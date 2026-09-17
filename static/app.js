@@ -179,13 +179,41 @@
 
   function renderAnnouncement(A) {
     if (!A || !A.enabled || !tx(A.text)) return;
-    var bar = el("div", "announce");
+    var text = tx(A.text);
     var u = safeUrl(A.url);
-    var inner = u ? el("a", "", tx(A.text)) : el("span", "", tx(A.text));
-    if (u) { inner.href = u; inner.rel = "noopener"; }
-    bar.appendChild(inner);
+    var bar = el(u ? "a" : "div", "announce");
+    if (u) { bar.href = u; bar.rel = "noopener"; }
     var main = document.querySelector("main");
-    if (main) main.insertBefore(bar, main.firstChild);
+    if (!main) return;
+    main.insertBefore(bar, main.firstChild);
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (A.scroll === false || reduce) {
+      bar.appendChild(el("span", "announce-static", text));
+      return;
+    }
+    // Ticker: the same text repeated, moving right to left in a seamless loop
+    bar.classList.add("is-scroll");
+    bar.setAttribute("aria-label", text);
+    var track = el("div", "announce-track");
+    track.setAttribute("aria-hidden", "true");
+    bar.appendChild(track);
+    function group() {
+      var g = el("span", "announce-group");
+      g.appendChild(el("span", "announce-item", text));
+      g.appendChild(el("span", "announce-sep", "✦"));
+      return g;
+    }
+    var first = group();
+    track.appendChild(first);
+    var one = first.getBoundingClientRect().width || 200;
+    var need = Math.ceil((bar.clientWidth || window.innerWidth) / one) + 1;
+    for (var i = 1; i < need; i++) track.appendChild(group());
+    // duplicate the whole set so the loop has no gap
+    Array.prototype.slice.call(track.children).forEach(function (n) { track.appendChild(n.cloneNode(true)); });
+    var speeds = { slow: 35, medium: 60, fast: 95 };
+    var pxPerSec = speeds[A.speed] || speeds.medium;
+    var setWidth = one * need;
+    track.style.animationDuration = Math.max(6, setWidth / pxPerSec) + "s";
   }
 
   function renderAffiliates(A) {
