@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "affiliate": {
+    "amazonTag": "",
+    "maxPerSlot": 4,
+    "products": [
+      {"enabled": true, "pages": ["navratri", "navratri-day", "garba"], "store": "Amazon", "search": "chaniya choli for navratri", "url": "", "price": "", "image": "",
+       "title": {"hi": "गरबा के लिए चनिया-चोली", "gu": "ગરબા માટે ચણિયા-ચોળી", "en": "Chaniya choli for Garba"}},
+      {"enabled": true, "pages": ["navratri", "garba"], "store": "Amazon", "search": "kediyu kurta men navratri", "url": "", "price": "", "image": "",
+       "title": {"hi": "पुरुषों के लिए केडियू", "gu": "પુરુષો માટે કેડિયું", "en": "Kediyu for men"}},
+      {"enabled": true, "pages": ["navratri", "garba"], "store": "Amazon", "search": "dandiya sticks decorated", "url": "", "price": "", "image": "",
+       "title": {"hi": "सजावटी डांडिया स्टिक", "gu": "શણગારેલા દાંડિયા", "en": "Decorated dandiya sticks"}},
+      {"enabled": true, "pages": ["navratri", "garba"], "store": "Amazon", "search": "oxidised jewellery set for navratri", "url": "", "price": "", "image": "",
+       "title": {"hi": "ऑक्सीडाइज़्ड ज्वेलरी सेट", "gu": "ઓક્સિડાઇઝ્ડ જ્વેલરી સેટ", "en": "Oxidised jewellery set"}},
+      {"enabled": true, "pages": ["navratri-day", "home"], "store": "Amazon", "search": "pooja thali set brass", "url": "", "price": "", "image": "",
+       "title": {"hi": "पूजा थाली सेट", "gu": "પૂજા થાળી સેટ", "en": "Puja thali set"}},
+      {"enabled": true, "pages": ["navratri-day"], "store": "Amazon", "search": "kalash sthapana puja samagri kit", "url": "", "price": "", "image": "",
+       "title": {"hi": "घटस्थापना पूजा सामग्री", "gu": "ઘટસ્થાપન પૂજા સામગ્રી", "en": "Ghatasthapana puja kit"}},
+      {"enabled": true, "pages": ["navratri-day", "home"], "store": "Amazon", "search": "clay diya handmade", "url": "", "price": "", "image": "",
+       "title": {"hi": "मिट्टी के दीये", "gu": "માટીના દીવા", "en": "Handmade clay diyas"}},
+      {"enabled": true, "pages": ["recipes", "navratri-day"], "store": "Amazon", "search": "makhana roasted", "url": "", "price": "", "image": "",
+       "title": {"hi": "मखाने", "gu": "મખાણા", "en": "Makhana (fox nuts)"}},
+      {"enabled": true, "pages": ["recipes"], "store": "Amazon", "search": "kuttu atta buckwheat flour", "url": "", "price": "", "image": "",
+       "title": {"hi": "कुट्टू का आटा", "gu": "કુટ્ટુનો લોટ", "en": "Kuttu (buckwheat) flour"}},
+      {"enabled": true, "pages": ["recipes"], "store": "Amazon", "search": "sendha namak rock salt", "url": "", "price": "", "image": "",
+       "title": {"hi": "सेंधा नमक", "gu": "સિંધવ મીઠું", "en": "Rock salt (sendha namak)"}},
+      {"enabled": true, "pages": ["recipes"], "store": "Amazon", "search": "dry fruits combo pack", "url": "", "price": "", "image": "",
+       "title": {"hi": "सूखे मेवे का पैक", "gu": "સૂકા મેવાનું પેક", "en": "Dry fruits combo"}},
+      {"enabled": true, "pages": ["birthday"], "store": "Amazon", "search": "birthday decoration kit", "url": "", "price": "", "image": "",
+       "title": {"hi": "बर्थडे डेकोरेशन किट", "gu": "બર્થડે ડેકોરેશન કિટ", "en": "Birthday decoration kit"}},
+      {"enabled": true, "pages": ["birthday"], "store": "Amazon", "search": "personalised birthday gift", "url": "", "price": "", "image": "",
+       "title": {"hi": "नाम वाले बर्थडे गिफ़्ट", "gu": "નામવાળી બર્થડે ગિફ્ટ", "en": "Personalised birthday gifts"}},
+      {"enabled": true, "pages": ["anniversary", "wedding", "engagement"], "store": "Amazon", "search": "couple gift personalised", "url": "", "price": "", "image": "",
+       "title": {"hi": "कपल के लिए गिफ़्ट", "gu": "કપલ માટે ગિફ્ટ", "en": "Gifts for couples"}},
+      {"enabled": true, "pages": ["wedding", "engagement"], "store": "Amazon", "search": "wedding gift for couple", "url": "", "price": "", "image": "",
+       "title": {"hi": "शादी का तोहफ़ा", "gu": "લગ્નની ભેટ", "en": "Wedding gifts"}},
+      {"enabled": true, "pages": ["anniversary"], "store": "Amazon", "search": "photo frame couple", "url": "", "price": "", "image": "",
+       "title": {"hi": "कपल फ़ोटो फ़्रेम", "gu": "કપલ ફોટો ફ્રેમ", "en": "Couple photo frame"}},
+      {"enabled": true, "pages": ["good-morning"], "store": "Amazon", "search": "coffee mug printed", "url": "", "price": "", "image": "",
+       "title": {"hi": "चाय-कॉफ़ी मग", "gu": "ચા-કોફી મગ", "en": "Tea and coffee mugs"}},
+      {"enabled": true, "pages": ["good-morning"], "store": "Amazon", "search": "motivational books hindi", "url": "", "price": "", "image": "",
+       "title": {"hi": "प्रेरणादायक किताबें", "gu": "પ્રેરણાદાયી પુસ્તકો", "en": "Motivational books"}}
+    ]
+  },
+  "telegram": {
+    "enabled": false,
+    "url": "",
+    "pages": ["all"],
+    "inline": true,
+    "sticky": true,
+    "title": {"hi": "रोज़ के शॉपिंग ऑफ़र्स", "gu": "રોજની શોપિંગ ઑફર્સ", "en": "Daily shopping deals"},
+    "text": {"hi": "Amazon, Flipkart की सबसे अच्छी डील सबसे पहले पाएँ। हमारे Telegram चैनल से जुड़ें।", "gu": "Amazon, Flipkartની શ્રેષ્ઠ ડીલ સૌથી પહેલાં મેળવો. અમારી Telegram ચેનલમાં જોડાઓ.", "en": "Get the best Amazon and Flipkart deals first. Join our Telegram channel."},
+    "button": {"hi": "चैनल जॉइन करें", "gu": "ચેનલ જોઇન કરો", "en": "Join channel"}
+  },
+  "announcement": {
+    "enabled": false,
+    "url": "",
+    "text": {"hi": "", "gu": "", "en": ""}
+  },
+  "ads": {
+    "adsenseClient": "",
+    "slotTop": "",
+    "slotMiddle": "",
+    "gaId": ""
+  },
+  "custom": {
+    "thoughts": {"hi": [], "gu": [], "en": []},
+    "wishes": {"hi": {}, "gu": {}, "en": {}}
+  }
+}

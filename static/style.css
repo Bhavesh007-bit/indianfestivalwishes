@@ -450,3 +450,37 @@ fieldset.field legend { font-weight: 600; margin-bottom: .3rem; padding: 0; }
   h2 { font-size: 1.35rem; }
   .btn { padding: .7rem 1rem; }
 }
+
+/* Telegram promo */
+.tg-slot:empty { display: none; }
+.tg-slot { margin: 1.4rem 0; }
+.tg-box {
+  display: grid; grid-template-columns: auto 1fr; gap: .4rem .9rem; align-items: center;
+  padding: .9rem 1rem; border-radius: 16px; text-decoration: none; color: #0B3954;
+  background: linear-gradient(135deg, #E3F4FC, #F2FAFE); border: 1.5px solid #BFE3F5;
+}
+.tg-icon svg { width: 44px; height: 44px; display: block; }
+.tg-body { display: grid; gap: .1rem; }
+.tg-title { font-family: var(--display); font-weight: 800; font-size: 1.15rem; line-height: 1.2; }
+.tg-text { font-size: .93rem; color: #25566F; }
+.tg-btn { background: #229ED9; color: #fff; font-weight: 700; border-radius: 999px; padding: .5rem 1rem; white-space: nowrap; justify-self: start; }
+.tg-box .tg-btn { grid-column: 1 / -1; justify-self: stretch; text-align: center; }
+@media (min-width: 640px) { .tg-box { grid-template-columns: auto 1fr auto; } .tg-box .tg-btn { grid-column: auto; justify-self: end; } }
+.tg-sticky {
+  position: fixed; left: 8px; right: 8px; bottom: 8px; z-index: 40; display: flex; align-items: center; gap: .3rem;
+  background: #fff; border-radius: 14px; box-shadow: 0 8px 28px -6px rgba(0,0,0,.35); padding: .4rem .4rem .4rem .6rem;
+  max-width: 560px; margin-inline: auto;
+}
+.tg-sticky-link { flex: 1; display: flex; align-items: center; gap: .6rem; text-decoration: none; color: #0B3954; min-width: 0; }
+.tg-sticky .tg-icon svg { width: 34px; height: 34px; }
+.tg-sticky-text { flex: 1; font-weight: 700; font-size: .95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tg-sticky .tg-btn { padding: .4rem .8rem; font-size: .88rem; }
+.tg-close { border: 0; background: transparent; font-size: 1.5rem; line-height: 1; width: 34px; height: 34px; cursor: pointer; color: var(--muted); }
+body.has-sticky .site-footer { padding-bottom: 76px; }
+
+/* Announcement */
+.announce { background: #FFF1C9; border-bottom: 1px solid #F2DB8C; text-align: center; padding: .5rem 1rem; font-weight: 600; font-size: .95rem; }
+.announce a { color: var(--sindoor-deep); }
+
+/* Affiliate icon when no image */
+.aff-icon { font-size: 1.8rem; line-height: 1; }

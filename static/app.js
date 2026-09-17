@@ -4,7 +4,6 @@
   if (!dataEl) return;
   var D = JSON.parse(dataEl.textContent);
   var U = D.ui;
-  var S = window.SITE || {};
 
   function fmt(s, o) {
     return String(s).replace(/\{(\w+)\}/g, function (_, k) { return o[k] != null ? o[k] : ""; });
@@ -138,83 +137,157 @@
     document.addEventListener("click", function () { langBtn.setAttribute("aria-expanded", "false"); langList.hidden = true; });
   }
 
-  /* ---------- Affiliate products (edit static/affiliates.js) ---------- */
-  var A = window.AFFILIATES;
-  document.querySelectorAll(".aff-slot").forEach(function (slot) {
-    if (!A || !A.products) return;
-    var tag = slot.getAttribute("data-aff");
-    var list = A.products.filter(function (p) {
-      return p.url && /^https:\/\//.test(p.url) && (p.pages || []).indexOf(tag) >= 0;
-    }).slice(0, A.maxPerSlot || 4);
-    if (!list.length) return;
-    var h = document.createElement("h2");
-    h.className = "small-h";
-    h.textContent = slot.getAttribute("data-title");
-    slot.appendChild(h);
-    var ul = document.createElement("ul");
-    ul.className = "aff-list";
-    list.forEach(function (p) {
-      var li = document.createElement("li");
-      var a = document.createElement("a");
-      a.href = p.url;
-      a.target = "_blank";
-      a.rel = "sponsored nofollow noopener";
-      a.className = "aff-card";
-      if (p.image && /^https:\/\//.test(p.image)) {
-        var im = document.createElement("img");
-        im.src = p.image; im.alt = ""; im.loading = "lazy";
-        a.appendChild(im);
-      }
-      var t = document.createElement("span");
-      t.className = "aff-title";
-      t.textContent = (p.title && (p.title[D.lang] || p.title.en)) || "";
-      a.appendChild(t);
-      if (p.price) { var pr = document.createElement("span"); pr.className = "aff-price"; pr.textContent = p.price; a.appendChild(pr); }
-      var st = document.createElement("span");
-      st.className = "aff-store";
-      st.textContent = (p.store || "Shop") + " →";
-      a.appendChild(st);
-      li.appendChild(a);
-      ul.appendChild(li);
-    });
-    slot.appendChild(ul);
-    var n = document.createElement("p");
-    n.className = "hint";
-    n.textContent = slot.getAttribute("data-note");
-    slot.appendChild(n);
-  });
+  /* ---------- Site settings (edited from the admin panel) ---------- */
+  var L = D.lang;
+  var PAGE = D.page || "";
+  var settingsUrl = (D.rel || "") + "static/site-settings.json";
+  window.IFW_SETTINGS = fetch(settingsUrl, { cache: "no-cache" })
+    .then(function (r) { return r.ok ? r.json() : {}; })
+    .catch(function () { return {}; });
+  window.IFW_SETTINGS.then(applySettings);
 
-  /* ---------- Ads and analytics (set IDs in static/config.js) ---------- */
-  if (S.adsenseClient) {
-    if (!document.querySelector('script[src*="adsbygoogle.js"]')) {
-      var s = document.createElement("script");
-      s.async = true;
-      s.crossOrigin = "anonymous";
-      s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=" + encodeURIComponent(S.adsenseClient);
-      document.head.appendChild(s);
+  function tx(obj) { return obj ? (obj[L] || obj.en || "") : ""; }
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function safeUrl(u) { return typeof u === "string" && /^https:\/\//.test(u) ? u : ""; }
+  function onPage(list) {
+    if (!list || !list.length) return false;
+    return list.indexOf("all") >= 0 || list.indexOf(PAGE) >= 0;
+  }
+
+  function productUrl(p, tag) {
+    var u = safeUrl(p.url);
+    if (u) {
+      if (tag && /amazon\.in/.test(u) && !/[?&]tag=/.test(u)) u += (u.indexOf("?") >= 0 ? "&" : "?") + "tag=" + encodeURIComponent(tag);
+      return u;
     }
-    document.querySelectorAll(".ad-slot").forEach(function (el) {
-      var slotId = (S.adSlots || {})[el.getAttribute("data-slot")];
-      if (!slotId) return;
-      var ins = document.createElement("ins");
-      ins.className = "adsbygoogle";
-      ins.style.display = "block";
-      ins.setAttribute("data-ad-client", S.adsenseClient);
-      ins.setAttribute("data-ad-slot", slotId);
-      ins.setAttribute("data-ad-format", "auto");
-      ins.setAttribute("data-full-width-responsive", "true");
-      el.appendChild(ins);
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    if (p.search && tag) return "https://www.amazon.in/s?k=" + encodeURIComponent(p.search) + "&tag=" + encodeURIComponent(tag);
+    return "";
+  }
+
+  function applySettings(S) {
+    S = S || {};
+    renderAnnouncement(S.announcement);
+    renderAffiliates(S.affiliate);
+    renderTelegram(S.telegram);
+    runAds(S.ads);
+  }
+
+  function renderAnnouncement(A) {
+    if (!A || !A.enabled || !tx(A.text)) return;
+    var bar = el("div", "announce");
+    var u = safeUrl(A.url);
+    var inner = u ? el("a", "", tx(A.text)) : el("span", "", tx(A.text));
+    if (u) { inner.href = u; inner.rel = "noopener"; }
+    bar.appendChild(inner);
+    var main = document.querySelector("main");
+    if (main) main.insertBefore(bar, main.firstChild);
+  }
+
+  function renderAffiliates(A) {
+    if (!A || !A.products) return;
+    var tag = (A.amazonTag || "").trim();
+    document.querySelectorAll(".aff-slot").forEach(function (slot) {
+      var key = slot.getAttribute("data-aff");
+      var list = A.products.filter(function (p) {
+        return p.enabled !== false && (p.pages || []).indexOf(key) >= 0 && productUrl(p, tag);
+      }).slice(0, A.maxPerSlot || 4);
+      if (!list.length) return;
+      slot.appendChild(el("h2", "small-h", slot.getAttribute("data-title")));
+      var ul = el("ul", "aff-list");
+      list.forEach(function (p) {
+        var li = el("li"), a = el("a", "aff-card");
+        a.href = productUrl(p, tag); a.target = "_blank"; a.rel = "sponsored nofollow noopener";
+        var img = safeUrl(p.image);
+        if (img) { var im = el("img"); im.src = img; im.alt = ""; im.loading = "lazy"; a.appendChild(im); }
+        else { var ic = el("span", "aff-icon", "🛍"); ic.setAttribute("aria-hidden", "true"); a.appendChild(ic); }
+        a.appendChild(el("span", "aff-title", tx(p.title)));
+        if (p.price) a.appendChild(el("span", "aff-price", p.price));
+        a.appendChild(el("span", "aff-store", (p.store || "Shop") + " →"));
+        li.appendChild(a); ul.appendChild(li);
+      });
+      slot.appendChild(ul);
+      slot.appendChild(el("p", "hint", slot.getAttribute("data-note")));
     });
   }
-  if (S.gaId) {
-    var g = document.createElement("script");
-    g.async = true;
-    g.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(S.gaId);
-    document.head.appendChild(g);
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = function () { window.dataLayer.push(arguments); };
-    window.gtag("js", new Date());
-    window.gtag("config", S.gaId);
+
+  var TG_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#229ED9"/><path d="M5.4 11.8l11.1-4.3c.5-.2 1 .1.8.9l-1.9 8.9c-.1.6-.5.8-1 .5l-2.9-2.1-1.4 1.3c-.2.2-.3.3-.6.3l.2-3 5.4-4.9c.2-.2 0-.3-.3-.1l-6.7 4.2-2.9-.9c-.6-.2-.6-.6.2-.8z" fill="#fff"/></svg>';
+
+  function renderTelegram(T) {
+    if (!T || !T.enabled) return;
+    var u = safeUrl(T.url);
+    if (!u || !/^https:\/\/(t\.me|telegram\.me)\//.test(u)) return;
+    if (!onPage(T.pages)) return;
+    if (T.inline !== false) {
+      document.querySelectorAll(".tg-slot").forEach(function (slot) {
+        var box = el("a", "tg-box");
+        box.href = u; box.target = "_blank"; box.rel = "noopener";
+        var icon = el("span", "tg-icon"); icon.innerHTML = TG_ICON;
+        var body = el("span", "tg-body");
+        body.appendChild(el("span", "tg-title", tx(T.title)));
+        body.appendChild(el("span", "tg-text", tx(T.text)));
+        box.appendChild(icon); box.appendChild(body);
+        box.appendChild(el("span", "tg-btn", tx(T.button)));
+        slot.appendChild(box);
+      });
+    }
+    var closed = false;
+    try { closed = sessionStorage.getItem("tgClosed") === "1"; } catch (e) {}
+    if (T.sticky !== false && !closed) {
+      var bar = el("div", "tg-sticky");
+      var link = el("a", "tg-sticky-link");
+      link.href = u; link.target = "_blank"; link.rel = "noopener";
+      var ic2 = el("span", "tg-icon"); ic2.innerHTML = TG_ICON;
+      link.appendChild(ic2);
+      link.appendChild(el("span", "tg-sticky-text", tx(T.title)));
+      link.appendChild(el("span", "tg-btn", tx(T.button)));
+      var x = el("button", "tg-close", "×");
+      x.type = "button"; x.setAttribute("aria-label", "Close");
+      x.addEventListener("click", function () {
+        bar.remove();
+        document.body.classList.remove("has-sticky");
+        try { sessionStorage.setItem("tgClosed", "1"); } catch (e) {}
+      });
+      bar.appendChild(link); bar.appendChild(x);
+      document.body.appendChild(bar);
+      document.body.classList.add("has-sticky");
+    }
+  }
+
+  function runAds(Ad) {
+    Ad = Ad || {};
+    var client = (Ad.adsenseClient || "").trim();
+    if (/^ca-pub-\d{10,20}$/.test(client)) {
+      if (!document.querySelector('script[src*="adsbygoogle.js"]')) {
+        var sc = document.createElement("script");
+        sc.async = true; sc.crossOrigin = "anonymous";
+        sc.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=" + encodeURIComponent(client);
+        document.head.appendChild(sc);
+      }
+      var slots = { top: (Ad.slotTop || "").trim(), middle: (Ad.slotMiddle || "").trim() };
+      document.querySelectorAll(".ad-slot").forEach(function (box) {
+        var id = slots[box.getAttribute("data-slot")];
+        if (!/^\d{6,20}$/.test(id || "")) return;
+        var ins = document.createElement("ins");
+        ins.className = "adsbygoogle"; ins.style.display = "block";
+        ins.setAttribute("data-ad-client", client); ins.setAttribute("data-ad-slot", id);
+        ins.setAttribute("data-ad-format", "auto"); ins.setAttribute("data-full-width-responsive", "true");
+        box.appendChild(ins);
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      });
+    }
+    var ga = (Ad.gaId || "").trim();
+    if (/^G-[A-Z0-9]{4,15}$/.test(ga)) {
+      var g = document.createElement("script");
+      g.async = true; g.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(ga);
+      document.head.appendChild(g);
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      window.gtag("js", new Date()); window.gtag("config", ga);
+    }
   }
 })();

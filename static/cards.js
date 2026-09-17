@@ -569,6 +569,26 @@
   function val(id) { var el = $(id); return el ? clean(el.value) : ""; }
   if ($("in-from")) $("in-from").value = received ? "" : state.from;
 
+  // Extra wishes and thoughts added from the admin panel
+  if (window.IFW_SETTINGS) {
+    window.IFW_SETTINGS.then(function (S) {
+      var cu = (S && S.custom) || {};
+      var extra = ((cu.wishes || {})[D.lang] || {})[K.occasion] || {};
+      var changed = false;
+      Object.keys(extra).forEach(function (rel) {
+        if (!Array.isArray(extra[rel]) || !K.wishes[rel]) return;
+        extra[rel].forEach(function (w) {
+          if (typeof w === "string" && w.trim()) { K.wishes[rel].push(w.trim().slice(0, 160)); changed = true; }
+        });
+      });
+      var th = (cu.thoughts || {})[D.lang];
+      if (K.thoughts && Array.isArray(th)) {
+        th.forEach(function (t) { if (typeof t === "string" && t.trim()) { K.thoughts.push(t.trim().slice(0, 160)); changed = true; } });
+      }
+      if (changed) { fillWishes(); redraw(); }
+    });
+  }
+
   styleBtns.forEach(function (b, i) {
     b.setAttribute("aria-pressed", i === state.style ? "true" : "false");
     b.addEventListener("click", function () {
