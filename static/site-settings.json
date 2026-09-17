@@ -1,8 +1,8 @@
 {
   "version": 1,
   "affiliate": {
-    "amazonTag": "",
-    "maxPerSlot": 4,
+    "amazonTag": "saverhub-21",
+    "maxPerSlot": 5,
     "products": [
       {
         "enabled": true,
@@ -306,8 +306,8 @@
     ]
   },
   "telegram": {
-    "enabled": false,
-    "url": "",
+    "enabled": true,
+    "url": "https://t.me/SB_Loots_And_Deals",
     "pages": [
       "all"
     ],
