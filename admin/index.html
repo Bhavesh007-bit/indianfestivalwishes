@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin Panel | Indian Festival Wishes</title>
+<link rel="icon" href="../static/favicon.svg" type="image/svg+xml">
+<style>
+  :root { --ink:#2B1B14; --muted:#6B5549; --line:#E4D6C8; --bg:#F6F1EA; --card:#fff; --brand:#B3122E; --ok:#1F8F4E; --warn:#B26A00; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.5 system-ui, "Segoe UI", "Noto Sans Devanagari", "Noto Sans Gujarati", sans-serif; background: var(--bg); color: var(--ink); }
+  header { background: var(--brand); color: #fff; padding: .8rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; position: sticky; top: 0; z-index: 5; }
+  header h1 { font-size: 1.1rem; margin: 0; }
+  header a { color: #FFE3B0; }
+  main { max-width: 980px; margin: 0 auto; padding: 1rem; }
+  nav.tabs { display: flex; flex-wrap: wrap; gap: .4rem; margin: .4rem 0 1rem; }
+  nav.tabs button { border: 1.5px solid var(--line); background: #fff; border-radius: 999px; padding: .45rem .9rem; font: inherit; font-weight: 600; cursor: pointer; }
+  nav.tabs button[aria-selected="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
+  section.panel { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 1rem 1.1rem 1.2rem; margin-bottom: 1rem; }
+  section.panel[hidden] { display: none; }
+  h2 { font-size: 1.15rem; margin: 0 0 .6rem; }
+  h3 { font-size: 1rem; margin: 1rem 0 .4rem; }
+  p.help { color: var(--muted); margin: .2rem 0 .8rem; font-size: .92rem; }
+  label { display: block; font-weight: 600; margin: .6rem 0 .2rem; font-size: .92rem; }
+  input[type=text], input[type=password], input[type=number], input[type=url], select, textarea {
+    width: 100%; padding: .55rem .65rem; border: 1.5px solid var(--line); border-radius: 8px; font: inherit; background: #fff; color: var(--ink);
+  }
+  textarea { min-height: 120px; resize: vertical; }
+  .row { display: grid; gap: .6rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .check { display: flex; align-items: center; gap: .45rem; font-weight: 600; margin: .5rem 0; }
+  .check input { width: 18px; height: 18px; }
+  .chips { display: flex; flex-wrap: wrap; gap: .3rem .8rem; }
+  .chips label { display: flex; align-items: center; gap: .3rem; font-weight: 500; margin: 0; }
+  button.btn { border: 0; border-radius: 10px; padding: .6rem 1rem; font: inherit; font-weight: 700; cursor: pointer; background: var(--ink); color: #fff; }
+  button.btn.primary { background: var(--brand); }
+  button.btn.ghost { background: #fff; color: var(--ink); border: 1.5px solid var(--line); }
+  button.btn.small { padding: .35rem .7rem; font-size: .88rem; }
+  button.btn.danger { background: #fff; color: var(--brand); border: 1.5px solid #f0c3cb; }
+  .actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .8rem; }
+  .product { border: 1.5px solid var(--line); border-radius: 12px; padding: .8rem; margin: .7rem 0; background: #FFFCF8; }
+  .product.off { opacity: .6; }
+  .product-head { display: flex; justify-content: space-between; align-items: center; gap: .5rem; flex-wrap: wrap; }
+  .product-head strong { font-size: 1rem; }
+  #status { position: sticky; bottom: 0; background: #fff; border-top: 1px solid var(--line); padding: .7rem 1rem; display: flex; gap: .8rem; align-items: center; flex-wrap: wrap; justify-content: space-between; }
+  #status .msg { font-weight: 600; }
+  .msg.ok { color: var(--ok); } .msg.err { color: var(--brand); } .msg.warn { color: var(--warn); }
+  .dirty { color: var(--warn); font-weight: 700; }
+  code { background: #F3EAE0; padding: 0 .3rem; border-radius: 4px; }
+  ol.steps li { margin-bottom: .3rem; }
+</style>
+</head>
+<body>
+<header>
+  <h1>⚙ Admin Panel: Indian Festival Wishes</h1>
+  <a href="../" target="_blank" rel="noopener">Site kholo ↗</a>
+</header>
+<main>
+  <nav class="tabs" role="tablist" id="tabs"></nav>
+
+  <section class="panel" data-tab="setup">
+    <h2>1. GitHub se jodo</h2>
+    <p class="help">Admin panel aapki GitHub repository me <code>static/site-settings.json</code> file badalta hai. Iske liye ek baar GitHub "token" banana hoga.</p>
+    <details>
+      <summary><strong>Token kaise banaye (ek baar ka kaam)</strong></summary>
+      <ol class="steps">
+        <li>GitHub par: profile photo &gt; <b>Settings</b> &gt; sabse neeche <b>Developer settings</b> &gt; <b>Personal access tokens</b> &gt; <b>Fine-grained tokens</b> &gt; <b>Generate new token</b>.</li>
+        <li>Naam: <code>site-admin</code>. Expiration: 90 days (khatam hone par naya bana lena).</li>
+        <li>Repository access: <b>Only select repositories</b> &gt; <code>indianfestivalwishes</code>.</li>
+        <li>Permissions &gt; Repository permissions &gt; <b>Contents: Read and write</b>. Baaki kuch mat chhedna.</li>
+        <li><b>Generate token</b> dabao aur token copy karke neeche daalo. Ye token kisi ko mat dena.</li>
+      </ol>
+    </details>
+    <div class="row">
+      <div><label for="gh-owner">GitHub username</label><input id="gh-owner" type="text" value="Bhavesh007-bit"></div>
+      <div><label for="gh-repo">Repository</label><input id="gh-repo" type="text" value="indianfestivalwishes"></div>
+      <div><label for="gh-branch">Branch</label><input id="gh-branch" type="text" value="main"></div>
+    </div>
+    <label for="gh-token">Token</label>
+    <input id="gh-token" type="password" autocomplete="off" placeholder="github_pat_...">
+    <label class="check"><input type="checkbox" id="gh-remember"> Is computer/phone par token yaad rakho (sirf apne device par tick karo)</label>
+    <div class="actions">
+      <button class="btn primary" id="btn-connect" type="button">Jodo aur settings load karo</button>
+      <button class="btn ghost" id="btn-load-live" type="button">Bina token ke sirf dekhne ke liye load karo</button>
+      <button class="btn ghost" id="btn-forget" type="button">Token bhool jao</button>
+    </div>
+  </section>
+
+  <section class="panel" data-tab="affiliate" hidden>
+    <h2>2. Affiliate products</h2>
+    <p class="help">Amazon Associates ka tracking ID daalo (jaise <code>yourname-21</code>). "Search shabd" wale products apne-aap Amazon search link ban jaate hain aur unme aapka ID lag jaata hai. Kisi product ka seedha link ho to "Direct link" me daalo. Bina tracking ID aur bina direct link wale products site par nahi dikhte.</p>
+    <div class="row">
+      <div><label for="aff-tag">Amazon tracking ID</label><input id="aff-tag" type="text" placeholder="yourname-21"></div>
+      <div><label for="aff-max">Ek box me kitne products</label><input id="aff-max" type="number" min="1" max="8"></div>
+    </div>
+    <div id="products"></div>
+    <div class="actions"><button class="btn" id="btn-add-product" type="button">+ Naya product</button></div>
+  </section>
+
+  <section class="panel" data-tab="telegram" hidden>
+    <h2>3. Telegram channel promotion</h2>
+    <p class="help">Link <code>https://t.me/</code> se shuru hona chahiye. Page ke beech me ek box aur neeche chipki hui patti dikhegi (user band kar sakta hai).</p>
+    <label class="check"><input type="checkbox" id="tg-enabled"> Telegram promotion chalu karo</label>
+    <label for="tg-url">Channel link</label><input id="tg-url" type="url" placeholder="https://t.me/yourchannel">
+    <label class="check"><input type="checkbox" id="tg-inline"> Page ke beech me box dikhao</label>
+    <label class="check"><input type="checkbox" id="tg-sticky"> Neeche chipki patti dikhao</label>
+    <h3>Kin pages par</h3>
+    <div class="chips" id="tg-pages"></div>
+    <div id="tg-texts"></div>
+  </section>
+
+  <section class="panel" data-tab="announce" hidden>
+    <h2>4. Announcement patti</h2>
+    <p class="help">Har page ke upar ek chhoti patti, jaise "Diwali sale shuru!" ya "Naye Dussehra cards aa gaye". Link optional hai.</p>
+    <label class="check"><input type="checkbox" id="an-enabled"> Patti dikhao</label>
+    <label class="check"><input type="checkbox" id="an-scroll"> Text ko chalta hua dikhao (ticker)</label>
+    <label for="an-speed">Chalne ki raftaar</label>
+    <select id="an-speed"><option value="slow">Dheemi</option><option value="medium">Madhyam</option><option value="fast">Tez</option></select>
+    <label for="an-url">Link (optional)</label><input id="an-url" type="url" placeholder="https://...">
+    <div id="an-texts"></div>
+  </section>
+
+  <section class="panel" data-tab="ads" hidden>
+    <h2>5. Google AdSense aur Analytics</h2>
+    <p class="help">AdSense approve hone ke baad yahan ID daalo. Slot ID AdSense me "Ads &gt; By ad unit" se milta hai. Sirf Auto ads chahiye to slot khali chhod do.</p>
+    <div class="row">
+      <div><label for="ad-client">AdSense publisher ID</label><input id="ad-client" type="text" placeholder="ca-pub-1234567890123456"></div>
+      <div><label for="ad-top">Slot ID: upar wali jagah</label><input id="ad-top" type="text" placeholder="1234567890"></div>
+      <div><label for="ad-mid">Slot ID: beech wali jagah</label><input id="ad-mid" type="text" placeholder="1234567890"></div>
+      <div><label for="ga-id">Google Analytics ID</label><input id="ga-id" type="text" placeholder="G-XXXXXXXXXX"></div>
+    </div>
+    <p class="help">Dhyan do: AdSense site verify karte waqt jo code maangta hai, wo seedha HTML me hona chahiye. Uske liye Claude se nayi files banwa lena, ya AdSense me "ads.txt" wala tareeka chuno.</p>
+  </section>
+
+  <section class="panel" data-tab="wishes" hidden>
+    <h2>6. Apni wishes aur suvichar jodo</h2>
+    <p class="help">Yahan likhi wishes card ki list me sabse neeche jud jaati hain. Har line ek wish. 160 akshar se lambi wish kaat di jaati hai.</p>
+    <div class="row">
+      <div><label for="cw-lang">Bhasha</label><select id="cw-lang"></select></div>
+      <div><label for="cw-occ">Mauka</label><select id="cw-occ"></select></div>
+      <div><label for="cw-rel">Kiske liye</label><select id="cw-rel"></select></div>
+    </div>
+    <label for="cw-text">Wishes (ek line me ek)</label>
+    <textarea id="cw-text"></textarea>
+    <h3>Good Morning ke suvichar</h3>
+    <label for="th-lang">Bhasha</label><select id="th-lang"></select>
+    <label for="th-text">Suvichar (ek line me ek)</label>
+    <textarea id="th-text"></textarea>
+  </section>
+
+  <section class="panel" data-tab="backup" hidden>
+    <h2>7. Backup</h2>
+    <p class="help">Save karne se pehle backup download kar lo. Kabhi gadbad ho to wahi file yahan se wapas daal sakte ho.</p>
+    <div class="actions">
+      <button class="btn" id="btn-download" type="button">Backup download karo</button>
+      <label class="btn ghost" style="margin:0">Backup file chuno<input id="file-restore" type="file" accept="application/json" hidden></label>
+    </div>
+  </section>
+</main>
+<div id="status">
+  <span class="msg" id="msg">Pehle "GitHub se jodo" me token daal ke settings load karo.</span>
+  <span id="dirty" class="dirty" hidden>● Save nahi hua</span>
+  <button class="btn primary" id="btn-save" type="button" disabled>💾 Save karo (site par lagao)</button>
+</div>
+<script src="admin.js"></script>
+</body>
+</html>
