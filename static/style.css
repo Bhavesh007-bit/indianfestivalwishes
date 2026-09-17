@@ -479,8 +479,18 @@ fieldset.field legend { font-weight: 600; margin-bottom: .3rem; padding: 0; }
 body.has-sticky .site-footer { padding-bottom: 76px; }
 
 /* Announcement */
-.announce { background: #FFF1C9; border-bottom: 1px solid #F2DB8C; text-align: center; padding: .5rem 1rem; font-weight: 600; font-size: .95rem; }
-.announce a { color: var(--sindoor-deep); }
+.announce {
+  display: block; background: #FFF1C9; border-bottom: 1px solid #F2DB8C; color: var(--sindoor-deep);
+  text-align: center; padding: .5rem 1rem; font-weight: 700; font-size: .95rem; text-decoration: none;
+}
+.announce.is-scroll { padding: .5rem 0; overflow: hidden; text-align: left; white-space: nowrap; }
+.announce-track { display: inline-flex; width: max-content; animation: announce-move linear infinite; will-change: transform; }
+.announce.is-scroll:hover .announce-track, .announce.is-scroll:focus .announce-track { animation-play-state: paused; }
+.announce-group { display: inline-flex; align-items: center; }
+.announce-item { padding: 0 1.1rem; }
+.announce-sep { color: var(--marigold); font-size: .8rem; }
+@keyframes announce-move { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .announce-track { animation: none; } }
 
 /* Affiliate icon when no image */
 .aff-icon { font-size: 1.8rem; line-height: 1; }
