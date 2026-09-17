@@ -29,18 +29,26 @@
 <style>:root{--day:#B3122E;--day-ink:#FFFFFF;}</style>
 
 <script src="static/config.js"></script>
+<script src="static/affiliates.js"></script>
 <script src="static/app.js" defer></script>
+<script src="static/cards.js" defer></script>
 
 </head>
 <body>
 <header class="site-header">
-  <div class="wrap">
-    <a class="brand" href="./"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2.5c3.2 4.3 4.2 7.6 0 11.5-4.2-3.9-3.2-7.2 0-11.5z" fill="#F2A007"/><path d="M3.5 16.5h25c-1 6.6-6.1 11-12.5 11S4.5 23.1 3.5 16.5z" fill="#fff"/></svg><span>Indian Festival Wishes</span></a>
-    <nav class="lang-switch" aria-label="भाषा"><a href="disclaimer.html" lang="hi" hreflang="hi" title="हिन्दी" aria-current="true">हिं</a><a href="gu/disclaimer.html" lang="gu" hreflang="gu" title="ગુજરાતી">ગુ</a><a href="en/disclaimer.html" lang="en" hreflang="en" title="English">EN</a></nav>
+  <div class="wrap head-row">
+    <button class="icon-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="मेनू">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+    </button>
+    <a class="brand" href="./"><svg viewBox="0 0 40 40" aria-hidden="true"><g transform="translate(20 20)"><g fill="#F2A007"><ellipse rx="4.2" ry="9" cy="-9.5" transform="rotate(0)"/><ellipse rx="4.2" ry="9" cy="-9.5" transform="rotate(45)"/><ellipse rx="4.2" ry="9" cy="-9.5" transform="rotate(90)"/><ellipse rx="4.2" ry="9" cy="-9.5" transform="rotate(135)"/><ellipse rx="4.2" ry="9" cy="-9.5" transform="rotate(180)"/><ellipse rx="4.2" ry="9" cy="-9.5" transform="rotate(225)"/><ellipse rx="4.2" ry="9" cy="-9.5" transform="rotate(270)"/><ellipse rx="4.2" ry="9" cy="-9.5" transform="rotate(315)"/></g><g fill="#FF5D8F"><ellipse rx="2.6" ry="5.6" cy="-7" transform="rotate(22)"/><ellipse rx="2.6" ry="5.6" cy="-7" transform="rotate(67)"/><ellipse rx="2.6" ry="5.6" cy="-7" transform="rotate(112)"/><ellipse rx="2.6" ry="5.6" cy="-7" transform="rotate(157)"/><ellipse rx="2.6" ry="5.6" cy="-7" transform="rotate(202)"/><ellipse rx="2.6" ry="5.6" cy="-7" transform="rotate(247)"/><ellipse rx="2.6" ry="5.6" cy="-7" transform="rotate(292)"/><ellipse rx="2.6" ry="5.6" cy="-7" transform="rotate(337)"/></g><circle r="5.2" fill="#B3122E"/><circle r="2.4" fill="#F2A007"/></g></svg><span>Indian Festival Wishes</span></a>
+    <div class="lang-drop">
+      <button class="icon-btn lang-btn" id="lang-btn" type="button" aria-expanded="false" aria-controls="lang-list" aria-label="भाषा"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9S14.5 18.3 12 21c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg><span>हिं</span></button>
+      <ul class="lang-list" id="lang-list" hidden><li><a href="disclaimer.html" lang="hi" hreflang="hi" aria-current="true">हिन्दी</a></li><li><a href="gu/disclaimer.html" lang="gu" hreflang="gu">ગુજરાતી</a></li><li><a href="en/disclaimer.html" lang="en" hreflang="en">English</a></li></ul>
+    </div>
   </div>
+  <nav class="site-menu" id="site-menu" aria-label="मेनू"><ul class="wrap"><li><a href="./">होम</a></li><li><a href="navratri/">नवरात्रि 2026</a></li><li><a href="wishes/birthday.html">जन्मदिन</a></li><li><a href="wishes/anniversary.html">सालगिरह</a></li><li><a href="wishes/wedding.html">शादी</a></li><li><a href="wishes/engagement.html">सगाई</a></li><li><a href="wishes/good-morning.html">सुप्रभात</a></li><li><a href="navratri/vrat-recipes.html">व्रत रेसिपी</a></li><li><a href="navratri/garba-dandiya.html">गरबा-डांडिया</a></li></ul></nav>
 </header>
 <div class="bandhani" aria-hidden="true" style="background-color:var(--sindoor)"></div>
-<nav class="site-nav" aria-label="Menu"><ul class="wrap"><li><a href="./">होम</a></li><li><a href="navratri/">नवरात्रि 2026</a></li><li><a href="navratri/vrat-recipes.html">व्रत रेसिपी</a></li><li><a href="navratri/garba-dandiya.html">गरबा-डांडिया</a></li></ul></nav>
 <main>
 
 <div class="wrap">
@@ -50,13 +58,16 @@
 <p>व्रत और खान-पान से जुड़ी जानकारी केवल सामान्य जानकारी के लिए है, यह डॉक्टर की सलाह नहीं है। कोई बीमारी हो तो व्रत रखने से पहले डॉक्टर से बात करें।</p>
 <p>इस साइट पर विज्ञापन दिखाए जा सकते हैं। विज्ञापनों में दिखाए गए प्रोडक्ट या सेवाओं की ज़िम्मेदारी विज्ञापन देने वाली कंपनियों की है।</p>
 </article>
+  <div class="aff-slot" data-aff="recipes" data-title="त्योहार की खरीदारी" data-note="ये एफ़िलिएट लिंक हैं। इनसे खरीदने पर हमें छोटा कमीशन मिल सकता है, आपकी कीमत नहीं बढ़ती।"></div>
+
 </div>
-<script id="page-data" type="application/json">{"lang": "hi", "day": 0, "dates": ["2026-10-11", "2026-10-12", "2026-10-13", "2026-10-14", "2026-10-15", "2026-10-16", "2026-10-17", "2026-10-18", "2026-10-19"], "dussehra": "2026-10-20", "font": "'Baloo 2', sans-serif", "rel": "", "ui": {"site_name": "Indian Festival Wishes", "today_is": "आज नवरात्रि का दिन {n} है", "starts_in": "नवरात्रि शुरू होने में {d} दिन बाकी हैं", "dussehra_today": "आज दशहरा है। विजयादशमी की शुभकामनाएँ!", "over": "नवरात्रि 2026 पूरी हुई। अगले साल फिर मिलेंगे।", "open_today": "आज का पेज खोलें", "card_heading_received": "आपके लिए एक शुभकामना कार्ड", "card_now_yours": "अब अपने नाम से कार्ड बनाकर दोस्तों को भेजें", "name_error": "कार्ड बनाने के लिए अपना नाम लिखें।", "card_top": "नवरात्रि 2026", "share_msg": "{name} ने आपके लिए नवरात्रि दिन {n} का शुभकामना कार्ड बनाया है। कार्ड देखें और अपना भी बनाएँ:", "share_msg_home": "{name} ने आपके लिए नवरात्रि का शुभकामना कार्ड बनाया है। कार्ड देखें और अपना भी बनाएँ:", "copied_link": "लिंक कॉपी हो गया", "copy": "कॉपी करें", "copied": "कॉपी हो गया", "btn_share_photo": "फ़ोटो शेयर करें", "today_short": "आज", "reel_making": "रील बन रही है, 20 सेकंड रुकें... {p}%", "reel_ready": "रील तैयार है। नीचे से डाउनलोड करें।", "reel_unsupported": "आपका ब्राउज़र वीडियो नहीं बना सकता। Chrome में खोलकर देखें।", "reel_webm_note": "यह वीडियो WebM फ़ॉर्मेट में है। WhatsApp पर न चले तो Chrome का नया वर्ज़न इस्तेमाल करें।", "reel_story": "माँ की कथा", "color_label": "आज का रंग", "bhog_label": "भोग", "insta_hint": "फ़ोटो डाउनलोड हो गई। अब Instagram खोलें और स्टोरी या पोस्ट में यह फ़ोटो चुनें।", "reel_saved_hint": "रील डाउनलोड हो गई। अब {app} खोलें और यह वीडियो अपलोड करें।"}}</script>
+<script id="page-data" type="application/json">{"lang": "hi", "day": 0, "dates": ["2026-10-11", "2026-10-12", "2026-10-13", "2026-10-14", "2026-10-15", "2026-10-16", "2026-10-17", "2026-10-18", "2026-10-19"], "dussehra": "2026-10-20", "font": "'Baloo 2', sans-serif", "rel": "", "ui": {"site_name": "Indian Festival Wishes", "today_is": "आज नवरात्रि का दिन {n} है", "starts_in": "नवरात्रि शुरू होने में {d} दिन बाकी हैं", "dussehra_today": "आज दशहरा है। विजयादशमी की शुभकामनाएँ!", "over": "नवरात्रि 2026 पूरी हुई। अगले साल फिर मिलेंगे।", "open_today": "आज का पेज खोलें", "card_heading_received": "आपके लिए एक शुभकामना कार्ड", "card_now_yours": "अब अपने नाम से कार्ड बनाकर दोस्तों को भेजें", "name_error": "कार्ड बनाने के लिए अपना नाम लिखें।", "card_top": "नवरात्रि 2026", "share_msg": "{name} ने आपके लिए नवरात्रि दिन {n} का शुभकामना कार्ड बनाया है। कार्ड देखें और अपना भी बनाएँ:", "share_msg_home": "{name} ने आपके लिए नवरात्रि का शुभकामना कार्ड बनाया है। कार्ड देखें और अपना भी बनाएँ:", "copied_link": "लिंक कॉपी हो गया", "copy": "कॉपी करें", "copied": "कॉपी हो गया", "btn_share_photo": "फ़ोटो शेयर करें", "today_short": "आज", "color_label": "आज का रंग", "bhog_label": "भोग", "insta_hint": "फ़ोटो डाउनलोड हो गई। अब Instagram खोलें और स्टोरी या पोस्ट में यह फ़ोटो चुनें।", "need_name": "कार्ड बनाने के लिए नाम लिखें।", "share_link_msg": "आपके लिए एक शुभकामना कार्ड है। देखें और अपना भी बनाएँ:"}}</script>
 </main>
 <footer class="site-footer">
   <div class="bandhani" aria-hidden="true"></div>
   <div class="wrap">
-    <ul><li><a href="./">होम</a></li><li><a href="navratri/">नवरात्रि 2026</a></li><li><a href="navratri/vrat-recipes.html">व्रत रेसिपी</a></li><li><a href="about.html">हमारे बारे में</a></li><li><a href="contact.html">संपर्क</a></li><li><a href="privacy-policy.html">प्राइवेसी पॉलिसी</a></li><li><a href="disclaimer.html">डिस्क्लेमर</a></li></ul>
+    <ul><li><a href="./">होम</a></li><li><a href="navratri/">नवरात्रि 2026</a></li><li><a href="wishes/birthday.html">जन्मदिन</a></li><li><a href="wishes/anniversary.html">सालगिरह</a></li><li><a href="wishes/wedding.html">शादी</a></li><li><a href="wishes/engagement.html">सगाई</a></li><li><a href="wishes/good-morning.html">सुप्रभात</a></li><li><a href="navratri/vrat-recipes.html">व्रत रेसिपी</a></li><li><a href="about.html">हमारे बारे में</a></li><li><a href="contact.html">संपर्क</a></li><li><a href="privacy-policy.html">प्राइवेसी पॉलिसी</a></li><li><a href="disclaimer.html">डिस्क्लेमर</a></li></ul>
+    <p class="foot-lang"><span>भाषा:</span></p><ul class="foot-langs"><li><a href="disclaimer.html" lang="hi">हिन्दी</a></li><li><a href="gu/disclaimer.html" lang="gu">ગુજરાતી</a></li><li><a href="en/disclaimer.html" lang="en">English</a></li></ul>
     <p class="note">तिथियाँ और दिन के रंग अलग-अलग पंचांग में थोड़े अलग हो सकते हैं। पूजा से पहले अपने स्थानीय पंचांग या पंडित जी से मिलान कर लें।</p>
     <p>© 2026 Indian Festival Wishes</p>
   </div>
