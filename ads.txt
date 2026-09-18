@@ -1,2 +1,1 @@
-# AdSense approval ke baad neeche wali line ke aage se # hataayein aur pub ID badlein:
-# google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
+google.com, pub-1833153255842443, DIRECT, f08c47fec0942fa0
