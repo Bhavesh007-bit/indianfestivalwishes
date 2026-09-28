@@ -225,9 +225,12 @@
 
   function applySettings(S) {
     S = S || {};
-    renderAnnouncement(S.announcement);
-    renderAffiliates(S.affiliate);
-    renderTelegram(S.telegram);
+    // keep condolence pages free of promotions
+    if (PAGE !== "shraddhanjali") {
+      renderAnnouncement(S.announcement);
+      renderAffiliates(S.affiliate);
+      renderTelegram(S.telegram);
+    }
     runAds(S.ads);
   }
 

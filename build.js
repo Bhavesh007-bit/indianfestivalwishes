@@ -21,6 +21,9 @@ const PAGES = read("pages.json");
 const OCC = read("occasions.json");
 const ART = read("articles.json");
 const FEST = read("festivals.json");
+const MW = {}, NP = {};
+["hi", "gu", "en"].forEach((L) => { MW[L] = read(`more_wishes_${L}.json`); NP[L] = read(`newpages_${L}.json`); });
+const INVITES = ["wedding", "engagement", "birthday-party", "griha-pravesh", "baby-shower", "naming-ceremony", "puja", "shop-opening"];
 
 const ASSET_V = String(Date.now()).slice(-8);
 
@@ -103,9 +106,21 @@ const DESIGNS = {
   M1: { tone: "light", zone: [130, 640], w: 900, ink: "#5A2A0C", scrim: 0.55 },
   M2: { tone: "light", zone: [120, 620], w: 900, ink: "#4A2C12", scrim: 0.45 },
   M3: { tone: "light", zone: [330, 1000], w: 820, ink: "#1F5AA6" },
-  M4: { tone: "light", zone: [120, 700], w: 900, ink: "#8C2F5B", scrim: 0.45 }
+  M4: { tone: "light", zone: [120, 700], w: 900, ink: "#8C2F5B", scrim: 0.45 },
+  P1: { tone: "light", zone: [150, 1200], w: 820, ink: "#7A4A12" },
+  P2: { tone: "light", zone: [150, 1200], w: 820, ink: "#3F3F4A" },
+  P3: { tone: "dark", zone: [150, 1200], w: 820 }
 };
 const SETS = {
+  shraddhanjali: ["P2", "M4", "C4", "M1", "P1", "U2", "U4", "U5"],
+  "inv-wedding": ["C2", "U1", "U5", "N1", "C4", "U2", "P1", "P3", "D4", "U4"],
+  "inv-engagement": ["C4", "C3", "C1", "U4", "U2", "B4", "U3", "P1", "U6", "C2"],
+  "inv-birthday-party": ["B2", "B1", "B3", "B4", "U6", "U3", "M3", "D3", "U2", "C3"],
+  "inv-griha-pravesh": ["N3", "D1", "N1", "D4", "U1", "U5", "P1", "P3", "S1", "U4"],
+  "inv-baby-shower": ["M3", "C3", "U3", "B4", "B2", "U4", "K2", "M4", "P1", "C4"],
+  "inv-naming-ceremony": ["K2", "M3", "C3", "U3", "B4", "U4", "M4", "B2", "P1", "C4"],
+  "inv-puja": ["N3", "N1", "D1", "S1", "U1", "U5", "P3", "M4", "N2", "P1"],
+  "inv-shop-opening": ["D2", "S2", "U2", "B3", "U5", "U1", "N1", "D4", "P3", "U6"],
   navratri: ["N1", "N2", "N3", "N4", "U1", "U5", "U2", "U6", "U3", "U4"],
   dussehra: ["S1", "S2", "N1", "N3", "U1", "U5", "U2", "U6", "D2", "U3"],
   "karva-chauth": ["K1", "K2", "U1", "U2", "C1", "C4", "U4", "U6", "D4", "U5"],
@@ -175,17 +190,22 @@ function navItems(L) {
   const n = UI[L].nav;
   return {
     festivals: [["navratri", "navratri/"], ["dussehra", "dussehra/"], ["karva-chauth", "karva-chauth/"], ["diwali", "diwali/"]].map(([k, p]) => ({ k, p, t: n[k] })),
+    invites: [["invitations", "invitations/"]].concat(INVITES.map((k) => [k, "invitations/" + k + ".html"])).map(([k, p]) => ({ k, p, t: k === "invitations" ? NP[L].invitations.nav : NP[L].invites[k].nav })),
+    tribute: { k: "shraddhanjali", p: "shraddhanjali/", t: NP[L].shraddhanjali.nav },
     occasions: [["birthday", "wishes/birthday.html"], ["anniversary", "wishes/anniversary.html"], ["wedding", "wishes/wedding.html"], ["engagement", "wishes/engagement.html"], ["good-morning", "wishes/good-morning.html"]].map(([k, p]) => ({ k, p, t: n[k] })),
     more: [["recipes", "navratri/vrat-recipes.html"], ["garba", "navratri/garba-dandiya.html"], ["about", "about.html"], ["contact", "contact.html"]].map(([k, p]) => ({ k, p, t: n[k] }))
   };
 }
-const OCC_ICON = { birthday: "cake", anniversary: "heart", wedding: "mandap", engagement: "rings", "good-morning": "sun", navratri: "sticks", dussehra: "sparkle", "karva-chauth": "sparkle", diwali: "diya", recipes: "bowl", garba: "sticks", about: "sparkle", contact: "sparkle" };
+const OCC_ICON = { invitations: "mandap", shraddhanjali: "diya", "birthday-party": "cake", "griha-pravesh": "mandap", "baby-shower": "heart", "naming-ceremony": "heart", puja: "diya", "shop-opening": "sparkle", birthday: "cake", anniversary: "heart", wedding: "mandap", engagement: "rings", "good-morning": "sun", navratri: "sticks", dussehra: "sparkle", "karva-chauth": "sparkle", diwali: "diya", recipes: "bowl", garba: "sticks", about: "sparkle", contact: "sparkle" };
 
 function header(L, p, active) {
   const u = UI[L], N = navItems(L);
   const link = (it, cls) => `<a class="${cls}" href="${url(L, it.p)}"${active === it.k ? ' aria-current="page"' : ""}>${esc(it.t)}</a>`;
   const langs = LANGS.map((x) => `<a href="${url(x, p)}" lang="${x}" hreflang="${x}"${x === L ? ' aria-current="true"' : ""}>${esc(UI[x].lang_short)}</a>`).join("");
-  const occActive = N.occasions.some((i) => i.k === active);
+  const occList = N.occasions.concat([N.tribute], N.more);
+  const occActive = occList.some((i) => i.k === active);
+  const invActive = N.invites.some((i) => i.k === active);
+  const invLink = N.invites[0];
   const drawerGroup = (key, list) => `<div class="drawer-group"><p class="drawer-h">${esc(u.nav_groups[key])}</p><ul>${list.map((it) => `<li><a href="${url(L, it.p)}"${active === it.k ? ' aria-current="page"' : ""}><span class="ico">${I[OCC_ICON[it.k]] || I.sparkle}</span>${esc(it.t)}</a></li>`).join("")}</ul></div>`;
   return `<a class="skip" href="#main">${esc(u.skip)}</a>
 <header class="hdr" id="top">
@@ -194,21 +214,22 @@ function header(L, p, active) {
     <nav class="nav-desk" aria-label="${esc(u.menu)}">
       <a class="nav-link" href="${url(L, "")}"${active === "home" ? ' aria-current="page"' : ""}>${esc(u.nav.home)}</a>
       ${N.festivals.map((it) => link(it, "nav-link")).join("")}
+      <a class="nav-link" href="${url(L, invLink.p)}"${invActive ? ' aria-current="page"' : ""}>${esc(invLink.t)}</a>
       <div class="nav-more">
         <button class="nav-link nav-more-btn" type="button" aria-expanded="false" aria-controls="nav-occ"${occActive ? ' data-active="1"' : ""}>${esc(u.nav_groups.occasions)}${I.chevron}</button>
-        <div class="nav-pop" id="nav-occ" hidden>${N.occasions.concat(N.more).map((it) => `<a href="${url(L, it.p)}"${active === it.k ? ' aria-current="page"' : ""}><span class="ico">${I[OCC_ICON[it.k]] || I.sparkle}</span>${esc(it.t)}</a>`).join("")}</div>
+        <div class="nav-pop" id="nav-occ" hidden>${occList.map((it) => `<a href="${url(L, it.p)}"${active === it.k ? ' aria-current="page"' : ""}><span class="ico">${I[OCC_ICON[it.k]] || I.sparkle}</span>${esc(it.t)}</a>`).join("")}</div>
       </div>
     </nav>
     <div class="lang-pill" role="group" aria-label="${esc(u.language)}">${I.globe}${langs}</div>
     <button class="burger" id="menu-btn" type="button" aria-expanded="false" aria-controls="drawer" aria-label="${esc(u.menu)}">${I.menu}</button>
   </div>
-  <nav class="chips-nav" aria-label="${esc(u.nav_groups.festivals)}"><div class="chips-row">${N.festivals.concat(N.occasions).map((it) => link(it, "chip")).join("")}</div></nav>
+  <nav class="chips-nav" aria-label="${esc(u.nav_groups.festivals)}"><div class="chips-row">${N.festivals.map((it) => link(it, "chip")).join("")}<a class="chip chip-hot" href="${url(L, invLink.p)}"${invActive ? ' aria-current="page"' : ""}>${esc(invLink.t)}</a>${N.occasions.concat([N.tribute]).map((it) => link(it, "chip")).join("")}</div></nav>
 </header>
 <div class="drawer" id="drawer" hidden>
   <div class="drawer-scrim" data-close></div>
   <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="${esc(u.menu)}">
     <div class="drawer-top"><span class="logo">${LOGO}<span class="logo-t">Indian Festival <b>Wishes</b></span></span><button class="icon-btn" type="button" data-close aria-label="${esc(u.close)}">${I.close}</button></div>
-    ${drawerGroup("festivals", N.festivals)}${drawerGroup("occasions", N.occasions)}${drawerGroup("more", N.more)}
+    ${drawerGroup("festivals", N.festivals)}${drawerGroup("invites", N.invites)}${drawerGroup("occasions", N.occasions.concat([N.tribute]))}${drawerGroup("more", N.more)}
     <div class="drawer-lang">${LANGS.map((x) => `<a href="${url(x, p)}" lang="${x}"${x === L ? ' aria-current="true"' : ""}>${esc(UI[x].lang_name)}</a>`).join("")}</div>
   </div>
 </div>`;
@@ -223,7 +244,7 @@ function footer(L) {
   <div class="wrap ftr-grid">
     <div class="f-brand"><span class="logo">${LOGO}<span class="logo-t">Indian Festival <b>Wishes</b></span></span><p>${esc(u.footer_about)}</p></div>
     ${col(u.nav_groups.festivals, N.festivals)}
-    ${col(u.nav_groups.occasions, N.occasions)}
+    ${col(u.nav_groups.occasions, N.occasions.concat([N.tribute, N.invites[0]]))}
     ${col(u.nav_groups.more, [N.more[0], N.more[1]].concat(legal))}
   </div>
   <div class="wrap ftr-bottom"><p class="f-note">${esc(u.footer_note)}</p><p>${esc(u.rights)} · <a href="mailto:contact@indianfestivalwishes.com">contact@indianfestivalwishes.com</a></p></div>
@@ -301,15 +322,19 @@ function cardMaker(L, K) {
   // K = card config; returns html. Fields depend on kind.
   const u = UI[L];
   const kind = K.kind;
-  const rels = K.rels.map(([k, t]) => `<option value="${esc(k)}">${esc(t)}</option>`).join("");
+  const invite = kind === "invite";
+  const rels = invite ? "" : K.rels.map(([k, t]) => `<option value="${esc(k)}">${esc(t)}</option>`).join("");
   let names = "";
-  if (kind === "couple") {
+  if (invite) {
+    const long = { venue: 90, host: 90, note: 90 };
+    names = Object.keys(K.fieldDefs).map((k) => `<div class="field"><label for="f-${k}">${esc(K.fieldDefs[k].label)}</label><input id="f-${k}" type="text" maxlength="${long[k] || 50}" placeholder="${esc(K.fieldDefs[k].ph)}"></div>`).join("");
+  } else if (kind === "couple") {
     names = `<div class="row2"><div class="field"><label for="in-n1">${esc(u.n1_label)}</label><input id="in-n1" type="text" maxlength="30" placeholder="${esc(u.n1_ph)}"></div><div class="field"><label for="in-n2">${esc(u.n2_label)}</label><input id="in-n2" type="text" maxlength="30" placeholder="${esc(u.n2_ph)}"></div></div>`;
   } else if (kind === "person") {
     names = `<div class="field"><label for="in-to">${esc(K.toLabel || u.to_label)}</label><input id="in-to" type="text" maxlength="30" placeholder="${esc(u.to_ph)}"></div>`;
   }
   const fromReq = kind === "festival";
-  names += `<div class="field"><label for="in-from">${esc(fromReq ? u.from_label : u.from_label_opt)}</label><input id="in-from" type="text" maxlength="30" autocomplete="name" placeholder="${esc(u.from_ph)}"></div>`;
+  if (!invite) names += `<div class="field"><label for="in-from">${esc(fromReq ? u.from_label : u.from_label_opt)}</label><input id="in-from" type="text" maxlength="30" autocomplete="name" placeholder="${esc(u.from_ph)}"></div>`;
   const thought = kind === "morning" ? `<div class="field thought-box"><span class="label" id="thought-label">${esc(u.thought_label)}</span><p class="thought" id="thought-text" aria-labelledby="thought-label"></p><button class="btn btn-soft btn-sm" id="next-thought" type="button">${I.refresh}${esc(u.next_thought)}</button></div>` : "";
   const photo = kind !== "festival" || true ? `<fieldset class="field" id="photo-box"><legend>${esc(u.photo_label)}</legend>
         <div class="segs"><button type="button" class="seg" data-photo-mode="without" aria-pressed="true">${esc(u.without_photo)}</button><button type="button" class="seg" data-photo-mode="with" aria-pressed="false">${esc(u.with_photo)}</button></div>
@@ -327,11 +352,12 @@ function cardMaker(L, K) {
       <fieldset class="field"><legend><span class="step-n">1</span>${esc(u.step_design)} <span class="muted">· ${esc(fmt(u.designs_count, { n: K.designs.length }))}</span></legend>
         <div class="dz-row" id="design-row">${designs}</div>
       </fieldset>
-      <div class="field"><label for="card-rel"><span class="step-n">2</span>${esc(u.rel_label)}</label><select id="card-rel">${rels}</select></div>
-      <div class="field"><label for="card-wish">${esc(u.wish_label)}</label><select id="card-wish"></select></div>
+      ${invite ? (K.types ? `<div class="field"><label for="card-type"><span class="step-n">2</span>${esc(u.type_label)}</label><select id="card-type">${K.types.map((t, i) => `<option value="${i}">${esc(t.label)}</option>`).join("")}</select></div>` : "")
+        : `<div class="field"><label for="card-rel"><span class="step-n">2</span>${esc(u.rel_label)}</label><select id="card-rel">${rels}</select></div>`}
+      <div class="field"><label for="card-wish">${invite && !K.types ? '<span class="step-n">2</span>' : ""}${esc(invite ? u.wording_label : u.wish_label)}</label><select id="card-wish"></select></div>
+      <div class="field" id="custom-box" hidden><label for="card-custom">${esc(u.custom_label)}</label><textarea id="card-custom" rows="3" maxlength="180" placeholder="${esc(u.custom_ph)}"></textarea></div>
       ${thought}
-      ${photo}
-      ${names}
+      ${invite ? names + photo : photo + names}
       <p class="form-error" id="card-error" role="alert"></p>
       <button class="btn btn-primary btn-wide shine" type="submit">${I.sparkle}${esc(u.make_card)}</button>
     </form>
@@ -414,6 +440,8 @@ function buildHome(L) {
   <section class="sec" id="festivals"><div class="sec-top"><h2 class="sec-h">${esc(u.upcoming_h)}</h2><p class="sec-sub">${esc(u.upcoming_sub)}</p></div><ul class="fest-grid">${festCards}</ul></section>
   ${slots(L)}
   <section class="sec"><div class="sec-top"><h2 class="sec-h">${esc(u.occasions_h)}</h2><p class="sec-sub">${esc(u.occasions_sub)}</p></div><ul class="occ-grid">${occ}</ul></section>
+  <section class="sec"><div class="sec-top"><h2 class="sec-h">${esc(u.invites_h)}</h2><p class="sec-sub">${esc(u.invites_sub)}</p></div><ul class="inv-grid">${inviteTiles(L)}</ul></section>
+  <a class="tribute-band reveal" href="${url(L, "shraddhanjali/")}"><span class="ico">${I.diya}</span><span><b>${esc(u.tribute_tile)}</b><small>${esc(u.tribute_sub)}</small></span>${I.arrow}</a>
   <section class="sec how reveal"><h2 class="sec-h">${esc(u.how_h)}</h2><ol class="how-list">${u.how.map((t, i) => `<li><span class="how-n">${i + 1}</span><span>${esc(t)}</span></li>`).join("")}</ol></section>
   <section class="sec"><div class="sec-top"><h2 class="sec-h">${esc(u.days_h)}</h2><p class="sec-sub">${esc(u.days_sub)}</p></div><ol class="days-grid">${days}</ol></section>
   ${affSlot(L, "home")}
@@ -431,12 +459,13 @@ function navCard(L, o) {
 function buildNavratri(L) {
   const u = UI[L], N = NAV[L], p = "navratri/";
   const days = N.days.map((d, i) => `<li class="reveal" style="--d:${i * 40}ms"><a class="${tileCls(d.theme.primary)}" href="${url(L, "navratri/day-" + (i + 1) + ".html")}" data-day="${i + 1}" style="--c:${d.theme.primary}"><span class="day-n">${i + 1}</span><span class="day-devi">${esc(d.devi)}</span><span class="day-col">${esc(d.date)}</span></a></li>`).join("");
-  const K = navCard(L, { title: N.card_title, topLabel: N.card_top, wishes: N.home_wishes, fromTpl: N.from_home, slug: "navratri-2026", theme: N.days[0].theme });
+  const K = navCard(L, { title: N.card_title, topLabel: N.card_top, wishes: MW[L].navratri.card, fromTpl: N.from_home, slug: "navratri-2026", theme: N.days[0].theme });
   const body = `${pageHead(L, { kicker: N.hero_sub, h1: N.hero_title, sub: N.pick, img: "N1", crumbs: [[u.nav.home, url(L, "")], [u.nav.navratri]], extra: '<p class="today-note" id="today-note"></p>' })}
 <div class="wrap">
   <ol class="days-grid days-lg">${days}</ol>
   ${cardMaker(L, K)}
   ${slots(L)}
+  <section class="sec"><h2 class="sec-h">${esc(u.wishes_h)}</h2>${wishList(L, MW[L].navratri.list, "w")}</section>
   <article class="prose reveal">${N.article}</article>
   <div class="ad-slot" data-slot="middle"></div>
   ${affSlot(L, "navratri")}
@@ -447,7 +476,7 @@ function buildNavratri(L) {
 
 function buildNavDay(L, i) {
   const u = UI[L], N = NAV[L], d = N.days[i], n = i + 1, p = `navratri/day-${n}.html`;
-  const K = navCard(L, { title: d.devi, topLabel: d.card_top, wishes: d.card_wishes, fromTpl: d.from, slug: "navratri-2026-day-" + n, theme: d.theme, dayNum: String(n) });
+  const K = navCard(L, { title: d.devi, topLabel: d.card_top, wishes: MW[L]["navratri-day-" + n].card, fromTpl: d.from, slug: "navratri-2026-day-" + n, theme: d.theme, dayNum: String(n) });
   const facts = [[u.date_label, d.date], [u.color_label, d.color], [u.bhog_label, d.bhog]];
   const prevNext = `<nav class="pn" aria-label="${esc(u.nav.navratri)}">${n > 1 ? `<a class="pn-a" href="${url(L, `navratri/day-${n - 1}.html`)}"><span>${esc(u.prev)}</span><b>${esc(N.days[i - 1].devi)}</b></a>` : "<span></span>"}${n < 9 ? `<a class="pn-a next" href="${url(L, `navratri/day-${n + 1}.html`)}"><span>${esc(u.next)}</span><b>${esc(N.days[i + 1].devi)}</b></a>` : `<a class="pn-a next" href="${url(L, "dussehra/")}"><span>${esc(u.next)}</span><b>${esc(u.nav.dussehra)}</b></a>`}</nav>`;
   const light = ["#F7F3EE", "#F5C518"].indexOf(d.theme.primary) >= 0;
@@ -464,7 +493,7 @@ function buildNavDay(L, i) {
     </article>
     <aside class="side reveal"><a class="side-card${light ? " is-light" : ""}" href="${url(L, `navratri/vrat-recipes-day-${n}.html`)}" style="--c:${d.theme.primary}"><span class="ico">${I.bowl}</span><span><b>${esc(u.day_recipes)}</b><small>${esc(REC[L].days[i].desc || "")}</small></span>${I.arrow}</a></aside>
   </div>
-  <section class="sec"><h2 class="sec-h">${esc(u.wishes_h)}</h2>${wishList(L, d.wishes, "w")}</section>
+  <section class="sec"><h2 class="sec-h">${esc(u.wishes_h)}</h2>${wishList(L, d.wishes.concat(MW[L]["navratri-day-" + n].list), "w")}</section>
   <div class="ad-slot" data-slot="middle"></div>
   ${prevNext}
   ${affSlot(L, "navratri-day")}
@@ -520,8 +549,8 @@ function buildInfo(L, key, active, tag) {
 function buildOccasion(L, occ) {
   const u = UI[L], O = OCC[L][occ], A = ART[L][occ], p = `wishes/${occ}.html`;
   const kind = { birthday: "person", "good-morning": "morning" }[occ] || "couple";
-  const K = { occasion: occ, kind, title: O.card_title, topLabel: "", wishes: O.wishes, rels: O.rels, fromTpl: O.from, theme: O.theme, slug: occ, thoughts: O.thoughts || null, designs: designList(occ) };
-  const allW = (O.wishes.all || []).concat(O.wishes.friend || []).slice(0, 6);
+  const K = { occasion: occ, kind, title: O.card_title, topLabel: "", wishes: MW[L][occ].card, rels: O.rels, fromTpl: O.from, theme: O.theme, slug: occ, thoughts: O.thoughts || null, designs: designList(occ) };
+  const allW = MW[L][occ].list;
   const body = `${pageHead(L, { h1: O.h1, sub: O.sub, img: SETS[occ][0], crumbs: [[u.nav.home, url(L, "")], [u.nav[occ]]] })}
 <div class="wrap">
   ${cardMaker(L, K)}
@@ -538,8 +567,8 @@ function buildOccasion(L, occ) {
 
 function buildFestival(L, key) {
   const u = UI[L], F = FEST[L][key], p = key + "/";
-  const K = { occasion: key, kind: "festival", title: F.card_title, topLabel: F.card_top, wishes: F.wishes, rels: F.rels, fromTpl: F.from, theme: F.theme, slug: key + "-2026", designs: designList(key) };
-  const allW = (F.wishes.all || F.wishes[F.rels[0][0]] || []).slice(0, 6);
+  const K = { occasion: key, kind: "festival", title: F.card_title, topLabel: F.card_top, wishes: MW[L][key].card, rels: F.rels, fromTpl: F.from, theme: F.theme, slug: key + "-2026", designs: designList(key) };
+  const allW = MW[L][key].list;
   const cal = CAL.find((c) => c.key === key);
   const body = `${pageHead(L, { kicker: F.date_label, h1: F.h1, sub: F.sub, img: cal.img, crumbs: [[u.nav.home, url(L, "")], [u.nav[key]]],
     extra: `<p class="countdown" data-start="${cal.start}" data-end="${cal.end}"></p>` })}
@@ -556,6 +585,67 @@ function buildFestival(L, key) {
   const ev = { "@context": "https://schema.org", "@type": "Event", name: F.h1, startDate: F.date_iso, endDate: F.date_iso, eventAttendanceMode: "https://schema.org/MixedEventAttendanceMode", eventStatus: "https://schema.org/EventScheduled", location: { "@type": "Place", name: "India", address: { "@type": "PostalAddress", addressCountry: "IN" } }, description: F.desc };
   emit(L, p, page({ L, p, title: F.title, desc: F.desc, active: key, pageTag: key, body, cards: true, data: { card: K },
     ld: faqLd(F.faq).concat([crumbLd(L, [[u.nav.home, ""], [u.nav[key], p]]), ev]) }));
+}
+
+function inviteCard(L, key, C, set, extra) {
+  return Object.assign({
+    occasion: key, kind: "invite", title: C.title, topLabel: C.top || "", wordings: C.wordings, fieldDefs: C.fields, join: C.join || "",
+    prefix: { host: C.host_prefix || "", date: C.date_prefix || "", time: C.time_prefix || "", venue: C.venue_prefix || "" },
+    theme: { primary: "#7A0F35", secondary: "#B7791F" }, slug: key, designs: designList(set)
+  }, extra || {});
+}
+
+function buildTribute(L) {
+  const u = UI[L], T = NP[L].shraddhanjali, p = "shraddhanjali/";
+  const K = inviteCard(L, "shraddhanjali", T.card, "shraddhanjali", { types: T.card.types, photoDefault: true, shareMsg: u.tribute_share });
+  const body = `${pageHead(L, { h1: T.h1, sub: T.sub, crumbs: [[u.nav.home, url(L, "")], [T.nav]] })}
+<div class="wrap">
+  ${cardMaker(L, K)}
+  <section class="sec"><h2 class="sec-h">${esc(u.tribute_h)}</h2>${wishList(L, T.list, "w")}</section>
+  <article class="prose reveal">${T.article}</article>
+  ${faqBlock(L, T.faq)}
+</div>`;
+  emit(L, p, page({ L, p, title: T.title, desc: T.desc, active: "shraddhanjali", pageTag: "shraddhanjali", body, cards: true, data: { card: K },
+    ld: faqLd(T.faq).concat([crumbLd(L, [[u.nav.home, ""], [T.nav, p]])]) }));
+}
+
+function inviteTiles(L) {
+  return INVITES.map((k, i) => {
+    const V = NP[L].invites[k];
+    return `<li class="reveal" style="--d:${i * 50}ms"><a class="inv-tile" href="${url(L, "invitations/" + k + ".html")}"><img src="/static/cards/thumb/${SETS["inv-" + k][0]}.webp" alt="" loading="lazy" width="432" height="540"><span class="inv-shade"></span><span class="inv-name">${esc(V.nav)}</span><span class="fest-go">${I.arrow}</span></a></li>`;
+  }).join("");
+}
+
+function buildInvitesHub(L) {
+  const u = UI[L], H = NP[L].invitations, p = "invitations/";
+  const body = `${pageHead(L, { h1: H.h1, sub: H.sub, crumbs: [[u.nav.home, url(L, "")], [H.nav]] })}
+<div class="wrap">
+  <ul class="inv-grid">${inviteTiles(L)}</ul>
+  ${slots(L)}
+  <article class="prose reveal">${H.article}</article>
+  ${faqBlock(L, H.faq)}
+</div>`;
+  emit(L, p, page({ L, p, title: H.title, desc: H.desc, active: "invitations", pageTag: "invitations", body,
+    ld: faqLd(H.faq).concat([crumbLd(L, [[u.nav.home, ""], [H.nav, p]])]) }));
+}
+
+function buildInvite(L, k) {
+  const u = UI[L], V = NP[L].invites[k], H = NP[L].invitations, p = "invitations/" + k + ".html";
+  const K = inviteCard(L, k, V.card, "inv-" + k, { shareMsg: u.invite_share });
+  const others = INVITES.filter((x) => x !== k).map((x) => `<a class="chip" href="${url(L, "invitations/" + x + ".html")}">${esc(NP[L].invites[x].nav)}</a>`).join("");
+  const body = `${pageHead(L, { h1: V.h1, sub: V.sub, img: SETS["inv-" + k][0], crumbs: [[u.nav.home, url(L, "")], [H.nav, url(L, "invitations/")], [V.nav]] })}
+<div class="wrap">
+  ${cardMaker(L, K)}
+  ${slots(L)}
+  <section class="sec"><h2 class="sec-h">${esc(u.messages_h)}</h2>${wishList(L, V.list, "w")}</section>
+  <article class="prose reveal">${V.article}</article>
+  <div class="ad-slot" data-slot="middle"></div>
+  ${faqBlock(L, V.faq)}
+  <nav class="more-chips" aria-label="${esc(H.nav)}">${others}</nav>
+  ${affSlot(L, "invite-" + k)}
+</div>`;
+  emit(L, p, page({ L, p, title: V.title, desc: V.desc, active: k, pageTag: "invite-" + k, body, cards: true, data: { card: K },
+    ld: faqLd(V.faq).concat([crumbLd(L, [[u.nav.home, ""], [H.nav, "invitations/"], [V.nav, p]])]) }));
 }
 
 function buildStub(L, from, to) {
@@ -599,6 +689,9 @@ function main() {
     for (let i = 0; i < 9; i++) buildRecipeDay(L, i);
     ["dussehra", "karva-chauth", "diwali"].forEach((k) => buildFestival(L, k));
     ["birthday", "anniversary", "wedding", "engagement", "good-morning"].forEach((o) => buildOccasion(L, o));
+    buildTribute(L);
+    buildInvitesHub(L);
+    INVITES.forEach((k) => buildInvite(L, k));
     buildInfo(L, "navratri/garba-dandiya.html", "garba", "garba");
     buildInfo(L, "about.html", "about");
     buildInfo(L, "contact.html", "contact");

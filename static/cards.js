@@ -1,5 +1,6 @@
-/* Indian Festival Wishes — card maker v9
-   Photo backgrounds (made in Canva) + live text overlay on a 1080x1350 canvas. */
+/* Indian Festival Wishes — card maker v10
+   Photo backgrounds + a frosted text panel so text always stays readable.
+   Kinds: festival, person, couple, morning (wishes) and invite (invitations, shraddhanjali). */
 (function () {
   "use strict";
   var dataEl = document.getElementById("page-data");
@@ -14,22 +15,27 @@
   var FD = D.fonts.display, FB = D.fonts.body;
   var FDW = D.lang === "gu" ? 700 : 400; // Rozha One ships a single weight
   var DES = K.designs;
+  var INVITE = K.kind === "invite";
+  var FIELD_KEYS = ["name1", "name2", "dates", "date", "time", "venue", "host", "note"];
 
   function $(id) { return document.getElementById(id); }
   function fmt(s, o) { return String(s).replace(/\{(\w+)\}/g, function (_, k) { return o[k] != null ? o[k] : ""; }); }
-  function clean(v) { return String(v || "").replace(/[\u0000-\u001F\u007F<>"`]/g, "").replace(/\s+/g, " ").trim().slice(0, 30); }
+  function clean(v, max) { return String(v || "").replace(/[\u0000-\u001F\u007F<>"`]/g, " ").replace(/\s+/g, " ").trim().slice(0, max || 30); }
 
   /* ---------------- state ---------------- */
   var P = new URLSearchParams(location.search);
-  var relKeys = K.rels.map(function (r) { return r[0]; });
+  var relKeys = INVITE ? [] : K.rels.map(function (r) { return r[0]; });
   var state = {
     design: Math.min(DES.length - 1, Math.max(0, parseInt(P.get("s"), 10) || 0)),
     rel: relKeys.indexOf(P.get("r")) >= 0 ? P.get("r") : relKeys[0],
-    wish: Math.max(0, parseInt(P.get("w"), 10) || 0),
+    wish: P.get("w") === "c" ? "c" : Math.max(0, parseInt(P.get("w"), 10) || 0),
+    custom: clean(P.get("c"), 180),
+    type: Math.max(0, parseInt(P.get("ty"), 10) || 0),
     from: clean(P.get("name") || P.get("from")),
     to: clean(P.get("to")),
     n1: clean(P.get("n1")),
     n2: clean(P.get("n2")),
+    f: {},
     thought: (function () {
       if (!K.thoughts) return 0;
       var q = parseInt(P.get("t"), 10);
@@ -37,12 +43,15 @@
       var d = new Date(), start = new Date(d.getFullYear(), 0, 0);
       return Math.floor((d - start) / 86400000) % K.thoughts.length;
     })(),
-    photoMode: false,
+    photoMode: !!K.photoDefault,
     photo: null,
     made: false
   };
-  var received = !!(state.from || state.to || state.n1);
-  if (!K.wishes[state.rel] || state.wish >= K.wishes[state.rel].length) state.wish = 0;
+  FIELD_KEYS.forEach(function (k) { state.f[k] = clean(P.get("f_" + k), k === "venue" || k === "note" || k === "host" ? 90 : 50); });
+  if (K.types && state.type >= K.types.length) state.type = 0;
+  var received = !!(state.from || state.to || state.n1 || state.f.name1);
+  function wishList() { return INVITE ? K.wordings : (K.wishes[state.rel] || []); }
+  if (state.wish !== "c" && state.wish >= wishList().length) state.wish = 0;
 
   /* ---------------- images ---------------- */
   var cache = {};
@@ -54,7 +63,6 @@
       im.decoding = "async";
       im.onload = function () { res(im); };
       im.onerror = function () {
-        // fall back to the small thumbnail, then to a plain gradient
         var t = new Image();
         t.onload = function () { res(t); };
         t.onerror = function () { res(null); };
@@ -81,60 +89,74 @@
     ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
     ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
   }
-  function cover(img) {
+  function coverRect(img) {
     var r = Math.max(W / img.width, H / img.height), w = img.width * r, h = img.height * r;
-    ctx.drawImage(img, (W - w) / 2, (H - h) / 2, w, h);
+    return [(W - w) / 2, (H - h) / 2, w, h];
   }
   function gold(y0, y1) {
     var g = ctx.createLinearGradient(0, y0, 0, y1);
     g.addColorStop(0, "#FFF6D2"); g.addColorStop(0.45, "#FFD36B"); g.addColorStop(0.75, "#F2A93B"); g.addColorStop(1, "#C9821E");
     return g;
   }
-
-  // palette for the current design
   function palette(d) {
-    if (d.tone === "dark") return { title: "gold", text: "#FFF8EC", soft: "rgba(255,248,236,.86)", accent: "#FFD36B", line: "rgba(255,211,107,.8)", ribbon: ["#E0115F", "#B80D4D"], ribbonInk: "#FFFFFF", shadow: "rgba(0,0,0,.55)" };
-    return { title: d.ink, text: "#2A1633", soft: "rgba(42,22,51,.8)", accent: d.ink, line: d.ink, ribbon: [d.ink, d.ink], ribbonInk: "#FFFFFF", shadow: "rgba(255,255,255,.9)" };
+    if (d.tone === "dark") return { dark: true, title: "gold", text: "#FFF8EC", soft: "rgba(255,248,236,.88)", accent: "#FFD36B", line: "rgba(255,211,107,.85)", ribbon: ["#E0115F", "#B80D4D"], shadow: "rgba(0,0,0,.5)" };
+    return { dark: false, title: d.ink, text: "#2A1633", soft: "rgba(42,22,51,.82)", accent: d.ink, line: d.ink, ribbon: [d.ink, d.ink], shadow: "rgba(255,255,255,.7)" };
   }
 
   function currentWish() {
-    var list = K.wishes[state.rel] || [];
+    if (state.wish === "c") return state.custom || (INVITE ? K.wordings[0] : (K.wishes[state.rel] || [""])[0]);
+    var list = wishList();
     return list[state.wish] || list[0] || "";
   }
-  function fromLine() {
-    if (!state.from) return "";
-    return fmt(K.fromTpl, { from: state.from, name: state.from });
-  }
+  function currentType() { return K.types ? K.types[state.type] : null; }
 
-  // Text blocks, top to bottom. Each: {kind, text, font fn(size), size, min, max lines, color, gap}
-  function blocks(pal) {
-    var list = [];
-    if (K.topLabel) list.push({ k: "label", t: K.topLabel, fam: FB, w: 700, s: 34, min: 24, max: 1, gap: 18 });
-    if (K.kind === "couple" && state.n1 && state.n2) list.push({ k: "names", t: state.n1 + "  &  " + state.n2, fam: FD, w: FDW, s: 64, min: 36, max: 2, gap: 14 });
-    list.push({ k: "title", t: K.title, fam: FD, w: FDW, s: 124, min: 60, max: 2, gap: 20 });
-    if (K.kind === "person" && state.to) list.push({ k: "ribbon", t: state.to, fam: FB, w: 700, s: 50, min: 32, max: 1, gap: 26 });
-    list.push({ k: "divider", h: 26, gap: 22 });
-    list.push({ k: "wish", t: currentWish(), fam: FB, w: 600, s: 48, min: 28, max: 4, gap: 22 });
-    if (K.kind === "morning" && K.thoughts) list.push({ k: "thought", t: "“" + K.thoughts[state.thought] + "”", fam: FB, w: 500, s: 36, min: 24, max: 4, gap: 22 });
-    var fl = fromLine();
-    if (fl) list.push({ k: "from", t: fl, fam: FB, w: 600, s: 38, min: 24, max: 2, gap: 0 });
+  /* Text blocks, top to bottom */
+  function blocks() {
+    var list = [], ty = currentType();
+    var top = ty ? ty.top : K.topLabel, title = ty ? ty.title : K.title;
+    if (top) list.push({ k: "label", t: top, fam: FB, w: 700, s: 32, min: 22, max: 1, gap: 16 });
+    if (INVITE) {
+      var f = state.f;
+      list.push({ k: "title", t: title, fam: FD, w: FDW, s: 104, min: 54, max: 2, gap: 16 });
+      var names = f.name1 && f.name2 ? f.name1 + (K.join ? "  " + K.join + "  " : "  ") + f.name2 : (f.name1 || "");
+      if (names) list.push({ k: "names", t: names, fam: FD, w: FDW, s: 64, min: 34, max: 2, gap: 12 });
+      if (f.dates) list.push({ k: "detail", t: f.dates, fam: FB, w: 600, s: 30, min: 22, max: 2, gap: 12 });
+      list.push({ k: "divider", h: 24, gap: 18 });
+      list.push({ k: "wish", t: currentWish(), fam: FB, w: 600, s: 38, min: 24, max: 4, gap: 18 });
+      var dt = [];
+      if (f.date) dt.push((K.prefix.date ? K.prefix.date + " " : "") + f.date);
+      if (f.time) dt.push((K.prefix.time ? K.prefix.time + " " : "") + f.time);
+      if (dt.length) list.push({ k: "detail-b", t: dt.join("  |  "), fam: FB, w: 700, s: 34, min: 22, max: 2, gap: 10 });
+      if (f.venue) list.push({ k: "detail", t: (K.prefix.venue ? K.prefix.venue + " " : "") + f.venue, fam: FB, w: 600, s: 32, min: 22, max: 3, gap: 14 });
+      if (f.host) list.push({ k: "from", t: (K.prefix.host ? K.prefix.host + " " : "") + f.host, fam: FB, w: 700, s: 32, min: 22, max: 3, gap: 10 });
+      if (f.note) list.push({ k: "note", t: f.note, fam: FB, w: 500, s: 28, min: 20, max: 2, gap: 0 });
+      return list;
+    }
+    if (K.kind === "couple" && state.n1 && state.n2) list.push({ k: "names", t: state.n1 + "  &  " + state.n2, fam: FD, w: FDW, s: 62, min: 34, max: 2, gap: 12 });
+    list.push({ k: "title", t: title, fam: FD, w: FDW, s: 118, min: 58, max: 2, gap: 18 });
+    if (K.kind === "person" && state.to) list.push({ k: "ribbon", t: state.to, fam: FB, w: 700, s: 48, min: 30, max: 1, gap: 24 });
+    list.push({ k: "divider", h: 24, gap: 20 });
+    list.push({ k: "wish", t: currentWish(), fam: FB, w: 600, s: 46, min: 26, max: 5, gap: 20 });
+    if (K.kind === "morning" && K.thoughts) list.push({ k: "thought", t: "“" + K.thoughts[state.thought] + "”", fam: FB, w: 500, s: 34, min: 22, max: 4, gap: 20 });
+    if (state.from) list.push({ k: "from", t: fmt(K.fromTpl, { from: state.from, name: state.from }), fam: FB, w: 700, s: 36, min: 22, max: 2, gap: 0 });
     return list;
   }
 
   function measure(list, maxW, scale) {
     var total = 0;
     list.forEach(function (b, i) {
-      if (b.k === "divider") { b.hh = b.h; total += b.h + (i < list.length - 1 ? b.gap * scale : 0); return; }
-      var s = Math.round(b.s * scale), limit = b.k === "ribbon" ? maxW - 120 : maxW;
+      var gap = i < list.length - 1 ? b.gap * scale : 0;
+      if (b.k === "divider") { b.hh = b.h; total += b.h + gap; return; }
+      var s = Math.round(b.s * scale), limit = b.k === "ribbon" ? maxW - 110 : maxW;
       ctx.font = font(b.fam, b.w, s);
       var lines = wrap(b.t, limit);
       while ((lines.length > b.max || lines.some(function (l) { return ctx.measureText(l).width > limit; })) && s > b.min) {
         s -= 2; ctx.font = font(b.fam, b.w, s); lines = wrap(b.t, limit);
       }
-      b.size = s; b.lines = lines.slice(0, b.max + 1);
-      b.lh = Math.round(s * (b.k === "title" || b.k === "names" ? 1.18 : 1.42));
-      b.hh = b.lines.length * b.lh + (b.k === "ribbon" ? 34 : 0);
-      total += b.hh + (i < list.length - 1 ? b.gap * scale : 0);
+      b.size = s; b.lines = lines;
+      b.lh = Math.round(s * (b.k === "title" || b.k === "names" ? 1.2 : 1.42));
+      b.hh = b.lines.length * b.lh + (b.k === "ribbon" ? 30 : 0);
+      total += b.hh + gap;
     });
     return total;
   }
@@ -142,18 +164,17 @@
   function drawDivider(cx, y, pal) {
     ctx.save();
     ctx.strokeStyle = pal.line; ctx.fillStyle = pal.accent; ctx.lineWidth = 3; ctx.lineCap = "round";
-    ctx.globalAlpha = 0.9;
-    ctx.beginPath(); ctx.moveTo(cx - 150, y); ctx.lineTo(cx - 34, y); ctx.moveTo(cx + 34, y); ctx.lineTo(cx + 150, y); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(cx, y - 13); ctx.lineTo(cx + 13, y); ctx.lineTo(cx, y + 13); ctx.lineTo(cx - 13, y); ctx.closePath(); ctx.fill();
-    [-24, 24].forEach(function (dx) { ctx.beginPath(); ctx.arc(cx + dx, y, 4, 0, Math.PI * 2); ctx.fill(); });
+    ctx.beginPath(); ctx.moveTo(cx - 140, y); ctx.lineTo(cx - 32, y); ctx.moveTo(cx + 32, y); ctx.lineTo(cx + 140, y); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx, y - 12); ctx.lineTo(cx + 12, y); ctx.lineTo(cx, y + 12); ctx.lineTo(cx - 12, y); ctx.closePath(); ctx.fill();
+    [-22, 22].forEach(function (dx) { ctx.beginPath(); ctx.arc(cx + dx, y, 4, 0, Math.PI * 2); ctx.fill(); });
     ctx.restore();
   }
 
   function drawPhoto(cx, cy, r, pal) {
     ctx.save();
-    ctx.shadowColor = "rgba(0,0,0,.35)"; ctx.shadowBlur = 30; ctx.shadowOffsetY = 10;
+    ctx.shadowColor = "rgba(0,0,0,.35)"; ctx.shadowBlur = 28; ctx.shadowOffsetY = 8;
     ctx.beginPath(); ctx.arc(cx, cy, r + 12, 0, Math.PI * 2);
-    ctx.fillStyle = pal.title === "gold" ? gold(cy - r, cy + r) : "#FFFFFF"; ctx.fill();
+    ctx.fillStyle = pal.dark ? gold(cy - r, cy + r) : "#FFFFFF"; ctx.fill();
     ctx.restore();
     ctx.save();
     ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.clip();
@@ -161,15 +182,36 @@
       var im = state.photo, s = Math.max((2 * r) / im.width, (2 * r) / im.height);
       ctx.drawImage(im, cx - (im.width * s) / 2, cy - (im.height * s) / 2, im.width * s, im.height * s);
     } else {
-      ctx.fillStyle = "rgba(255,255,255,.6)"; ctx.fillRect(cx - r, cy - r, 2 * r, 2 * r);
-      ctx.fillStyle = "rgba(42,22,51,.35)";
+      ctx.fillStyle = "#EDE6DC"; ctx.fillRect(cx - r, cy - r, 2 * r, 2 * r);
+      ctx.fillStyle = "#C9BDB0";
       ctx.beginPath(); ctx.arc(cx, cy - r * 0.18, r * 0.32, 0, Math.PI * 2); ctx.fill();
       ctx.beginPath(); ctx.ellipse(cx, cy + r * 0.62, r * 0.6, r * 0.42, 0, 0, Math.PI * 2); ctx.fill();
     }
     ctx.restore();
-    if (pal.title !== "gold") {
-      ctx.save(); ctx.strokeStyle = pal.accent; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(cx, cy, r + 12, 0, Math.PI * 2); ctx.stroke(); ctx.restore();
+    if (!pal.dark) { ctx.save(); ctx.strokeStyle = pal.accent; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(cx, cy, r + 12, 0, Math.PI * 2); ctx.stroke(); ctx.restore(); }
+  }
+
+  // Frosted glass panel: blurred copy of the background + tint + thin border
+  function drawPanel(img, x, y, w, h, pal) {
+    var r = 36;
+    ctx.save();
+    ctx.shadowColor = "rgba(0,0,0,.28)"; ctx.shadowBlur = 40; ctx.shadowOffsetY = 12;
+    roundRect(x, y, w, h, r); ctx.fillStyle = pal.dark ? "rgba(18,8,28,.35)" : "rgba(255,252,246,.4)"; ctx.fill();
+    ctx.restore();
+    ctx.save();
+    roundRect(x, y, w, h, r); ctx.clip();
+    if (img && "filter" in ctx) {
+      ctx.filter = "blur(22px) saturate(1.15)";
+      var c = coverRect(img); ctx.drawImage(img, c[0], c[1], c[2], c[3]);
+      ctx.filter = "none";
     }
+    ctx.fillStyle = pal.dark ? "rgba(22,10,34,.55)" : "rgba(255,252,246,.74)";
+    ctx.fillRect(x, y, w, h);
+    ctx.restore();
+    ctx.save();
+    roundRect(x + 10, y + 10, w - 20, h - 20, r - 8);
+    ctx.lineWidth = 2; ctx.strokeStyle = pal.dark ? "rgba(255,211,107,.7)" : "rgba(120,80,40,.28)"; ctx.stroke();
+    ctx.restore();
   }
 
   function drawCard(img) {
@@ -178,47 +220,45 @@
     ctx.save();
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, W, H);
-    if (img) cover(img);
+    if (img) { var c = coverRect(img); ctx.drawImage(img, c[0], c[1], c[2], c[3]); }
     else {
       var g = ctx.createLinearGradient(0, 0, W, H);
       g.addColorStop(0, K.theme.primary); g.addColorStop(1, K.theme.secondary);
       ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
     }
-    var z0 = d.zone[0], z1 = d.zone[1], cx = W / 2, maxW = d.w;
-    // soft scrim behind the text for readability
-    var sc = d.scrim != null ? d.scrim : (d.tone === "dark" ? 0.2 : 0.35);
-    if (sc > 0) {
-      var my = (z0 + z1) / 2, rad = Math.max(maxW * 0.62, (z1 - z0) * 0.62);
-      var rg = ctx.createRadialGradient(cx, my, 10, cx, my, rad);
-      var c = d.tone === "dark" ? "0,0,0" : "255,250,242";
-      rg.addColorStop(0, "rgba(" + c + "," + sc + ")"); rg.addColorStop(0.65, "rgba(" + c + "," + sc * 0.6 + ")"); rg.addColorStop(1, "rgba(" + c + ",0)");
-      ctx.fillStyle = rg;
-      ctx.save(); ctx.translate(cx, my); ctx.scale(1, (z1 - z0) / (maxW * 1.1)); ctx.translate(-cx, -my);
-      ctx.fillRect(-W, -H * 6, W * 3, H * 13); ctx.restore();
-    }
-    // photo
-    var photoR = 0;
-    if (state.photoMode) { photoR = Math.min(150, (z1 - z0) * 0.19); }
-    var avail = z1 - z0 - (photoR ? photoR * 2 + 50 : 0);
-    var list = blocks(pal), scale = 1, total = measure(list, maxW, scale);
-    while (total > avail && scale > 0.5) { scale -= 0.04; total = measure(list, maxW, scale); }
-    var y = z0 + Math.max(0, (avail - total) / 2);
-    if (photoR) { drawPhoto(cx, y + photoR + 12, photoR, pal); y += photoR * 2 + 50; }
+    var z0 = d.zone[0], z1 = d.zone[1], cx = W / 2;
+    var textW = Math.min(d.w, 820), padX = 56, padY = 52;
+    var panelW = Math.min(W - 80, textW + padX * 2);
+    var photoR = state.photoMode ? (INVITE ? 150 : 128) : 0;
+    var list = blocks(), scale = 1;
+    var maxPanelH = H - 150 - (photoR ? photoR + 20 : 0);
+    var total = measure(list, textW, scale);
+    // prefer the design's zone; grow outwards if the text needs more room
+    var zoneH = Math.max(z1 - z0, 0) - (photoR ? photoR + 20 : 0);
+    while (total + padY * 2 > Math.max(zoneH, maxPanelH * 0.9) && scale > 0.55) { scale -= 0.04; total = measure(list, textW, scale); }
+    var panelH = total + padY * 2 + (photoR ? photoR + 16 : 0);
+    var blockH = panelH + (photoR ? photoR + 12 : 0);
+    var mid = (z0 + z1) / 2;
+    var top = Math.round(mid - blockH / 2);
+    top = Math.max(50, Math.min(top, H - 90 - blockH));
+    var panelY = top + (photoR ? photoR + 12 : 0);
+    drawPanel(img, cx - panelW / 2, panelY, panelW, panelH, pal);
+    var y = panelY + padY;
+    if (photoR) { drawPhoto(cx, panelY, photoR, pal); y += photoR + 16; }
     ctx.textAlign = "center"; ctx.textBaseline = "middle";
     list.forEach(function (b) {
       if (b.k === "divider") { drawDivider(cx, y + b.h / 2, pal); y += b.h + b.gap * scale; return; }
       ctx.font = font(b.fam, b.w, b.size);
       if (b.k === "ribbon") {
-        var tw = Math.max.apply(null, b.lines.map(function (l) { return ctx.measureText(l).width; })) + 90;
+        var tw = Math.max.apply(null, b.lines.map(function (l) { return ctx.measureText(l).width; })) + 80;
         var rh = b.hh;
         ctx.save();
-        ctx.shadowColor = "rgba(0,0,0,.25)"; ctx.shadowBlur = 18; ctx.shadowOffsetY = 6;
         var rgx = ctx.createLinearGradient(cx - tw / 2, 0, cx + tw / 2, 0);
         rgx.addColorStop(0, pal.ribbon[0]); rgx.addColorStop(1, pal.ribbon[1]);
         ctx.fillStyle = rgx; roundRect(cx - tw / 2, y, tw, rh, rh / 2); ctx.fill();
         ctx.restore();
-        ctx.fillStyle = pal.ribbonInk;
-        b.lines.forEach(function (l, i) { ctx.fillText(l, cx, y + 17 + b.lh * i + b.lh / 2); });
+        ctx.fillStyle = "#FFFFFF";
+        b.lines.forEach(function (l, i) { ctx.fillText(l, cx, y + 15 + b.lh * i + b.lh / 2); });
         y += rh + b.gap * scale; return;
       }
       b.lines.forEach(function (l) {
@@ -226,22 +266,16 @@
         ctx.save();
         if (b.k === "title" || b.k === "names") {
           if (pal.title === "gold") {
-            ctx.shadowColor = "rgba(0,0,0,.55)"; ctx.shadowBlur = 22; ctx.shadowOffsetY = 6;
+            ctx.shadowColor = "rgba(0,0,0,.5)"; ctx.shadowBlur = 16; ctx.shadowOffsetY = 4;
             ctx.fillStyle = gold(ly - b.size / 2, ly + b.size / 2);
-          } else {
-            ctx.shadowColor = "rgba(255,255,255,.9)"; ctx.shadowBlur = 16;
-            ctx.fillStyle = pal.title;
-          }
+          } else ctx.fillStyle = pal.title;
           ctx.fillText(l, cx, ly);
-          if (pal.title === "gold") { ctx.shadowColor = "transparent"; ctx.lineWidth = 1.2; ctx.strokeStyle = "rgba(120,70,10,.55)"; ctx.strokeText(l, cx, ly); }
         } else if (b.k === "label") {
           ctx.fillStyle = pal.accent;
-          ctx.shadowColor = pal.shadow; ctx.shadowBlur = 10;
-          if ("letterSpacing" in ctx) ctx.letterSpacing = "4px";
+          if ("letterSpacing" in ctx) ctx.letterSpacing = "3px";
           ctx.fillText(l, cx, ly);
         } else {
-          ctx.shadowColor = pal.shadow; ctx.shadowBlur = d.tone === "dark" ? 14 : 12;
-          ctx.fillStyle = b.k === "from" ? pal.accent : b.k === "thought" ? pal.soft : pal.text;
+          ctx.fillStyle = b.k === "from" || b.k === "detail-b" ? pal.accent : b.k === "thought" || b.k === "note" ? pal.soft : pal.text;
           ctx.fillText(l, cx, ly);
         }
         ctx.restore();
@@ -252,22 +286,26 @@
     // footer mark
     ctx.save();
     ctx.font = font(FB, 600, 24);
-    ctx.fillStyle = d.tone === "dark" ? "rgba(255,248,236,.7)" : "rgba(42,22,51,.55)";
-    ctx.shadowColor = d.tone === "dark" ? "rgba(0,0,0,.6)" : "rgba(255,255,255,.8)"; ctx.shadowBlur = 8;
-    ctx.fillText("indianfestivalwishes.com", cx, H - 34);
+    ctx.fillStyle = pal.dark ? "rgba(255,248,236,.75)" : "rgba(42,22,51,.6)";
+    ctx.shadowColor = pal.dark ? "rgba(0,0,0,.7)" : "rgba(255,255,255,.9)"; ctx.shadowBlur = 8;
+    ctx.fillText("indianfestivalwishes.com", cx, H - 30);
     ctx.restore();
     ctx.restore();
   }
 
   /* ---------------- fonts + redraw ---------------- */
+  function sampleText() {
+    var all = [];
+    if (INVITE) all = K.wordings.concat((K.types || []).map(function (t) { return t.title + t.top; }));
+    else Object.keys(K.wishes).forEach(function (k) { all = all.concat(K.wishes[k]); });
+    return (K.title || "") + (K.topLabel || "") + (K.fromTpl || "") + all.join("") + (K.thoughts || []).join("") + JSON.stringify(state.f) + state.to + state.n1 + state.n2 + state.from + state.custom;
+  }
   function fontsReady() {
     if (!document.fonts || !document.fonts.load) return Promise.resolve();
-    var all = [];
-    Object.keys(K.wishes).forEach(function (k) { all = all.concat(K.wishes[k]); });
-    var sample = K.title + (K.topLabel || "") + K.fromTpl + all.join("") + (K.thoughts || []).join("") + state.to + state.n1 + state.n2 + state.from;
+    var s = sampleText();
     return Promise.all([
-      document.fonts.load(font(FD, FDW, 100), sample),
-      document.fonts.load(font(FB, 600, 40), sample), document.fonts.load(font(FB, 700, 40), sample)
+      document.fonts.load(font(FD, FDW, 100), s),
+      document.fonts.load(font(FB, 500, 40), s), document.fonts.load(font(FB, 600, 40), s), document.fonts.load(font(FB, 700, 40), s)
     ]).catch(function () {});
   }
   var token = 0;
@@ -279,12 +317,12 @@
       drawCard(r[0]);
       frame.classList.remove("loading");
     });
-    // warm the cache for neighbours
     [state.design + 1, state.design - 1].forEach(function (i) { if (DES[i]) loadImg(DES[i].id); });
   }
 
-  /* ---------------- sharing ---------------- */
+  /* ---------------- form wiring ---------------- */
   var relSel = $("card-rel"), wishSel = $("card-wish"), err = $("card-error"), status = $("card-status"), shareBox = $("share-actions");
+  var customBox = $("custom-box"), customIn = $("card-custom"), typeSel = $("card-type");
   var photoBox = $("photo-box"), photoIn = $("card-photo");
   var modeBtns = document.querySelectorAll("[data-photo-mode]");
   var nextThought = $("next-thought"), thoughtText = $("thought-text");
@@ -296,12 +334,17 @@
     if (state.to) q.set("to", state.to);
     if (state.n1) q.set("n1", state.n1);
     if (state.n2) q.set("n2", state.n2);
-    q.set("r", state.rel); q.set("w", String(state.wish)); q.set("s", String(state.design));
+    FIELD_KEYS.forEach(function (k) { if (state.f[k]) q.set("f_" + k, state.f[k]); });
+    if (K.types) q.set("ty", String(state.type));
+    if (!INVITE) q.set("r", state.rel);
+    q.set("w", String(state.wish));
+    if (state.wish === "c" && state.custom) q.set("c", state.custom);
+    q.set("s", String(state.design));
     if (K.thoughts) q.set("t", String(state.thought));
     return location.origin + location.pathname + "?" + q.toString();
   }
   function refreshLinks() {
-    $("btn-wa").href = "https://wa.me/?text=" + encodeURIComponent(U.share_link_msg + "\n" + link());
+    $("btn-wa").href = "https://wa.me/?text=" + encodeURIComponent((K.shareMsg || U.share_link_msg) + "\n" + link());
     $("btn-fb").href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(link());
   }
   function fileName() { return (K.slug || "card") + "-indianfestivalwishes.png"; }
@@ -320,48 +363,45 @@
       status.textContent = U.insta_hint;
     });
   }
+  function changed() { redraw(); if (state.made) refreshLinks(); }
 
-  function val(id) { var el = $(id); return el ? clean(el.value) : ""; }
   function fillWishes() {
-    var list = K.wishes[state.rel] || [];
+    var list = wishList();
     wishSel.innerHTML = "";
     list.forEach(function (w, i) {
       var o = document.createElement("option"); o.value = String(i); o.textContent = w; wishSel.appendChild(o);
     });
-    if (state.wish >= list.length) state.wish = 0;
+    var oc = document.createElement("option"); oc.value = "c"; oc.textContent = U.custom_wish; wishSel.appendChild(oc);
+    if (state.wish !== "c" && state.wish >= list.length) state.wish = 0;
     wishSel.value = String(state.wish);
+    if (customBox) customBox.hidden = state.wish !== "c";
   }
 
   // Extra wishes and thoughts added from the admin panel
-  if (window.IFW_SETTINGS) {
+  if (window.IFW_SETTINGS && !INVITE) {
     window.IFW_SETTINGS.then(function (S) {
       var cu = (S && S.custom) || {};
       var extra = ((cu.wishes || {})[D.lang] || {})[K.occasion] || {};
-      var changed = false;
+      var ch = false;
       Object.keys(extra).forEach(function (rel) {
         if (!Array.isArray(extra[rel]) || !K.wishes[rel]) return;
-        extra[rel].forEach(function (w) {
-          if (typeof w === "string" && w.trim()) { K.wishes[rel].push(w.trim().slice(0, 160)); changed = true; }
-        });
+        extra[rel].forEach(function (w) { if (typeof w === "string" && w.trim()) { K.wishes[rel].push(w.trim().slice(0, 160)); ch = true; } });
       });
       var th = (cu.thoughts || {})[D.lang];
-      if (K.thoughts && Array.isArray(th)) {
-        th.forEach(function (t) { if (typeof t === "string" && t.trim()) { K.thoughts.push(t.trim().slice(0, 160)); changed = true; } });
-      }
-      if (changed) { fillWishes(); redraw(); }
+      if (K.thoughts && Array.isArray(th)) th.forEach(function (t) { if (typeof t === "string" && t.trim()) { K.thoughts.push(t.trim().slice(0, 160)); ch = true; } });
+      if (ch) { fillWishes(); redraw(); }
     });
   }
 
-  function selectDesign(i, focus) {
+  function selectDesign(i, scroll) {
     state.design = i;
     dzBtns.forEach(function (x, j) { x.setAttribute("aria-pressed", j === i ? "true" : "false"); });
-    if (focus && dzBtns[i]) dzBtns[i].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-    redraw(); if (state.made) refreshLinks();
+    if (scroll && dzBtns[i]) dzBtns[i].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    changed();
   }
   dzBtns.forEach(function (b, i) { b.addEventListener("click", function () { selectDesign(i); }); });
-  if (dzBtns[state.design]) dzBtns.forEach(function (x, j) { x.setAttribute("aria-pressed", j === state.design ? "true" : "false"); });
+  dzBtns.forEach(function (x, j) { x.setAttribute("aria-pressed", j === state.design ? "true" : "false"); });
 
-  // swipe on the preview to change design
   var sx = null;
   canvas.addEventListener("touchstart", function (e) { sx = e.touches[0].clientX; }, { passive: true });
   canvas.addEventListener("touchend", function (e) {
@@ -370,55 +410,75 @@
     if (Math.abs(dx) > 50) selectDesign((state.design + (dx < 0 ? 1 : -1) + DES.length) % DES.length, true);
   }, { passive: true });
 
-  relSel.value = state.rel;
-  relSel.addEventListener("change", function () { state.rel = relSel.value; state.wish = 0; fillWishes(); redraw(); if (state.made) refreshLinks(); });
-  wishSel.addEventListener("change", function () { state.wish = parseInt(wishSel.value, 10) || 0; redraw(); if (state.made) refreshLinks(); });
+  if (relSel) {
+    relSel.value = state.rel;
+    relSel.addEventListener("change", function () { state.rel = relSel.value; if (state.wish !== "c") state.wish = 0; fillWishes(); changed(); });
+  }
+  if (typeSel) {
+    typeSel.value = String(state.type);
+    typeSel.addEventListener("change", function () { state.type = parseInt(typeSel.value, 10) || 0; changed(); });
+  }
+  wishSel.addEventListener("change", function () {
+    state.wish = wishSel.value === "c" ? "c" : parseInt(wishSel.value, 10) || 0;
+    if (customBox) customBox.hidden = state.wish !== "c";
+    if (state.wish === "c" && customIn) customIn.focus();
+    changed();
+  });
+  if (customIn) {
+    customIn.value = state.custom;
+    customIn.addEventListener("input", function () { state.custom = clean(customIn.value, 180); changed(); });
+  }
   fillWishes();
 
   if (nextThought && K.thoughts) {
     var showThought = function () { if (thoughtText) thoughtText.textContent = K.thoughts[state.thought]; };
     showThought();
-    nextThought.addEventListener("click", function () {
-      state.thought = (state.thought + 1) % K.thoughts.length; showThought(); redraw(); if (state.made) refreshLinks();
-    });
+    nextThought.addEventListener("click", function () { state.thought = (state.thought + 1) % K.thoughts.length; showThought(); changed(); });
   }
 
   if (photoBox) {
-    modeBtns.forEach(function (b) {
-      b.addEventListener("click", function () {
-        state.photoMode = b.getAttribute("data-photo-mode") === "with";
-        modeBtns.forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
-        $("photo-pick").hidden = !state.photoMode;
-        redraw();
-      });
-    });
+    var setMode = function (on) {
+      state.photoMode = on;
+      modeBtns.forEach(function (x) { x.setAttribute("aria-pressed", (x.getAttribute("data-photo-mode") === "with") === on ? "true" : "false"); });
+      $("photo-pick").hidden = !on;
+    };
+    setMode(state.photoMode);
+    modeBtns.forEach(function (b) { b.addEventListener("click", function () { setMode(b.getAttribute("data-photo-mode") === "with"); redraw(); }); });
     photoIn.addEventListener("change", function () {
       var f = photoIn.files && photoIn.files[0];
       if (!f) return;
       var img = new Image();
-      img.onload = function () { state.photo = img; state.photoMode = true; redraw(); };
+      img.onload = function () { state.photo = img; setMode(true); redraw(); };
       img.src = URL.createObjectURL(f);
     });
   }
 
   // live preview while typing
-  ["in-from", "in-to", "in-n1", "in-n2"].forEach(function (id) {
+  var simple = { "in-from": "from", "in-to": "to", "in-n1": "n1", "in-n2": "n2" };
+  Object.keys(simple).forEach(function (id) {
     var el = $(id);
     if (!el) return;
-    el.addEventListener("input", function () {
-      state[{ "in-from": "from", "in-to": "to", "in-n1": "n1", "in-n2": "n2" }[id]] = val(id);
-      redraw();
-    });
+    if (!received || id !== "in-from") el.value = state[simple[id]] || "";
+    el.addEventListener("input", function () { state[simple[id]] = clean(el.value); redraw(); });
   });
-  if ($("in-from") && !received) $("in-from").value = state.from;
+  if (received && $("in-from")) $("in-from").value = "";
+  FIELD_KEYS.forEach(function (k) {
+    var el = $("f-" + k);
+    if (!el) return;
+    el.value = state.f[k];
+    el.addEventListener("input", function () { state.f[k] = clean(el.value, parseInt(el.getAttribute("maxlength"), 10) || 50); redraw(); });
+  });
 
   $("card-form").addEventListener("submit", function (e) {
     e.preventDefault();
-    var from = val("in-from"), to = val("in-to"), n1 = val("in-n1"), n2 = val("in-n2");
-    var ok = K.kind === "festival" ? !!from : K.kind === "person" ? !!to : K.kind === "couple" ? !!(n1 && n2) : true;
+    var ok;
+    if (INVITE) ok = !!state.f.name1;
+    else {
+      ["in-from", "in-to", "in-n1", "in-n2"].forEach(function (id) { if ($(id)) state[simple[id]] = clean($(id).value); });
+      ok = K.kind === "festival" ? !!state.from : K.kind === "person" ? !!state.to : K.kind === "couple" ? !!(state.n1 && state.n2) : true;
+    }
     if (!ok) { err.textContent = U.need_name; return; }
     err.textContent = "";
-    state.from = from; state.to = to; state.n1 = n1; state.n2 = n2;
     state.made = true;
     shareBox.hidden = false;
     status.textContent = "";
