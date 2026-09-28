@@ -36,8 +36,7 @@ const MAX_UPLOAD = 2 * 1024 * 1024;
 let SESSION_SECRET = process.env.SESSION_SECRET || "";
 if (!SESSION_SECRET) {
   if (IS_PROD) {
-    console.error("[fatal] SESSION_SECRET is required when NODE_ENV=production");
-    process.exit(1);
+    console.error("[error] SESSION_SECRET is not set in production. The site stays up, but admin logins reset on every restart. Set SESSION_SECRET in Railway variables.");
   }
   SESSION_SECRET = crypto.randomBytes(32).toString("hex");
   console.warn("[warn] SESSION_SECRET not set; using a random one (sessions reset on restart)");
