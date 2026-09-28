@@ -126,6 +126,11 @@
   }
 
   /* ---------------- gate ---------------- */
+  // The old panel kept the token in plain localStorage. Carry it over once
+  // so nobody has to generate a fresh token just to sign in.
+  function legacy() {
+    try { return JSON.parse(localStorage.getItem("ifw-admin") || "null"); } catch (e) { return null; }
+  }
   function showGate() {
     var v = readVault();
     document.body.classList.remove("is-in");
@@ -133,7 +138,19 @@
     $("form-setup").hidden = !!v;
     if (v) { CFG = { owner: v.owner || CFG.owner, repo: v.repo || CFG.repo, branch: v.branch || CFG.branch }; }
     gateMsg("");
-    setTimeout(function () { (v ? $("pw") : $("su-token")).focus(); }, 60);
+    if (!v) {
+      var old = legacy();
+      if (old && old.token) {
+        $("su-token").value = old.token;
+        if (old.owner) $("su-owner").value = old.owner;
+        if (old.repo) $("su-repo").value = old.repo;
+        $("su-note").hidden = false;
+      }
+    }
+    setTimeout(function () {
+      var f = v ? $("pw") : ($("su-token").value ? $("su-pw") : $("su-token"));
+      f.focus();
+    }, 60);
   }
   function enterApp() {
     document.body.classList.add("is-in");
@@ -191,7 +208,9 @@
     loadSettings().then(function () {
       return sealVault(pw, token, cfg);
     }).then(function () {
+      try { localStorage.removeItem("ifw-admin"); } catch (e) {}
       $("su-token").value = $("su-pw").value = $("su-pw2").value = "";
+      $("su-note").hidden = true;
       enterApp();
       toast("Setup poora. Panel ab password se khulega.", "ok");
     }).catch(function (err) {
