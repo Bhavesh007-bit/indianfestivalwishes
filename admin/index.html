@@ -2,260 +2,151 @@
 <html lang="hi">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="referrer" content="no-referrer">
-<title>Admin Console | Indian Festival Wishes</title>
-<link rel="icon" href="../static/favicon.svg" type="image/svg+xml">
+<meta name="referrer" content="same-origin">
+<meta name="theme-color" content="#180E24">
+<title>Admin | Indian Festival Wishes</title>
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@600;700&family=Mukta:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@500;600;700&family=Mukta:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="admin.css">
 </head>
-<body>
+<body class="is-booting">
 
-<!-- ============ LOCK / SETUP ============ -->
-<div class="gate" id="gate">
-  <div class="gate-card">
-    <div class="gate-logo" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/>
-      </svg>
+<a class="skip" href="#main">Seedha content par jao</a>
+
+<!-- ======================= LOGIN ======================= -->
+<div class="login" id="login" hidden>
+  <div class="login-art" aria-hidden="true">
+    <svg class="login-mandala" viewBox="0 0 200 200">
+      <g fill="none" stroke="currentColor" stroke-width="1">
+        <circle cx="100" cy="100" r="96"/><circle cx="100" cy="100" r="78"/><circle cx="100" cy="100" r="56"/><circle cx="100" cy="100" r="30"/>
+      </g>
+      <g id="petal-ring" fill="currentColor" opacity=".55"></g>
+    </svg>
+    <div class="login-brand">
+      <span class="brand-mark"></span>
+      <p class="login-kicker">Indian Festival Wishes</p>
+      <h1 class="login-h">Site ka control room</h1>
+      <p class="login-sub">Products, Telegram, patti, ads aur wishes, sab ek jagah se badlo.</p>
     </div>
+  </div>
 
-    <!-- unlock -->
-    <form id="form-unlock" hidden>
-      <h1>Admin Console</h1>
-      <p class="sub">Password daal ke panel kholo.</p>
+  <div class="login-panel">
+    <form class="login-card" id="login-form" novalidate>
+      <div class="login-card-head">
+        <span class="login-lock" data-icon="lock"></span>
+        <div>
+          <h2>Admin login</h2>
+          <p>Apna username aur password daalo.</p>
+        </div>
+      </div>
+
       <div class="field">
-        <label for="pw">Password</label>
-        <div class="pw-row">
-          <input id="pw" type="password" autocomplete="current-password" required>
-          <button class="pw-toggle" type="button" data-toggle="pw" aria-label="Password dikhao">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        <label for="lg-user">Username</label>
+        <div class="input-icon">
+          <span data-icon="user"></span>
+          <input id="lg-user" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="lg-pass">Password</label>
+        <div class="input-icon has-action">
+          <span data-icon="key"></span>
+          <input id="lg-pass" name="password" type="password" autocomplete="current-password" required>
+          <button class="input-action" type="button" id="lg-eye" aria-label="Password dikhao" aria-pressed="false" aria-controls="lg-pass">
+            <span data-icon="eye"></span>
           </button>
         </div>
       </div>
-      <button class="btn primary" type="submit">Kholo</button>
-      <p class="gate-foot">Password bhool gaye? <button type="button" id="btn-reset">Naye token se dobara setup karo</button></p>
-    </form>
 
-    <!-- first-time setup -->
-    <form id="form-setup" hidden>
-      <h1>Pehli baar setup</h1>
-      <p class="sub">GitHub token daalo aur ek password banao. Token is device par password se lock hokar rahega.</p>
-      <div class="note info">Token kaise banaye, ye neeche "Token kaise banaye" me likha hai.</div>
-      <div class="note warn" id="su-note" hidden>Purane panel ka token mil gaya hai aur neeche bhar diya gaya hai. Bas ek password bana ke setup poora karo.</div>
-      <div class="field">
-        <label for="su-token">GitHub token</label>
-        <input id="su-token" type="password" autocomplete="off" placeholder="github_pat_..." required>
-      </div>
-      <div class="field">
-        <label for="su-pw">Naya password (kam se kam 8 akshar)</label>
-        <div class="pw-row">
-          <input id="su-pw" type="password" autocomplete="new-password" minlength="8" required>
-          <button class="pw-toggle" type="button" data-toggle="su-pw" aria-label="Password dikhao">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
-          </button>
-        </div>
-        <div class="meter" id="pw-meter" aria-hidden="true"><i></i></div>
-      </div>
-      <div class="field">
-        <label for="su-pw2">Password dobara</label>
-        <input id="su-pw2" type="password" autocomplete="new-password" required>
-      </div>
-      <div class="row">
-        <div class="field"><label for="su-owner">GitHub username</label><input id="su-owner" type="text" value="Bhavesh007-bit" autocomplete="off"></div>
-        <div class="field"><label for="su-repo">Repository</label><input id="su-repo" type="text" value="indianfestivalwishes" autocomplete="off"></div>
-      </div>
-      <button class="btn primary" type="submit">Setup poora karo</button>
-      <details class="steps">
-        <summary>Token kaise banaye</summary>
-        <ol>
-          <li>GitHub &gt; profile photo &gt; <b>Settings</b> &gt; <b>Developer settings</b> &gt; <b>Personal access tokens</b> &gt; <b>Fine-grained tokens</b> &gt; <b>Generate new token</b>.</li>
-          <li>Naam <code>site-admin</code>, expiration 90 days.</li>
-          <li>Repository access: <b>Only select repositories</b> &gt; <code>indianfestivalwishes</code>.</li>
-          <li>Permissions &gt; Repository &gt; <b>Contents: Read and write</b>.</li>
-          <li>Token copy karke upar wale box me daalo.</li>
-        </ol>
-      </details>
+      <div class="login-msg" id="login-msg" role="alert" aria-live="assertive" hidden></div>
+
+      <button class="btn btn-primary btn-block" type="submit" id="lg-submit">
+        <span class="btn-label">Login karo</span>
+        <span class="spinner" aria-hidden="true"></span>
+      </button>
+
+      <p class="login-foot"><span data-icon="shield"></span> 5 galat koshish ke baad 15 minute ke liye login ruk jaata hai.</p>
     </form>
-    <p class="gate-foot" id="gate-msg" role="alert"></p>
   </div>
 </div>
 
-<!-- ============ APP ============ -->
-<div class="app" id="app">
-  <aside class="side">
-    <div class="side-brand">
-      <svg viewBox="0 0 40 40" aria-hidden="true" fill="currentColor"><g transform="translate(20 20)"><ellipse rx="4.2" ry="9" cy="-9.5"/><ellipse rx="4.2" ry="9" cy="-9.5" transform="rotate(45)"/><ellipse rx="4.2" ry="9" cy="-9.5" transform="rotate(90)"/><ellipse rx="4.2" ry="9" cy="-9.5" transform="rotate(135)"/><ellipse rx="4.2" ry="9" cy="-9.5" transform="rotate(180)"/><ellipse rx="4.2" ry="9" cy="-9.5" transform="rotate(225)"/><ellipse rx="4.2" ry="9" cy="-9.5" transform="rotate(270)"/><ellipse rx="4.2" ry="9" cy="-9.5" transform="rotate(315)"/><circle r="5" fill="#D81E4A"/></g></svg>
-      <span>Admin Console</span>
+<!-- ======================= APP ======================= -->
+<div class="shell" id="app" hidden>
+  <aside class="side" id="side" aria-label="Admin menu">
+    <div class="side-head">
+      <span class="brand-mark small"></span>
+      <div class="side-title">
+        <strong>IFW Admin</strong>
+        <span>indianfestivalwishes.com</span>
+      </div>
+      <button class="icon-btn side-close" type="button" id="side-close" aria-label="Menu band karo"><span data-icon="x"></span></button>
     </div>
-    <nav id="nav" aria-label="Sections"></nav>
+    <nav class="side-nav" id="side-nav" aria-label="Sections"></nav>
     <div class="side-foot">
-      <a href="../" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>
-        <span>Site kholo</span>
-      </a>
-      <button type="button" id="btn-lock">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-        <span>Lock karo</span>
-      </button>
+      <a class="side-link" href="/" target="_blank" rel="noopener"><span data-icon="external"></span><span>Site kholo</span></a>
+      <button class="side-link" type="button" id="btn-logout"><span data-icon="logout"></span><span>Logout</span></button>
+      <div class="side-user"><span class="avatar" id="side-avatar">A</span><span><small>Login hai</small><strong id="side-user">admin</strong></span></div>
     </div>
   </aside>
+  <div class="scrim" id="scrim" hidden></div>
 
-  <main class="main">
-    <!-- overview -->
-    <section class="page is-on" data-page="home">
-      <header><h2>Aaj ki haalat</h2><p>Site par abhi kya chalu hai.</p></header>
-      <div class="stat-grid" id="stats"></div>
-      <div class="card" style="margin-top:.9rem">
-        <h3>Jaldi kaam</h3>
-        <p class="help">Sabse zyada kaam me aane wale hisse.</p>
-        <div class="actions" style="margin-top:0" id="quick"></div>
+  <div class="main-wrap">
+    <header class="topbar">
+      <button class="icon-btn menu-btn" type="button" id="menu-btn" aria-label="Menu kholo" aria-controls="side" aria-expanded="false"><span data-icon="menu"></span></button>
+      <div class="topbar-title">
+        <h1 id="view-title">Haalat</h1>
+        <p id="view-sub">Site par abhi kya chalu hai</p>
       </div>
-    </section>
+      <div class="topbar-actions">
+        <span class="save-chip" id="save-chip"><span class="dot"></span><span id="save-chip-text">Sab save hai</span></span>
+        <a class="btn btn-ghost btn-sm hide-sm" href="/" target="_blank" rel="noopener"><span data-icon="external"></span>Site</a>
+      </div>
+    </header>
 
-    <!-- products -->
-    <section class="page" data-page="products">
-      <header><h2>Affiliate products</h2><p>Amazon tracking ID aur products, jo page ke neeche "khareedari" box me dikhte hain.</p></header>
-      <div class="card">
-        <h3>Amazon Associates</h3>
-        <p class="help">Tracking ID (jaise <code>saverhub-21</code>) ke bina koi product site par nahi dikhta.</p>
-        <div class="row">
-          <div class="field"><label for="aff-tag">Tracking ID</label><input id="aff-tag" type="text" placeholder="yourname-21" autocomplete="off"></div>
-          <div class="field"><label for="aff-max">Ek box me kitne products</label><input id="aff-max" type="number" min="1" max="8" autocomplete="off"></div>
-        </div>
-      </div>
-      <div id="products"></div>
-      <div class="actions">
-        <button class="btn" id="btn-add-product" type="button">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
-          Naya product
-        </button>
-      </div>
-    </section>
+    <main class="main" id="main" tabindex="-1">
+      <section class="view" data-view="dashboard" aria-labelledby="view-title"></section>
+      <section class="view" data-view="products" aria-labelledby="view-title" hidden></section>
+      <section class="view" data-view="telegram" aria-labelledby="view-title" hidden></section>
+      <section class="view" data-view="patti" aria-labelledby="view-title" hidden></section>
+      <section class="view" data-view="ads" aria-labelledby="view-title" hidden></section>
+      <section class="view" data-view="wishes" aria-labelledby="view-title" hidden></section>
+      <section class="view" data-view="backup" aria-labelledby="view-title" hidden></section>
+      <section class="view" data-view="account" aria-labelledby="view-title" hidden></section>
+    </main>
+  </div>
 
-    <!-- telegram -->
-    <section class="page" data-page="telegram">
-      <header><h2>Telegram channel</h2><p>Page ke beech me box aur neeche chipki patti.</p></header>
-      <div class="card">
-        <label class="switch"><input type="checkbox" id="tg-enabled"><i></i>Telegram promotion chalu karo</label>
-        <div class="field" style="margin-top:.7rem"><label for="tg-url">Channel link</label><input id="tg-url" type="url" placeholder="https://t.me/yourchannel" autocomplete="off"><p class="hint">Link <code>https://t.me/</code> se shuru hona chahiye.</p></div>
-        <label class="switch"><input type="checkbox" id="tg-inline"><i></i>Page ke beech me box dikhao</label>
-        <label class="switch"><input type="checkbox" id="tg-sticky"><i></i>Neeche chipki patti dikhao</label>
-      </div>
-      <div class="card">
-        <h3>Kin pages par</h3>
-        <p class="help">"Sabhi pages" tick karoge to poori site par dikhega.</p>
-        <div class="chips" id="tg-pages"></div>
-      </div>
-      <div class="card"><h3>Text</h3><div id="tg-texts"></div></div>
-    </section>
+  <nav class="tabbar" id="tabbar" aria-label="Jaldi menu"></nav>
 
-    <!-- announcement -->
-    <section class="page" data-page="announce">
-      <header><h2>Announcement patti</h2><p>Har page ke upar chalti hui patti.</p></header>
-      <div class="card">
-        <label class="switch"><input type="checkbox" id="an-enabled"><i></i>Patti dikhao</label>
-        <label class="switch"><input type="checkbox" id="an-scroll"><i></i>Text chalta hua dikhao (ticker)</label>
-        <div class="row" style="margin-top:.7rem">
-          <div class="field"><label for="an-speed">Chalne ki raftaar</label>
-            <select id="an-speed" autocomplete="off"><option value="slow">Dheemi</option><option value="medium">Madhyam</option><option value="fast">Tez</option></select>
-          </div>
-          <div class="field"><label for="an-url">Link (zaroori nahi)</label><input id="an-url" type="url" placeholder="https://..." autocomplete="off"></div>
-        </div>
+  <div class="savebar" id="savebar" role="region" aria-label="Save" hidden>
+    <div class="savebar-inner">
+      <span class="savebar-icon" data-icon="alert"></span>
+      <p class="savebar-text"><strong>Badlav save nahi hue</strong><span id="savebar-sub">Site par lagane ke liye Save dabao</span></p>
+      <div class="savebar-actions">
+        <button class="btn btn-ghost-dark" type="button" id="btn-discard">Wapas lo</button>
+        <button class="btn btn-primary" type="button" id="btn-save"><span class="btn-label">Save karo</span><span class="spinner" aria-hidden="true"></span></button>
       </div>
-      <div class="card"><h3>Patti ka text</h3><p class="help">Teeno bhasha me alag-alag likho.</p><div id="an-texts"></div></div>
-    </section>
-
-    <!-- ads -->
-    <section class="page" data-page="ads">
-      <header><h2>Ads aur Analytics</h2><p>AdSense approve hone ke baad hi ID daalna.</p></header>
-      <div class="card">
-        <h3>Google AdSense</h3>
-        <p class="help">Slot ID AdSense me "Ads &gt; By ad unit" se milta hai. Sirf Auto ads chahiye to slot khali chhod do.</p>
-        <div class="row">
-          <div class="field"><label for="ad-client">Publisher ID</label><input id="ad-client" type="text" placeholder="ca-pub-1234567890123456" autocomplete="off"></div>
-          <div class="field"><label for="ad-top">Slot: upar wali jagah</label><input id="ad-top" type="text" placeholder="1234567890" autocomplete="off"></div>
-          <div class="field"><label for="ad-mid">Slot: beech wali jagah</label><input id="ad-mid" type="text" placeholder="1234567890" autocomplete="off"></div>
-        </div>
-      </div>
-      <div class="card">
-        <h3>Google Analytics</h3>
-        <div class="field"><label for="ga-id">Measurement ID</label><input id="ga-id" type="text" placeholder="G-XXXXXXXXXX" autocomplete="off"></div>
-      </div>
-    </section>
-
-    <!-- wishes -->
-    <section class="page" data-page="wishes">
-      <header><h2>Apni wishes aur suvichar</h2><p>Yahan likhi lines card ki list me sabse neeche jud jaati hain.</p></header>
-      <div class="card">
-        <h3>Wishes</h3>
-        <p class="help">Ek line me ek wish. 160 akshar se lambi line kaat di jaati hai.</p>
-        <div class="row">
-          <div class="field"><label for="cw-lang">Bhasha</label><select id="cw-lang" autocomplete="off"></select></div>
-          <div class="field"><label for="cw-occ">Mauka</label><select id="cw-occ" autocomplete="off"></select></div>
-          <div class="field"><label for="cw-rel">Kiske liye</label><select id="cw-rel" autocomplete="off"></select></div>
-        </div>
-        <div class="field"><label for="cw-text">Wishes</label><textarea id="cw-text" autocomplete="off"></textarea><p class="hint" id="cw-count"></p></div>
-      </div>
-      <div class="card">
-        <h3>Good Morning ke suvichar</h3>
-        <div class="field"><label for="th-lang">Bhasha</label><select id="th-lang" autocomplete="off"></select></div>
-        <div class="field"><label for="th-text">Suvichar</label><textarea id="th-text" autocomplete="off"></textarea><p class="hint" id="th-count"></p></div>
-      </div>
-    </section>
-
-    <!-- account -->
-    <section class="page" data-page="account">
-      <header><h2>Backup aur account</h2><p>Settings ka backup, password aur device.</p></header>
-      <div class="card">
-        <h3>Backup</h3>
-        <p class="help">Bada badlav karne se pehle backup download kar lo.</p>
-        <div class="actions" style="margin-top:0">
-          <button class="btn ghost" id="btn-download" type="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M4 21h16"/></svg>
-            Backup download
-          </button>
-          <label class="btn ghost" style="margin:0">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21V9"/><path d="m7 13 5-5 5 5"/><path d="M4 3h16"/></svg>
-            Backup file chuno
-            <input id="file-restore" type="file" accept="application/json" hidden>
-          </label>
-        </div>
-      </div>
-      <div class="card">
-        <h3>Password badlo</h3>
-        <div class="row">
-          <div class="field"><label for="ch-old">Abhi ka password</label><input id="ch-old" type="password" autocomplete="current-password"></div>
-          <div class="field"><label for="ch-new">Naya password</label><input id="ch-new" type="password" autocomplete="new-password" minlength="8"></div>
-        </div>
-        <div class="actions" style="margin-top:.2rem"><button class="btn ghost" id="btn-chpw" type="button">Password badlo</button></div>
-      </div>
-      <div class="card">
-        <h3>Token</h3>
-        <p class="help">Token 16 December 2026 tak chalega. Khatam hone par naya token yahan daal do.</p>
-        <div class="field"><label for="ch-token">Naya GitHub token</label><input id="ch-token" type="password" placeholder="github_pat_..." autocomplete="off"></div>
-        <div class="actions" style="margin-top:.2rem"><button class="btn ghost" id="btn-chtoken" type="button">Token badlo</button></div>
-      </div>
-      <div class="card">
-        <h3>Is device se hatao</h3>
-        <p class="help">Token aur password is device se mit jaayenge. Site par koi asar nahi hoga.</p>
-        <div class="actions" style="margin-top:0"><button class="btn danger" id="btn-wipe" type="button">Device se hatao</button></div>
-      </div>
-    </section>
-  </main>
+    </div>
+  </div>
 </div>
 
-<div class="savebar">
-  <div class="state"><span class="dot" id="save-dot"></span><span id="save-state">Sab save hai</span></div>
-  <button class="btn primary" id="btn-save" type="button">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
-    Save karke site par lagao
-  </button>
-</div>
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+<dialog class="dialog" id="dialog" aria-labelledby="dlg-title" aria-describedby="dlg-text">
+  <form method="dialog" class="dialog-card">
+    <span class="dialog-icon" id="dlg-icon" data-icon="alert"></span>
+    <h2 id="dlg-title">Pakka?</h2>
+    <p id="dlg-text"></p>
+    <div class="dialog-actions">
+      <button class="btn btn-ghost" value="cancel" id="dlg-cancel">Nahi</button>
+      <button class="btn btn-primary" value="ok" id="dlg-ok">Haan</button>
+    </div>
+  </form>
+</dialog>
 
 <script src="admin.js"></script>
 </body>

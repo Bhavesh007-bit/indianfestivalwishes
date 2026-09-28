@@ -20,19 +20,66 @@
 
   // Keep the card settings when switching language
   if (location.search) {
-    document.querySelectorAll(".lang-list a").forEach(function (a) {
+    document.querySelectorAll(".lang-pill a, .drawer-lang a").forEach(function (a) {
       var u = new URL(a.getAttribute("href"), location.href);
       ["name", "to", "n1", "n2", "r", "w", "s", "t"].forEach(function (k) { if (params.get(k)) u.searchParams.set(k, params.get(k)); });
       a.setAttribute("href", u.pathname + u.search);
     });
   }
 
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- Scroll reveal ---------- */
+  var reveals = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window && !reduceMotion) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    reveals.forEach(function (el) { io.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add("in"); });
+  }
+
+  /* ---------- Back to top ---------- */
+  var toTop = document.querySelector(".to-top");
+  if (toTop) {
+    var onScroll = function () { toTop.classList.toggle("show", window.scrollY > 700); };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+
+  /* ---------- Countdowns ---------- */
+  function dayDiff(a, b) { return Math.round((Date.parse(a) - Date.parse(b)) / 86400000); }
+  function whenText(start, end, today) {
+    if (today >= start && today <= end) return U.today_badge;
+    var d = dayDiff(start, today);
+    if (d === 1) return U.tomorrow;
+    if (d > 1) return fmt(U.days_left, { d: d });
+    return "";
+  }
   /* ---------- Today indicator ---------- */
   function todayISO() {
     var d = new Date();
     return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
   }
   var t = todayISO();
+  document.querySelectorAll("[data-start][data-end]").forEach(function (el) {
+    var txt = whenText(el.getAttribute("data-start"), el.getAttribute("data-end"), t);
+    var slot = el.querySelector("[data-count]") || el;
+    slot.textContent = txt;
+    if (txt === U.today_badge) el.classList.add("is-today");
+  });
+  var nextEl = document.getElementById("next-fest");
+  if (nextEl && D.cal) {
+    var nx = D.cal.filter(function (c) { return c.end >= t; })[0];
+    if (nx) {
+      var sp = nextEl.querySelector("span");
+      sp.textContent = "";
+      sp.appendChild(document.createTextNode(U.next_fest + ": "));
+      var b = document.createElement("b"); b.textContent = U.nav[nx.key]; sp.appendChild(b);
+      sp.appendChild(document.createTextNode(" · " + whenText(nx.start, nx.end, t)));
+    }
+  }
   var todayIdx = D.dates.indexOf(t);
   if (todayIdx >= 0) {
     var tile = document.querySelector('.days-grid a[data-day="' + (todayIdx + 1) + '"]');
@@ -51,8 +98,8 @@
     if (todayIdx >= 0) {
       span.textContent = fmt(U.today_is, { n: todayIdx + 1 });
       var a = document.createElement("a");
-      a.className = "btn btn-primary btn-small";
-      a.href = "day-" + (todayIdx + 1) + ".html";
+      a.className = "btn btn-primary";
+      a.href = (D.lang === "hi" ? "" : "/" + D.lang) + "/navratri/day-" + (todayIdx + 1) + ".html";
       a.textContent = U.open_today;
       note.appendChild(a);
     } else if (t < D.dates[0]) {
@@ -79,9 +126,10 @@
     btn.addEventListener("click", function () {
       var src = document.getElementById(btn.getAttribute("data-copy"));
       if (!src) return;
+      var label = btn.querySelector("span") || btn;
       copyText(src.textContent.trim() + "\n" + location.origin + location.pathname).then(function () {
-        btn.textContent = U.copied;
-        setTimeout(function () { btn.textContent = U.copy; }, 1800);
+        label.textContent = U.copied; btn.classList.add("done");
+        setTimeout(function () { label.textContent = U.copy; btn.classList.remove("done"); }, 1800);
       });
     });
   });
@@ -115,32 +163,38 @@
     });
   }
 
-  /* ---------- Menu and language ---------- */
+  /* ---------- Drawer menu and desktop dropdown ---------- */
   var menuBtn = document.getElementById("menu-btn");
-  var menu = document.getElementById("site-menu");
-  if (menuBtn && menu) {
-    menuBtn.addEventListener("click", function () {
-      var open = menuBtn.getAttribute("aria-expanded") === "true";
-      menuBtn.setAttribute("aria-expanded", open ? "false" : "true");
-      menu.classList.toggle("is-open", !open);
-    });
+  var drawer = document.getElementById("drawer");
+  function setDrawer(open) {
+    if (!drawer || !menuBtn) return;
+    drawer.hidden = !open;
+    menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    document.body.classList.toggle("no-scroll", open);
+    if (open) { var f = drawer.querySelector("[data-close].icon-btn"); if (f) f.focus(); } else menuBtn.focus();
   }
-  var langBtn = document.getElementById("lang-btn");
-  var langList = document.getElementById("lang-list");
-  if (langBtn && langList) {
-    langBtn.addEventListener("click", function (e) {
+  if (menuBtn && drawer) {
+    menuBtn.addEventListener("click", function () { setDrawer(true); });
+    drawer.querySelectorAll("[data-close]").forEach(function (b) { b.addEventListener("click", function () { setDrawer(false); }); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !drawer.hidden) setDrawer(false); });
+  }
+  var moreBtn = document.querySelector(".nav-more-btn");
+  var morePop = document.getElementById("nav-occ");
+  if (moreBtn && morePop) {
+    var closeMore = function () { moreBtn.setAttribute("aria-expanded", "false"); morePop.hidden = true; };
+    moreBtn.addEventListener("click", function (e) {
       e.stopPropagation();
-      var open = langBtn.getAttribute("aria-expanded") === "true";
-      langBtn.setAttribute("aria-expanded", open ? "false" : "true");
-      langList.hidden = open;
+      var open = moreBtn.getAttribute("aria-expanded") === "true";
+      if (open) closeMore(); else { moreBtn.setAttribute("aria-expanded", "true"); morePop.hidden = false; }
     });
-    document.addEventListener("click", function () { langBtn.setAttribute("aria-expanded", "false"); langList.hidden = true; });
+    document.addEventListener("click", function (e) { if (!morePop.contains(e.target)) closeMore(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeMore(); });
   }
 
   /* ---------- Site settings (edited from the admin panel) ---------- */
   var L = D.lang;
   var PAGE = D.page || "";
-  var settingsUrl = (D.rel || "") + "static/site-settings.json";
+  var settingsUrl = "/static/site-settings.json";
   window.IFW_SETTINGS = fetch(settingsUrl, { cache: "no-cache" })
     .then(function (r) { return r.ok ? r.json() : {}; })
     .catch(function () { return {}; });
@@ -153,7 +207,7 @@
     if (text != null) n.textContent = text;
     return n;
   }
-  function safeUrl(u) { return typeof u === "string" && /^https:\/\//.test(u) ? u : ""; }
+  function safeUrl(u) { return typeof u === "string" && (/^https:\/\//.test(u) || /^\/uploads\/[\w.-]+$/.test(u)) ? u : ""; }
   function onPage(list) {
     if (!list || !list.length) return false;
     return list.indexOf("all") >= 0 || list.indexOf(PAGE) >= 0;
@@ -232,7 +286,7 @@
         a.href = productUrl(p, tag); a.target = "_blank"; a.rel = "sponsored nofollow noopener";
         var img = safeUrl(p.image);
         if (img) { var im = el("img"); im.src = img; im.alt = ""; im.loading = "lazy"; a.appendChild(im); }
-        else { var ic = el("span", "aff-icon", "🛍"); ic.setAttribute("aria-hidden", "true"); a.appendChild(ic); }
+        else { var ic = el("span", "aff-icon"); ic.setAttribute("aria-hidden", "true"); ic.innerHTML = '<svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 016 0v2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>'; a.appendChild(ic); }
         a.appendChild(el("span", "aff-title", tx(p.title)));
         if (p.price) a.appendChild(el("span", "aff-price", p.price));
         a.appendChild(el("span", "aff-store", (p.store || "Shop") + " →"));

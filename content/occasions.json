@@ -1,0 +1,1307 @@
+{
+ "hi": {
+  "birthday": {
+   "title": "जन्मदिन की शुभकामनाएँ: नाम और फ़ोटो के साथ बर्थडे कार्ड बनाएँ",
+   "desc": "दोस्त, परिवार, भाई-बहन, पति-पत्नी या ग्राहक के लिए जन्मदिन की शुभकामनाएँ। 10 डिज़ाइन में फ़ोटो के साथ या बिना फ़ोटो के बर्थडे कार्ड बनाएँ।",
+   "h1": "जन्मदिन की शुभकामनाएँ",
+   "sub": "नाम, फ़ोटो और अपने रिश्ते के हिसाब से शुभकामना चुनकर सुंदर बर्थडे कार्ड बनाएँ।",
+   "body": "<h2>जन्मदिन पर शुभकामना कैसे भेजें</h2><p>जन्मदिन पर छोटा-सा संदेश भी किसी का दिन बना देता है। संदेश में उस व्यक्ति का नाम ज़रूर लिखें और कोई ऐसी बात जोड़ें जो सिर्फ़ आप दोनों जानते हों। दोस्त के लिए हल्का-फुल्का मज़ाक, माता-पिता के लिए आभार, और ग्राहक के लिए सम्मान भरे शब्द अच्छे लगते हैं।</p><p>फ़ोटो वाला कार्ड स्टेटस और स्टोरी के लिए अच्छा रहता है, और बिना फ़ोटो वाला कार्ड ग्रुप में भेजने के लिए। रात 12 बजे भेजना हो तो कार्ड पहले से बनाकर रख लें।</p>",
+   "card_title": "जन्मदिन मुबारक",
+   "from": "{from} की ओर से ढेर सारा प्यार",
+   "rels": [
+    [
+     "all",
+     "सभी के लिए"
+    ],
+    [
+     "friend",
+     "दोस्त के लिए"
+    ],
+    [
+     "family",
+     "परिवार के लिए"
+    ],
+    [
+     "sibling",
+     "भाई/बहन के लिए"
+    ],
+    [
+     "spouse",
+     "पति/पत्नी के लिए"
+    ],
+    [
+     "business",
+     "बिज़नेस/ग्राहक के लिए"
+    ],
+    [
+     "devotional",
+     "भक्तिमय"
+    ]
+   ],
+   "wishes": {
+    "all": [
+     "आपका हर दिन खुशियों से भरा हो। जन्मदिन की हार्दिक शुभकामनाएँ!",
+     "नया साल, नई उम्मीदें और ढेर सारी सफलता आपका इंतज़ार करे।",
+     "आप हमेशा ऐसे ही मुस्कुराते रहें। जन्मदिन मुबारक हो!"
+    ],
+    "friend": [
+     "मेरे सबसे प्यारे दोस्त, तेरी हर ख्वाहिश पूरी हो। हैप्पी बर्थडे!",
+     "दोस्ती हमारी यूँ ही बनी रहे और तेरी पार्टी हमेशा मेरे नाम रहे।",
+     "जिंदगी की हर मंज़िल पर तेरे साथ खड़ा हूँ। जन्मदिन मुबारक, यार!"
+    ],
+    "family": [
+     "आप हमारे घर की रौनक हैं। जन्मदिन की ढेर सारी शुभकामनाएँ!",
+     "भगवान आपको लंबी उम्र और अच्छी सेहत दें।",
+     "आपका आशीर्वाद और प्यार हमेशा हमारे साथ रहे। जन्मदिन मुबारक!"
+    ],
+    "sibling": [
+     "मेरे प्यारे भाई/बहन, तुम मेरी सबसे बड़ी ताकत हो। हैप्पी बर्थडे!",
+     "लड़ाई-झगड़े सब एक तरफ़, तुम्हारे बिना घर अधूरा है।",
+     "बचपन की यादों जैसा मीठा रहे तुम्हारा हर दिन। जन्मदिन मुबारक!"
+    ],
+    "spouse": [
+     "मेरी ज़िंदगी को खूबसूरत बनाने के लिए शुक्रिया। जन्मदिन मुबारक, मेरे हमसफ़र!",
+     "हर जन्मदिन पर तुम्हें पहले से ज़्यादा प्यार करता/करती हूँ।",
+     "तुम्हारी मुस्कान ही मेरा सबसे बड़ा तोहफ़ा है। हैप्पी बर्थडे!"
+    ],
+    "business": [
+     "आपके जन्मदिन पर हमारी ओर से हार्दिक शुभकामनाएँ। आपका भरोसा हमारी पूँजी है।",
+     "आपका आने वाला साल सफलता और समृद्धि से भरा हो।",
+     "हमारे परिवार का हिस्सा बनने के लिए धन्यवाद। जन्मदिन मुबारक!"
+    ],
+    "devotional": [
+     "भगवान आपको हर कदम पर सही राह दिखाएँ। जन्मदिन की शुभकामनाएँ!",
+     "प्रभु की कृपा से आपका जीवन सुख, शांति और स्वास्थ्य से भरा रहे।",
+     "ईश्वर आपकी हर प्रार्थना सुनें और हर इच्छा पूरी करें।"
+    ]
+   },
+   "thoughts": null,
+   "theme": {
+    "primary": "#7B2CBF",
+    "secondary": "#FF5D8F",
+    "ink": "#FFFFFF",
+    "accent": "#F2A007"
+   },
+   "motif": "cake"
+  },
+  "anniversary": {
+   "title": "शादी की सालगिरह की शुभकामनाएँ: कपल के नाम और फ़ोटो के साथ कार्ड",
+   "desc": "पति-पत्नी, दोस्त, भाई-बहन या माता-पिता के लिए मैरिज एनिवर्सरी विशेज़। कपल के नाम और फ़ोटो के साथ 10 डिज़ाइन में कार्ड बनाएँ।",
+   "h1": "सालगिरह की शुभकामनाएँ",
+   "sub": "दोनों के नाम लिखें, चाहें तो कपल फ़ोटो लगाएँ, और रिश्ते के हिसाब से शुभकामना चुनें।",
+   "body": "<h2>सालगिरह का संदेश</h2><p>शादी की सालगिरह साथ बिताए सफ़र का जश्न है। माता-पिता की सालगिरह पर उनके त्याग और साथ के लिए धन्यवाद कहें, और दोस्तों को उनकी जोड़ी की तारीफ़ के साथ बधाई दें। अपने जीवनसाथी के लिए कोई पुरानी याद जोड़ना सबसे अच्छा रहता है।</p>",
+   "card_title": "सालगिरह मुबारक",
+   "from": "{from} की ओर से ढेर सारी बधाई",
+   "rels": [
+    [
+     "all",
+     "सभी के लिए"
+    ],
+    [
+     "friend",
+     "दोस्त के लिए"
+    ],
+    [
+     "family",
+     "परिवार के लिए"
+    ],
+    [
+     "sibling",
+     "भाई/बहन के लिए"
+    ],
+    [
+     "spouse",
+     "पति/पत्नी के लिए"
+    ],
+    [
+     "business",
+     "बिज़नेस/ग्राहक के लिए"
+    ],
+    [
+     "devotional",
+     "भक्तिमय"
+    ]
+   ],
+   "wishes": {
+    "all": [
+     "आपकी जोड़ी हमेशा यूँ ही सलामत रहे। सालगिरह मुबारक!",
+     "प्यार और विश्वास का यह सफ़र हर साल और खूबसूरत हो।",
+     "साथ की हर सालगिरह नई खुशियाँ लेकर आए।"
+    ],
+    "friend": [
+     "तुम दोनों की जोड़ी देखकर प्यार पर भरोसा बढ़ जाता है। हैप्पी एनिवर्सरी!",
+     "यूँ ही लड़ते-झगड़ते और हँसते रहो, सालगिरह मुबारक!",
+     "मेरे फेवरेट कपल को ढेर सारी शुभकामनाएँ।"
+    ],
+    "family": [
+     "मम्मी-पापा, आपकी जोड़ी हमारे लिए सबसे बड़ी प्रेरणा है। सालगिरह मुबारक!",
+     "आपका साथ और आशीर्वाद हमेशा बना रहे।",
+     "आपने जो घर बनाया है, वह प्यार से भरा रहे।"
+    ],
+    "sibling": [
+     "भैया-भाभी / दीदी-जीजू, आपकी जोड़ी हमेशा खुश रहे। सालगिरह मुबारक!",
+     "आप दोनों का प्यार हर साल और गहरा हो।",
+     "हमारे परिवार की सबसे प्यारी जोड़ी को बधाई।"
+    ],
+    "spouse": [
+     "तुम्हारे साथ हर साल पहले से ज़्यादा खूबसूरत है। हैप्पी एनिवर्सरी, मेरी जान!",
+     "जीवन के हर मोड़ पर तुम्हारा हाथ थामे रहूँ, यही वादा है।",
+     "तुमसे मिलना मेरी ज़िंदगी का सबसे अच्छा फ़ैसला था।"
+    ],
+    "business": [
+     "आपको और आपके जीवनसाथी को सालगिरह की हार्दिक शुभकामनाएँ।",
+     "आपका वैवाहिक जीवन सुख और समृद्धि से भरा रहे।",
+     "हमारी पूरी टीम की ओर से आपकी जोड़ी को बधाई।"
+    ],
+    "devotional": [
+     "शिव-पार्वती जैसा अटूट रहे आपका साथ। सालगिरह मुबारक!",
+     "भगवान आपकी जोड़ी पर सदा कृपा बनाए रखें।",
+     "राधा-कृष्ण जैसा प्रेम आपके जीवन में सदा रहे।"
+    ]
+   },
+   "thoughts": null,
+   "theme": {
+    "primary": "#B3122E",
+    "secondary": "#F2A007",
+    "ink": "#FFFFFF",
+    "accent": "#F2A007"
+   },
+   "motif": "hearts"
+  },
+  "wedding": {
+   "title": "शादी की शुभकामनाएँ: दूल्हा-दुल्हन के नाम के साथ बधाई कार्ड",
+   "desc": "नए जोड़े को शादी की बधाई और शुभकामना संदेश। दूल्हा-दुल्हन के नाम और फ़ोटो के साथ 10 डिज़ाइन में वेडिंग कार्ड बनाएँ।",
+   "h1": "शादी की शुभकामनाएँ",
+   "sub": "दूल्हा-दुल्हन के नाम लिखें, चाहें तो फ़ोटो लगाएँ, और बधाई कार्ड बनाकर भेजें।",
+   "body": "<h2>नए जोड़े को बधाई</h2><p>शादी की बधाई में नए जीवन की शुरुआत के लिए आशीर्वाद, प्यार और साथ की दुआ दी जाती है। अगर आप शादी में नहीं जा पा रहे हैं, तो नाम वाला कार्ड भेजकर अपनी शुभकामनाएँ ज़रूर दें।</p>",
+   "card_title": "शादी की बधाई",
+   "from": "{from} की ओर से हार्दिक बधाई",
+   "rels": [
+    [
+     "all",
+     "सभी के लिए"
+    ],
+    [
+     "friend",
+     "दोस्त के लिए"
+    ],
+    [
+     "family",
+     "परिवार के लिए"
+    ],
+    [
+     "sibling",
+     "भाई/बहन के लिए"
+    ],
+    [
+     "business",
+     "बिज़नेस/ग्राहक के लिए"
+    ],
+    [
+     "devotional",
+     "भक्तिमय"
+    ]
+   ],
+   "wishes": {
+    "all": [
+     "नए जीवन की शुरुआत पर ढेर सारी शुभकामनाएँ। आपकी जोड़ी सदा सलामत रहे।",
+     "प्यार, विश्वास और खुशियों से भरा रहे आपका नया सफ़र।",
+     "सात फेरों के सातों वचन आपके जीवन को सुंदर बनाएँ।"
+    ],
+    "friend": [
+     "आख़िरकार तेरी भी शादी हो गई! नए सफ़र के लिए ढेर सारी शुभकामनाएँ।",
+     "दोस्त, तुम दोनों हमेशा ऐसे ही खुश रहो।",
+     "तेरी शादी में सबसे ज़्यादा नाचने वाला मैं ही रहूँगा। बधाई हो!"
+    ],
+    "family": [
+     "हमारे परिवार में नए सदस्य का स्वागत है। शादी मुबारक!",
+     "बड़ों का आशीर्वाद सदा आपके साथ रहे।",
+     "दोनों परिवारों का यह रिश्ता हमेशा प्यार से भरा रहे।"
+    ],
+    "sibling": [
+     "मेरे प्यारे भाई/बहन, नई ज़िंदगी की ढेर सारी बधाई!",
+     "तुम्हें इतना खुश देखकर दिल भर आया। शादी मुबारक!",
+     "नया घर, नया साथ, पर हमारा प्यार हमेशा वही रहेगा।"
+    ],
+    "business": [
+     "आपके विवाह पर हमारी ओर से हार्दिक शुभकामनाएँ।",
+     "आपका वैवाहिक जीवन सुख और सफलता से भरा हो।",
+     "पूरी टीम की ओर से नए जोड़े को बधाई।"
+    ],
+    "devotional": [
+     "भगवान गणेश आपके नए जीवन के हर विघ्न दूर करें।",
+     "सीता-राम जैसी आदर्श रहे आपकी जोड़ी।",
+     "प्रभु का आशीर्वाद आपके घर-आँगन में सदा रहे।"
+    ]
+   },
+   "thoughts": null,
+   "theme": {
+    "primary": "#8A1538",
+    "secondary": "#E0A100",
+    "ink": "#FFFFFF",
+    "accent": "#F2A007"
+   },
+   "motif": "kalash"
+  },
+  "engagement": {
+   "title": "सगाई की शुभकामनाएँ: होने वाले दूल्हा-दुल्हन के नाम के साथ कार्ड",
+   "desc": "सगाई (एंगेजमेंट) की बधाई और शुभकामना संदेश। कपल के नाम और फ़ोटो के साथ 10 डिज़ाइन में कार्ड बनाएँ।",
+   "h1": "सगाई की शुभकामनाएँ",
+   "sub": "दोनों के नाम लिखें, अंगूठी वाली खुशी का कार्ड बनाएँ और भेजें।",
+   "body": "<h2>सगाई पर बधाई</h2><p>सगाई नए रिश्ते का पहला वादा है। बधाई संदेश में दोनों को नए सफ़र की शुभकामना दें और शादी की तैयारियों के लिए उत्साह जताएँ।</p>",
+   "card_title": "सगाई की बधाई",
+   "from": "{from} की ओर से ढेर सारी शुभकामनाएँ",
+   "rels": [
+    [
+     "all",
+     "सभी के लिए"
+    ],
+    [
+     "friend",
+     "दोस्त के लिए"
+    ],
+    [
+     "family",
+     "परिवार के लिए"
+    ],
+    [
+     "sibling",
+     "भाई/बहन के लिए"
+    ],
+    [
+     "business",
+     "बिज़नेस/ग्राहक के लिए"
+    ],
+    [
+     "devotional",
+     "भक्तिमय"
+    ]
+   ],
+   "wishes": {
+    "all": [
+     "सगाई की ढेर सारी बधाई! यह वादा उम्र भर का साथ बने।",
+     "नए रिश्ते की पहली खुशी हमेशा बनी रहे।",
+     "आपकी जोड़ी को नज़र न लगे। सगाई मुबारक!"
+    ],
+    "friend": [
+     "अंगूठी पहन ली, अब शादी की पार्टी का इंतज़ार है! बधाई दोस्त।",
+     "तुम दोनों साथ में बहुत प्यारे लगते हो।",
+     "नए सफ़र की शुरुआत पर ढेर सारा प्यार।"
+    ],
+    "family": [
+     "हमारे घर की खुशियाँ दोगुनी हो गईं। सगाई मुबारक!",
+     "दोनों परिवारों का यह रिश्ता सदा खुशहाल रहे।",
+     "बड़ों का आशीर्वाद आप दोनों के साथ है।"
+    ],
+    "sibling": [
+     "मेरे भाई/बहन की सगाई! आज सबसे खुश मैं हूँ।",
+     "तुम्हारी नई ज़िंदगी की पहली सीढ़ी पर ढेर सारी शुभकामनाएँ।",
+     "अब शादी की तैयारियाँ शुरू! बधाई हो।"
+    ],
+    "business": [
+     "आपकी सगाई पर हमारी ओर से हार्दिक शुभकामनाएँ।",
+     "आने वाला जीवन सुख और सफलता से भरा रहे।",
+     "नए रिश्ते के लिए पूरी टीम की ओर से बधाई।"
+    ],
+    "devotional": [
+     "भगवान इस पवित्र रिश्ते पर अपनी कृपा बनाए रखें।",
+     "माँ पार्वती और भोलेनाथ आपकी जोड़ी को आशीर्वाद दें।",
+     "प्रभु आपके आने वाले जीवन को मंगलमय बनाएँ।"
+    ]
+   },
+   "thoughts": null,
+   "theme": {
+    "primary": "#C2185B",
+    "secondary": "#D4A373",
+    "ink": "#FFFFFF",
+    "accent": "#F2A007"
+   },
+   "motif": "rings"
+  },
+  "good-morning": {
+   "title": "गुड मॉर्निंग सुविचार: रोज़ नए सुविचार के साथ सुप्रभात कार्ड",
+   "desc": "हर दिन नया सुविचार और गुड मॉर्निंग संदेश। दोस्त, परिवार या ग्राहकों के लिए अपने नाम से सुप्रभात कार्ड बनाएँ।",
+   "h1": "सुप्रभात: आज का सुविचार",
+   "sub": "हर दिन नया सुविचार। स्टाइल चुनें, नाम लिखें और सुबह-सुबह अपनों को भेजें।",
+   "body": "<h2>सुप्रभात संदेश क्यों भेजें</h2><p>सुबह का एक अच्छा विचार पूरे दिन की सोच बदल सकता है। इस पेज पर हर दिन नया सुविचार अपने-आप आता है। पसंद न आए तो दूसरा सुविचार चुनें।</p>",
+   "card_title": "सुप्रभात",
+   "from": "{from} की ओर से सुप्रभात",
+   "rels": [
+    [
+     "all",
+     "सभी के लिए"
+    ],
+    [
+     "friend",
+     "दोस्त के लिए"
+    ],
+    [
+     "family",
+     "परिवार के लिए"
+    ],
+    [
+     "sibling",
+     "भाई/बहन के लिए"
+    ],
+    [
+     "spouse",
+     "पति/पत्नी के लिए"
+    ],
+    [
+     "business",
+     "बिज़नेस/ग्राहक के लिए"
+    ],
+    [
+     "devotional",
+     "भक्तिमय"
+    ]
+   ],
+   "wishes": {
+    "all": [
+     "आपका दिन मंगलमय हो।",
+     "नई सुबह, नई उम्मीदें। सुप्रभात!",
+     "मुस्कान के साथ दिन की शुरुआत करें।"
+    ],
+    "friend": [
+     "उठ जा दोस्त, आज का दिन तेरा है!",
+     "चाय तैयार है, बस तेरी मुस्कान की कमी है।",
+     "दोस्ती की मिठास के साथ सुप्रभात!"
+    ],
+    "family": [
+     "आपकी सुबह प्यार और सुकून से भरी हो।",
+     "परिवार के साथ हर सुबह खास है।",
+     "आपका आज का दिन सेहत और खुशियों से भरा रहे।"
+    ],
+    "sibling": [
+     "गुड मॉर्निंग, मेरे प्यारे भाई/बहन!",
+     "आज का दिन तुम्हारे लिए ढेर सारी खुशियाँ लाए।",
+     "जल्दी उठो, आज बहुत कुछ अच्छा होने वाला है।"
+    ],
+    "spouse": [
+     "तुम्हारी मुस्कान के साथ मेरी सुबह पूरी होती है।",
+     "सुप्रभात, मेरी ज़िंदगी की सबसे प्यारी सुबह!",
+     "आज का दिन भी तुम्हारे नाम।"
+    ],
+    "business": [
+     "आपका दिन सफल और उत्पादक रहे। सुप्रभात!",
+     "हमारे साथ बने रहने के लिए धन्यवाद। शुभ दिन!",
+     "नई सुबह, नए अवसर। आपका दिन शुभ हो।"
+    ],
+    "devotional": [
+     "भगवान का नाम लेकर दिन की शुरुआत करें। जय श्री कृष्ण!",
+     "प्रभु आपके आज के हर काम को सफल करें।",
+     "राम-राम! आपका दिन मंगलमय हो।"
+    ]
+   },
+   "thoughts": [
+    "छोटे-छोटे कदम भी बड़ी मंज़िल तक ले जाते हैं।",
+    "जो बीत गया उसे छोड़ें, आज को बेहतर बनाएँ।",
+    "मेहनत का कोई शॉर्टकट नहीं होता।",
+    "मुस्कान मुफ़्त है, पर इसकी कीमत बहुत बड़ी है।",
+    "दूसरों की मदद करने से अपना मन हल्का होता है।",
+    "गलती करना बुरा नहीं, उससे न सीखना बुरा है।",
+    "धैर्य रखें, सही समय पर सब अच्छा होगा।",
+    "अपनी तुलना सिर्फ़ कल के खुद से करें।",
+    "शांत मन सबसे अच्छे फ़ैसले लेता है।",
+    "जो आपके पास है, उसके लिए आभारी रहें।",
+    "आज का काम कल पर न टालें।",
+    "अच्छे विचार अच्छे कर्मों की शुरुआत हैं।",
+    "सेहत सबसे बड़ा धन है, इसका ध्यान रखें।",
+    "मीठा बोलने में कोई खर्च नहीं लगता।",
+    "हर सुबह एक नया मौका है।",
+    "डर के आगे ही जीत है।",
+    "सच्चे रिश्ते समय और भरोसे से बनते हैं।",
+    "सीखना कभी बंद न करें, उम्र चाहे कोई भी हो।",
+    "जो दूसरों की इज़्ज़त करता है, उसे इज़्ज़त मिलती है।",
+    "कम बोलें, ज़्यादा सुनें।",
+    "सपने देखें और उन्हें पूरा करने की हिम्मत रखें।",
+    "खुश रहना एक आदत है, इसे रोज़ अपनाएँ।",
+    "मुश्किलें हमें मज़बूत बनाने आती हैं।",
+    "अपना सबसे अच्छा दें, बाकी भगवान पर छोड़ दें।",
+    "समय की कद्र करें, यह लौटकर नहीं आता।",
+    "सादगी में ही सच्ची सुंदरता है।",
+    "जहाँ चाह, वहाँ राह।",
+    "आज किसी को एक अच्छी बात ज़रूर कहें।",
+    "हार मानने से पहले एक बार और कोशिश करें।",
+    "मन साफ़ हो तो हर दिन त्योहार है।"
+   ],
+   "theme": {
+    "primary": "#E76F00",
+    "secondary": "#F7C21A",
+    "ink": "#FFFFFF",
+    "accent": "#F2A007"
+   },
+   "motif": "sun"
+  }
+ },
+ "gu": {
+  "birthday": {
+   "title": "જન્મદિવસની શુભેચ્છા: નામ અને ફોટો સાથે બર્થડે કાર્ડ બનાવો",
+   "desc": "મિત્ર, પરિવાર, ભાઈ-બહેન, પતિ-પત્ની કે ગ્રાહક માટે જન્મદિવસની શુભેચ્છા. 10 ડિઝાઇનમાં ફોટો સાથે કે ફોટો વગર બર્થડે કાર્ડ બનાવો.",
+   "h1": "જન્મદિવસની શુભેચ્છા",
+   "sub": "નામ, ફોટો અને સંબંધ પ્રમાણે શુભેચ્છા પસંદ કરી સુંદર બર્થડે કાર્ડ બનાવો.",
+   "body": "<h2>જન્મદિવસે શુભેચ્છા કેવી રીતે મોકલવી</h2><p>જન્મદિવસે નાનો સંદેશ પણ કોઈનો દિવસ સુધારી દે છે. સંદેશમાં એ વ્યક્તિનું નામ જરૂર લખો અને તમારી બંનેની કોઈ ખાસ યાદ ઉમેરો. મિત્ર માટે હળવી મજાક, માતા-પિતા માટે આભાર અને ગ્રાહક માટે માનભર્યા શબ્દો સારા લાગે છે.</p><p>ફોટોવાળું કાર્ડ સ્ટેટસ અને સ્ટોરી માટે સારું રહે છે, અને ફોટો વગરનું કાર્ડ ગ્રુપમાં મોકલવા માટે. રાત્રે 12 વાગ્યે મોકલવું હોય તો કાર્ડ પહેલેથી બનાવી રાખો.</p>",
+   "card_title": "જન્મદિવસની શુભેચ્છા",
+   "from": "{from} તરફથી ઢગલો પ્રેમ",
+   "rels": [
+    [
+     "all",
+     "સૌ માટે"
+    ],
+    [
+     "friend",
+     "મિત્ર માટે"
+    ],
+    [
+     "family",
+     "પરિવાર માટે"
+    ],
+    [
+     "sibling",
+     "ભાઈ/બહેન માટે"
+    ],
+    [
+     "spouse",
+     "પતિ/પત્ની માટે"
+    ],
+    [
+     "business",
+     "બિઝનેસ/ગ્રાહક માટે"
+    ],
+    [
+     "devotional",
+     "ભક્તિમય"
+    ]
+   ],
+   "wishes": {
+    "all": [
+     "તમારો દરેક દિવસ ખુશીઓથી ભરેલો રહે. જન્મદિવસની હાર્દિક શુભેચ્છા!",
+     "નવું વર્ષ, નવી આશાઓ અને ઢગલો સફળતા તમારી રાહ જુએ.",
+     "તમે હંમેશાં આમ જ હસતા રહો. હેપ્પી બર્થડે!"
+    ],
+    "friend": [
+     "મારા સૌથી વહાલા મિત્ર, તારી દરેક ઇચ્છા પૂરી થાય. હેપ્પી બર્થડે!",
+     "આપણી દોસ્તી આમ જ રહે અને તારી પાર્ટી હંમેશાં મારા નામે રહે.",
+     "જીવનની દરેક મંઝિલે હું તારી સાથે છું. જન્મદિવસની શુભેચ્છા, દોસ્ત!"
+    ],
+    "family": [
+     "તમે અમારા ઘરની રોનક છો. જન્મદિવસની ઢગલો શુભેચ્છા!",
+     "ભગવાન તમને લાંબું આયુષ્ય અને સારું સ્વાસ્થ્ય આપે.",
+     "તમારા આશીર્વાદ અને પ્રેમ હંમેશાં અમારી સાથે રહે."
+    ],
+    "sibling": [
+     "મારા વહાલા ભાઈ/બહેન, તું મારી સૌથી મોટી તાકાત છે. હેપ્પી બર્થડે!",
+     "ઝઘડા બધા એક બાજુ, તારા વગર ઘર અધૂરું છે.",
+     "બાળપણની યાદો જેવો મીઠો રહે તારો દરેક દિવસ."
+    ],
+    "spouse": [
+     "મારા જીવનને સુંદર બનાવવા બદલ આભાર. હેપ્પી બર્થડે, મારા હમસફર!",
+     "દરેક જન્મદિવસે તને પહેલાં કરતાં વધુ પ્રેમ કરું છું.",
+     "તારું સ્મિત જ મારી સૌથી મોટી ભેટ છે."
+    ],
+    "business": [
+     "આપના જન્મદિવસે અમારા તરફથી હાર્દિક શુભેચ્છા. આપનો વિશ્વાસ અમારી મૂડી છે.",
+     "આપનું આવનારું વર્ષ સફળતા અને સમૃદ્ધિથી ભરેલું રહે.",
+     "અમારા પરિવારનો ભાગ બનવા બદલ આભાર. જન્મદિવસની શુભેચ્છા!"
+    ],
+    "devotional": [
+     "ભગવાન તમને દરેક પગલે સાચો માર્ગ બતાવે.",
+     "પ્રભુની કૃપાથી તમારું જીવન સુખ, શાંતિ અને સ્વાસ્થ્યથી ભરેલું રહે.",
+     "ઈશ્વર તમારી દરેક પ્રાર્થના સાંભળે. જય શ્રી કૃષ્ણ!"
+    ]
+   },
+   "thoughts": null,
+   "theme": {
+    "primary": "#7B2CBF",
+    "secondary": "#FF5D8F",
+    "ink": "#FFFFFF",
+    "accent": "#F2A007"
+   },
+   "motif": "cake"
+  },
+  "anniversary": {
+   "title": "લગ્નતિથિની શુભેચ્છા: કપલના નામ અને ફોટો સાથે કાર્ડ",
+   "desc": "પતિ-પત્ની, મિત્ર, ભાઈ-બહેન કે માતા-પિતા માટે મેરેજ એનિવર્સરી વિશિસ. કપલના નામ અને ફોટો સાથે 10 ડિઝાઇનમાં કાર્ડ બનાવો.",
+   "h1": "લગ્નતિથિની શુભેચ્છા",
+   "sub": "બંનેનાં નામ લખો, ઇચ્છા હોય તો કપલ ફોટો મૂકો અને સંબંધ પ્રમાણે શુભેચ્છા પસંદ કરો.",
+   "body": "<h2>લગ્નતિથિનો સંદેશ</h2><p>લગ્નતિથિ સાથે વિતાવેલા સફરની ઉજવણી છે. માતા-પિતાની લગ્નતિથિએ તેમના સાથ અને ત્યાગ માટે આભાર કહો, અને મિત્રોને તેમની જોડીનાં વખાણ સાથે અભિનંદન આપો. જીવનસાથી માટે કોઈ જૂની યાદ ઉમેરવી સૌથી સારી રહે છે.</p>",
+   "card_title": "લગ્નતિથિની શુભેચ્છા",
+   "from": "{from} તરફથી હાર્દિક અભિનંદન",
+   "rels": [
+    [
+     "all",
+     "સૌ માટે"
+    ],
+    [
+     "friend",
+     "મિત્ર માટે"
+    ],
+    [
+     "family",
+     "પરિવાર માટે"
+    ],
+    [
+     "sibling",
+     "ભાઈ/બહેન માટે"
+    ],
+    [
+     "spouse",
+     "પતિ/પત્ની માટે"
+    ],
+    [
+     "business",
+     "બિઝનેસ/ગ્રાહક માટે"
+    ],
+    [
+     "devotional",
+     "ભક્તિમય"
+    ]
+   ],
+   "wishes": {
+    "all": [
+     "તમારી જોડી હંમેશાં સલામત રહે. લગ્નતિથિની શુભેચ્છા!",
+     "પ્રેમ અને વિશ્વાસનો આ સફર દર વર્ષે વધુ સુંદર બને.",
+     "સાથની દરેક લગ્નતિથિ નવી ખુશીઓ લાવે."
+    ],
+    "friend": [
+     "તમારી જોડી જોઈને પ્રેમ પર વિશ્વાસ વધી જાય છે. હેપ્પી એનિવર્સરી!",
+     "આમ જ ઝઘડતાં અને હસતાં રહો. અભિનંદન!",
+     "મારા ફેવરિટ કપલને ઢગલો શુભેચ્છા."
+    ],
+    "family": [
+     "મમ્મી-પપ્પા, તમારી જોડી અમારી સૌથી મોટી પ્રેરણા છે. લગ્નતિથિની શુભેચ્છા!",
+     "તમારો સાથ અને આશીર્વાદ હંમેશાં રહે.",
+     "તમે બનાવેલું ઘર પ્રેમથી ભરેલું રહે."
+    ],
+    "sibling": [
+     "ભાઈ-ભાભી / દીદી-જીજાજી, તમારી જોડી હંમેશાં ખુશ રહે!",
+     "તમારો પ્રેમ દર વર્ષે વધુ ગાઢ બને.",
+     "અમારા પરિવારની સૌથી વહાલી જોડીને અભિનંદન."
+    ],
+    "spouse": [
+     "તારી સાથે દરેક વર્ષ પહેલાં કરતાં વધુ સુંદર છે. હેપ્પી એનિવર્સરી!",
+     "જીવનના દરેક વળાંકે તારો હાથ પકડી રાખીશ, એ મારું વચન છે.",
+     "તને મળવું મારા જીવનનો સૌથી સારો નિર્ણય હતો."
+    ],
+    "business": [
+     "આપને અને આપના જીવનસાથીને લગ્નતિથિની હાર્દિક શુભેચ્છા.",
+     "આપનું દાંપત્યજીવન સુખ અને સમૃદ્ધિથી ભરેલું રહે.",
+     "અમારી આખી ટીમ તરફથી આપની જોડીને અભિનંદન."
+    ],
+    "devotional": [
+     "શિવ-પાર્વતી જેવો અતૂટ રહે તમારો સાથ.",
+     "ભગવાન તમારી જોડી પર સદા કૃપા રાખે.",
+     "રાધા-કૃષ્ણ જેવો પ્રેમ તમારા જીવનમાં સદા રહે."
+    ]
+   },
+   "thoughts": null,
+   "theme": {
+    "primary": "#B3122E",
+    "secondary": "#F2A007",
+    "ink": "#FFFFFF",
+    "accent": "#F2A007"
+   },
+   "motif": "hearts"
+  },
+  "wedding": {
+   "title": "લગ્નની શુભેચ્છા: વર-કન્યાના નામ સાથે અભિનંદન કાર્ડ",
+   "desc": "નવદંપતીને લગ્નનાં અભિનંદન અને શુભેચ્છા સંદેશ. વર-કન્યાના નામ અને ફોટો સાથે 10 ડિઝાઇનમાં વેડિંગ કાર્ડ બનાવો.",
+   "h1": "લગ્નની શુભેચ્છા",
+   "sub": "વર-કન્યાનાં નામ લખો, ઇચ્છા હોય તો ફોટો મૂકો અને અભિનંદન કાર્ડ બનાવીને મોકલો.",
+   "body": "<h2>નવદંપતીને અભિનંદન</h2><p>લગ્નની શુભેચ્છામાં નવા જીવનની શરૂઆત માટે આશીર્વાદ, પ્રેમ અને સાથની દુઆ આપવામાં આવે છે. જો તમે લગ્નમાં જઈ શકતા ન હો, તો નામવાળું કાર્ડ મોકલીને શુભેચ્છા જરૂર આપો.</p>",
+   "card_title": "લગ્નની શુભેચ્છા",
+   "from": "{from} તરફથી હાર્દિક અભિનંદન",
+   "rels": [
+    [
+     "all",
+     "સૌ માટે"
+    ],
+    [
+     "friend",
+     "મિત્ર માટે"
+    ],
+    [
+     "family",
+     "પરિવાર માટે"
+    ],
+    [
+     "sibling",
+     "ભાઈ/બહેન માટે"
+    ],
+    [
+     "business",
+     "બિઝનેસ/ગ્રાહક માટે"
+    ],
+    [
+     "devotional",
+     "ભક્તિમય"
+    ]
+   ],
+   "wishes": {
+    "all": [
+     "નવા જીવનની શરૂઆતે ઢગલો શુભેચ્છા. તમારી જોડી સદા સલામત રહે.",
+     "પ્રેમ, વિશ્વાસ અને ખુશીઓથી ભરેલો રહે તમારો નવો સફર.",
+     "સપ્તપદીનાં સાતેય વચન તમારા જીવનને સુંદર બનાવે."
+    ],
+    "friend": [
+     "છેવટે તારાં પણ લગ્ન થઈ ગયાં! નવા સફર માટે ઢગલો શુભેચ્છા.",
+     "દોસ્ત, તમે બંને હંમેશાં આમ જ ખુશ રહો.",
+     "તારા લગ્નમાં સૌથી વધુ નાચનાર હું જ હોઈશ. અભિનંદન!"
+    ],
+    "family": [
+     "અમારા પરિવારમાં નવા સભ્યનું સ્વાગત છે. લગ્નની શુભેચ્છા!",
+     "વડીલોના આશીર્વાદ સદા તમારી સાથે રહે.",
+     "બંને પરિવારોનો આ સંબંધ હંમેશાં પ્રેમથી ભરેલો રહે."
+    ],
+    "sibling": [
+     "મારા વહાલા ભાઈ/બહેન, નવા જીવનની ઢગલો શુભેચ્છા!",
+     "તને આટલો ખુશ જોઈને હૈયું ભરાઈ આવ્યું.",
+     "નવું ઘર, નવો સાથ, પણ આપણો પ્રેમ હંમેશાં એવો જ રહેશે."
+    ],
+    "business": [
+     "આપના લગ્ન પ્રસંગે અમારા તરફથી હાર્દિક શુભેચ્છા.",
+     "આપનું દાંપત્યજીવન સુખ અને સફળતાથી ભરેલું રહે.",
+     "આખી ટીમ તરફથી નવદંપતીને અભિનંદન."
+    ],
+    "devotional": [
+     "ગણપતિ બાપ્પા તમારા નવા જીવનનાં બધાં વિઘ્ન દૂર કરે.",
+     "સીતા-રામ જેવી આદર્શ રહે તમારી જોડી.",
+     "પ્રભુના આશીર્વાદ તમારા ઘર-આંગણે સદા રહે."
+    ]
+   },
+   "thoughts": null,
+   "theme": {
+    "primary": "#8A1538",
+    "secondary": "#E0A100",
+    "ink": "#FFFFFF",
+    "accent": "#F2A007"
+   },
+   "motif": "kalash"
+  },
+  "engagement": {
+   "title": "સગાઈની શુભેચ્છા: ભાવિ વર-કન્યાના નામ સાથે કાર્ડ",
+   "desc": "સગાઈ (એન્ગેજમેન્ટ)નાં અભિનંદન અને શુભેચ્છા સંદેશ. કપલના નામ અને ફોટો સાથે 10 ડિઝાઇનમાં કાર્ડ બનાવો.",
+   "h1": "સગાઈની શુભેચ્છા",
+   "sub": "બંનેનાં નામ લખો, વીંટીની ખુશીનું કાર્ડ બનાવો અને મોકલો.",
+   "body": "<h2>સગાઈનાં અભિનંદન</h2><p>સગાઈ નવા સંબંધનું પહેલું વચન છે. અભિનંદન સંદેશમાં બંનેને નવા સફરની શુભેચ્છા આપો અને લગ્નની તૈયારીઓ માટે ઉત્સાહ બતાવો.</p>",
+   "card_title": "સગાઈની શુભેચ્છા",
+   "from": "{from} તરફથી ઢગલો શુભેચ્છા",
+   "rels": [
+    [
+     "all",
+     "સૌ માટે"
+    ],
+    [
+     "friend",
+     "મિત્ર માટે"
+    ],
+    [
+     "family",
+     "પરિવાર માટે"
+    ],
+    [
+     "sibling",
+     "ભાઈ/બહેન માટે"
+    ],
+    [
+     "business",
+     "બિઝનેસ/ગ્રાહક માટે"
+    ],
+    [
+     "devotional",
+     "ભક્તિમય"
+    ]
+   ],
+   "wishes": {
+    "all": [
+     "સગાઈનાં ઢગલો અભિનંદન! આ વચન આજીવન સાથ બને.",
+     "નવા સંબંધની પહેલી ખુશી હંમેશાં રહે.",
+     "તમારી જોડીને કોઈની નજર ન લાગે."
+    ],
+    "friend": [
+     "વીંટી પહેરી લીધી, હવે લગ્નની પાર્ટીની રાહ છે! અભિનંદન દોસ્ત.",
+     "તમે બંને સાથે ખૂબ સરસ લાગો છો.",
+     "નવા સફરની શરૂઆતે ઢગલો પ્રેમ."
+    ],
+    "family": [
+     "અમારા ઘરની ખુશીઓ બમણી થઈ ગઈ. સગાઈની શુભેચ્છા!",
+     "બંને પરિવારોનો આ સંબંધ સદા સુખી રહે.",
+     "વડીલોના આશીર્વાદ તમારી સાથે છે."
+    ],
+    "sibling": [
+     "મારા ભાઈ/બહેનની સગાઈ! આજે સૌથી ખુશ હું છું.",
+     "તારા નવા જીવનના પહેલા પગથિયે ઢગલો શુભેચ્છા.",
+     "હવે લગ્નની તૈયારી શરૂ! અભિનંદન."
+    ],
+    "business": [
+     "આપની સગાઈ પ્રસંગે અમારા તરફથી હાર્દિક શુભેચ્છા.",
+     "આવનારું જીવન સુખ અને સફળતાથી ભરેલું રહે.",
+     "નવા સંબંધ માટે આખી ટીમ તરફથી અભિનંદન."
+    ],
+    "devotional": [
+     "ભગવાન આ પવિત્ર સંબંધ પર કૃપા રાખે.",
+     "મા પાર્વતી અને ભોળાનાથ તમારી જોડીને આશીર્વાદ આપે.",
+     "પ્રભુ તમારા આવનારા જીવનને મંગલમય બનાવે."
+    ]
+   },
+   "thoughts": null,
+   "theme": {
+    "primary": "#C2185B",
+    "secondary": "#D4A373",
+    "ink": "#FFFFFF",
+    "accent": "#F2A007"
+   },
+   "motif": "rings"
+  },
+  "good-morning": {
+   "title": "ગુડ મોર્નિંગ સુવિચાર: દરરોજ નવા સુવિચાર સાથે સુપ્રભાત કાર્ડ",
+   "desc": "દરરોજ નવો સુવિચાર અને ગુડ મોર્નિંગ સંદેશ. મિત્ર, પરિવાર કે ગ્રાહકો માટે તમારા નામ સાથે સુપ્રભાત કાર્ડ બનાવો.",
+   "h1": "સુપ્રભાત: આજનો સુવિચાર",
+   "sub": "દરરોજ નવો સુવિચાર. સ્ટાઇલ પસંદ કરો, નામ લખો અને સવાર-સવારમાં પોતાનાંને મોકલો.",
+   "body": "<h2>સુપ્રભાત સંદેશ શા માટે</h2><p>સવારનો એક સારો વિચાર આખા દિવસની સોચ બદલી શકે છે. આ પેજ પર દરરોજ નવો સુવિચાર આપોઆપ આવે છે. ન ગમે તો બીજો સુવિચાર પસંદ કરો.</p>",
+   "card_title": "સુપ્રભાત",
+   "from": "{from} તરફથી સુપ્રભાત",
+   "rels": [
+    [
+     "all",
+     "સૌ માટે"
+    ],
+    [
+     "friend",
+     "મિત્ર માટે"
+    ],
+    [
+     "family",
+     "પરિવાર માટે"
+    ],
+    [
+     "sibling",
+     "ભાઈ/બહેન માટે"
+    ],
+    [
+     "spouse",
+     "પતિ/પત્ની માટે"
+    ],
+    [
+     "business",
+     "બિઝનેસ/ગ્રાહક માટે"
+    ],
+    [
+     "devotional",
+     "ભક્તિમય"
+    ]
+   ],
+   "wishes": {
+    "all": [
+     "તમારો દિવસ મંગલમય રહે.",
+     "નવી સવાર, નવી આશાઓ. સુપ્રભાત!",
+     "સ્મિત સાથે દિવસની શરૂઆત કરો."
+    ],
+    "friend": [
+     "ઊઠ દોસ્ત, આજનો દિવસ તારો છે!",
+     "ચા તૈયાર છે, બસ તારા સ્મિતની ખોટ છે.",
+     "દોસ્તીની મીઠાશ સાથે સુપ્રભાત!"
+    ],
+    "family": [
+     "તમારી સવાર પ્રેમ અને શાંતિથી ભરેલી રહે.",
+     "પરિવાર સાથેની દરેક સવાર ખાસ છે.",
+     "તમારો આજનો દિવસ સ્વાસ્થ્ય અને ખુશીથી ભરેલો રહે."
+    ],
+    "sibling": [
+     "ગુડ મોર્નિંગ, મારા વહાલા ભાઈ/બહેન!",
+     "આજનો દિવસ તારા માટે ઢગલો ખુશી લાવે.",
+     "જલદી ઊઠ, આજે ઘણું સારું થવાનું છે."
+    ],
+    "spouse": [
+     "તારા સ્મિત સાથે મારી સવાર પૂરી થાય છે.",
+     "સુપ્રભાત, મારા જીવનની સૌથી વહાલી સવાર!",
+     "આજનો દિવસ પણ તારા નામે."
+    ],
+    "business": [
+     "આપનો દિવસ સફળ રહે. સુપ્રભાત!",
+     "અમારી સાથે રહેવા બદલ આભાર. શુભ દિવસ!",
+     "નવી સવાર, નવી તકો. આપનો દિવસ શુભ રહે."
+    ],
+    "devotional": [
+     "ભગવાનનું નામ લઈને દિવસની શરૂઆત કરો. જય શ્રી કૃષ્ણ!",
+     "પ્રભુ તમારું આજનું દરેક કામ સફળ કરે.",
+     "જય માતાજી! તમારો દિવસ મંગલમય રહે."
+    ]
+   },
+   "thoughts": [
+    "નાનાં નાનાં પગલાં પણ મોટી મંઝિલ સુધી લઈ જાય છે.",
+    "જે વીતી ગયું તે છોડો, આજને વધુ સારો બનાવો.",
+    "મહેનતનો કોઈ શોર્ટકટ નથી.",
+    "સ્મિત મફત છે, પણ તેની કિંમત ઘણી મોટી છે.",
+    "બીજાની મદદ કરવાથી મન હળવું થાય છે.",
+    "ભૂલ કરવી ખરાબ નથી, તેમાંથી ન શીખવું ખરાબ છે.",
+    "ધીરજ રાખો, સાચા સમયે બધું સારું થશે.",
+    "તમારી સરખામણી ફક્ત ગઈકાલના તમારી સાથે કરો.",
+    "શાંત મન સૌથી સારા નિર્ણય લે છે.",
+    "જે તમારી પાસે છે, તેના માટે આભારી રહો.",
+    "આજનું કામ કાલ પર ન ટાળો.",
+    "સારા વિચાર સારાં કર્મોની શરૂઆત છે.",
+    "સ્વાસ્થ્ય સૌથી મોટું ધન છે, તેનું ધ્યાન રાખો.",
+    "મીઠું બોલવામાં કોઈ ખર્ચ નથી.",
+    "દરેક સવાર એક નવી તક છે.",
+    "ડરની પેલે પાર જ જીત છે.",
+    "સાચા સંબંધો સમય અને વિશ્વાસથી બને છે.",
+    "શીખવાનું ક્યારેય બંધ ન કરો, ઉંમર ગમે તે હોય.",
+    "જે બીજાને માન આપે છે, તેને માન મળે છે.",
+    "ઓછું બોલો, વધુ સાંભળો.",
+    "સપનાં જુઓ અને તેને પૂરાં કરવાની હિંમત રાખો.",
+    "ખુશ રહેવું એક આદત છે, તેને રોજ અપનાવો.",
+    "મુશ્કેલીઓ આપણને મજબૂત બનાવવા આવે છે.",
+    "તમારું શ્રેષ્ઠ આપો, બાકી ભગવાન પર છોડો.",
+    "સમયની કદર કરો, તે પાછો નથી આવતો.",
+    "સાદગીમાં જ સાચી સુંદરતા છે.",
+    "જ્યાં ચાહ, ત્યાં રાહ.",
+    "આજે કોઈને એક સારી વાત જરૂર કહો.",
+    "હાર માનતાં પહેલાં એક વાર વધુ પ્રયત્ન કરો.",
+    "મન સાફ હોય તો દરેક દિવસ તહેવાર છે."
+   ],
+   "theme": {
+    "primary": "#E76F00",
+    "secondary": "#F7C21A",
+    "ink": "#FFFFFF",
+    "accent": "#F2A007"
+   },
+   "motif": "sun"
+  }
+ },
+ "en": {
+  "birthday": {
+   "title": "Birthday Wishes: Make a Birthday Card with Name and Photo",
+   "desc": "Birthday wishes for a friend, family, brother or sister, husband or wife, or customers. Make a birthday card in 10 designs, with or without a photo.",
+   "h1": "Birthday Wishes",
+   "sub": "Pick a wish that fits your relationship, add a name and photo, and make a beautiful birthday card.",
+   "body": "<h2>How to send a birthday wish</h2><p>Even a short message can make someone's day. Always use their name, and add something only the two of you share. Light humour works for friends, gratitude for parents, and warm, respectful words for customers.</p><p>Photo cards work well for status updates and stories; cards without a photo are great for group chats. Sending at midnight? Make the card in advance.</p>",
+   "card_title": "Happy Birthday",
+   "from": "With love from {from}",
+   "rels": [
+    [
+     "all",
+     "For everyone"
+    ],
+    [
+     "friend",
+     "For a friend"
+    ],
+    [
+     "family",
+     "For family"
+    ],
+    [
+     "sibling",
+     "For brother/sister"
+    ],
+    [
+     "spouse",
+     "For husband/wife"
+    ],
+    [
+     "business",
+     "For business/customers"
+    ],
+    [
+     "devotional",
+     "Devotional"
+    ]
+   ],
+   "wishes": {
+    "all": [
+     "Wishing you a day as bright as your smile. Happy Birthday!",
+     "A new year of hope, joy and success awaits you.",
+     "Keep smiling, always. Many happy returns of the day!"
+    ],
+    "friend": [
+     "To my favourite partner in crime, may all your wishes come true!",
+     "Here's to our friendship and many more birthday parties together.",
+     "I'll be by your side at every milestone. Happy Birthday, buddy!"
+    ],
+    "family": [
+     "You are the light of our home. Happy Birthday!",
+     "May God bless you with a long, healthy life.",
+     "May your love and blessings always stay with us."
+    ],
+    "sibling": [
+     "To my brother/sister and my biggest strength, Happy Birthday!",
+     "All our fights aside, home is incomplete without you.",
+     "May every day be as sweet as our childhood memories."
+    ],
+    "spouse": [
+     "Thank you for making my life beautiful. Happy Birthday, my love!",
+     "Every birthday, I love you more than the last.",
+     "Your smile is the best gift I've ever had."
+    ],
+    "business": [
+     "Warm birthday wishes from all of us. Your trust means everything.",
+     "May the year ahead bring you success and prosperity.",
+     "Thank you for being part of our family. Happy Birthday!"
+    ],
+    "devotional": [
+     "May God guide you at every step. Happy Birthday!",
+     "May the Lord bless you with happiness, peace and good health.",
+     "May God hear every prayer and grant every wish."
+    ]
+   },
+   "thoughts": null,
+   "theme": {
+    "primary": "#7B2CBF",
+    "secondary": "#FF5D8F",
+    "ink": "#FFFFFF",
+    "accent": "#F2A007"
+   },
+   "motif": "cake"
+  },
+  "anniversary": {
+   "title": "Anniversary Wishes: Couple Card with Names and Photo",
+   "desc": "Wedding anniversary wishes for your spouse, friends, siblings or parents. Make a card with the couple's names and photo in 10 designs.",
+   "h1": "Anniversary Wishes",
+   "sub": "Add both names, a couple photo if you like, and pick a wish that fits your relationship.",
+   "body": "<h2>Writing an anniversary message</h2><p>An anniversary celebrates a journey shared. Thank your parents for their years together, compliment your friends on their bond, and for your own partner, a shared memory always works best.</p>",
+   "card_title": "Happy Anniversary",
+   "from": "Warm wishes from {from}",
+   "rels": [
+    [
+     "all",
+     "For everyone"
+    ],
+    [
+     "friend",
+     "For a friend"
+    ],
+    [
+     "family",
+     "For family"
+    ],
+    [
+     "sibling",
+     "For brother/sister"
+    ],
+    [
+     "spouse",
+     "For husband/wife"
+    ],
+    [
+     "business",
+     "For business/customers"
+    ],
+    [
+     "devotional",
+     "Devotional"
+    ]
+   ],
+   "wishes": {
+    "all": [
+     "May your bond stay strong forever. Happy Anniversary!",
+     "May your journey of love and trust grow more beautiful each year.",
+     "Wishing you many more years of togetherness."
+    ],
+    "friend": [
+     "You two make us believe in love. Happy Anniversary!",
+     "Keep laughing and bickering together. Congratulations!",
+     "Cheers to my favourite couple!"
+    ],
+    "family": [
+     "Mom and Dad, your bond is our biggest inspiration. Happy Anniversary!",
+     "May your love and blessings always be with us.",
+     "May the home you built stay full of love."
+    ],
+    "sibling": [
+     "To my brother/sister and their better half, stay happy always!",
+     "May your love grow deeper every year.",
+     "Congratulations to our family's sweetest couple."
+    ],
+    "spouse": [
+     "Every year with you is better than the last. Happy Anniversary, my love!",
+     "I promise to hold your hand through every turn of life.",
+     "Meeting you was the best decision of my life."
+    ],
+    "business": [
+     "Warm anniversary wishes to you and your spouse.",
+     "May your married life be full of joy and prosperity.",
+     "Congratulations from our entire team."
+    ],
+    "devotional": [
+     "May your bond be as unbreakable as Shiva and Parvati's.",
+     "May God always bless your union.",
+     "May love like Radha and Krishna's fill your life."
+    ]
+   },
+   "thoughts": null,
+   "theme": {
+    "primary": "#B3122E",
+    "secondary": "#F2A007",
+    "ink": "#FFFFFF",
+    "accent": "#F2A007"
+   },
+   "motif": "hearts"
+  },
+  "wedding": {
+   "title": "Wedding Wishes: Congratulations Card with Bride and Groom Names",
+   "desc": "Wedding congratulations and wishes for the newlyweds. Make a wedding card with the couple's names and photo in 10 designs.",
+   "h1": "Wedding Wishes",
+   "sub": "Add the bride's and groom's names, a photo if you like, and send your congratulations.",
+   "body": "<h2>Congratulating the newlyweds</h2><p>Wedding wishes bless a new beginning with love and companionship. If you can't attend, a personalised card is a lovely way to send your blessings.</p>",
+   "card_title": "Wedding Wishes",
+   "from": "Congratulations from {from}",
+   "rels": [
+    [
+     "all",
+     "For everyone"
+    ],
+    [
+     "friend",
+     "For a friend"
+    ],
+    [
+     "family",
+     "For family"
+    ],
+    [
+     "sibling",
+     "For brother/sister"
+    ],
+    [
+     "business",
+     "For business/customers"
+    ],
+    [
+     "devotional",
+     "Devotional"
+    ]
+   ],
+   "wishes": {
+    "all": [
+     "Best wishes as you begin your new life together.",
+     "May your journey be filled with love, trust and joy.",
+     "May the seven vows make your life beautiful."
+    ],
+    "friend": [
+     "You finally got married! Best wishes for the journey ahead.",
+     "Stay this happy forever, my friend.",
+     "I'll be the one dancing the most at your wedding. Congratulations!"
+    ],
+    "family": [
+     "Welcome to our family! Happy married life.",
+     "May the blessings of elders always be with you.",
+     "May this bond between two families stay full of love."
+    ],
+    "sibling": [
+     "My dear brother/sister, congratulations on your new life!",
+     "Seeing you this happy fills my heart.",
+     "New home, new partner, but our love stays the same."
+    ],
+    "business": [
+     "Warm wishes on your wedding from all of us.",
+     "May your married life be full of joy and success.",
+     "Congratulations to the newlyweds from our whole team."
+    ],
+    "devotional": [
+     "May Lord Ganesha remove every obstacle from your new life.",
+     "May your bond be as ideal as Sita and Ram's.",
+     "May God's blessings fill your home forever."
+    ]
+   },
+   "thoughts": null,
+   "theme": {
+    "primary": "#8A1538",
+    "secondary": "#E0A100",
+    "ink": "#FFFFFF",
+    "accent": "#F2A007"
+   },
+   "motif": "kalash"
+  },
+  "engagement": {
+   "title": "Engagement Wishes: Card with the Couple's Names",
+   "desc": "Engagement congratulations and wishes. Make a card with the couple's names and photo in 10 designs.",
+   "h1": "Engagement Wishes",
+   "sub": "Add both names and send a card celebrating the ring.",
+   "body": "<h2>Congratulating an engaged couple</h2><p>An engagement is the first promise of a new relationship. Wish the couple well for the journey ahead and share your excitement for the wedding.</p>",
+   "card_title": "Happy Engagement",
+   "from": "Best wishes from {from}",
+   "rels": [
+    [
+     "all",
+     "For everyone"
+    ],
+    [
+     "friend",
+     "For a friend"
+    ],
+    [
+     "family",
+     "For family"
+    ],
+    [
+     "sibling",
+     "For brother/sister"
+    ],
+    [
+     "business",
+     "For business/customers"
+    ],
+    [
+     "devotional",
+     "Devotional"
+    ]
+   ],
+   "wishes": {
+    "all": [
+     "Congratulations on your engagement! May this promise last a lifetime.",
+     "May the joy of this new bond stay forever.",
+     "Wishing the happy couple all the best."
+    ],
+    "friend": [
+     "The ring is on, now I'm waiting for the wedding party! Congrats!",
+     "You two look amazing together.",
+     "Lots of love as you start this journey."
+    ],
+    "family": [
+     "Our family's happiness just doubled. Congratulations!",
+     "May this bond between two families always flourish.",
+     "The blessings of the elders are with you both."
+    ],
+    "sibling": [
+     "My brother/sister is engaged! I'm the happiest person today.",
+     "Best wishes on the first step of your new life.",
+     "Let the wedding preparations begin! Congratulations."
+    ],
+    "business": [
+     "Warm wishes on your engagement from all of us.",
+     "May the life ahead be full of joy and success.",
+     "Congratulations from our whole team."
+    ],
+    "devotional": [
+     "May God bless this sacred bond.",
+     "May Parvati and Shiva bless you both.",
+     "May the Lord make your life ahead auspicious."
+    ]
+   },
+   "thoughts": null,
+   "theme": {
+    "primary": "#C2185B",
+    "secondary": "#D4A373",
+    "ink": "#FFFFFF",
+    "accent": "#F2A007"
+   },
+   "motif": "rings"
+  },
+  "good-morning": {
+   "title": "Good Morning Quotes: Daily Thought Cards with Your Name",
+   "desc": "A new thought every day with good morning wishes. Make a good morning card with your name for friends, family or customers.",
+   "h1": "Good Morning: Thought of the Day",
+   "sub": "A new thought every day. Pick a style, add your name and brighten someone's morning.",
+   "body": "<h2>Why send a good morning message</h2><p>A good thought in the morning can change the whole day. This page shows a new thought automatically every day. Don't like it? Pick another.</p>",
+   "card_title": "Good Morning",
+   "from": "Good morning from {from}",
+   "rels": [
+    [
+     "all",
+     "For everyone"
+    ],
+    [
+     "friend",
+     "For a friend"
+    ],
+    [
+     "family",
+     "For family"
+    ],
+    [
+     "sibling",
+     "For brother/sister"
+    ],
+    [
+     "spouse",
+     "For husband/wife"
+    ],
+    [
+     "business",
+     "For business/customers"
+    ],
+    [
+     "devotional",
+     "Devotional"
+    ]
+   ],
+   "wishes": {
+    "all": [
+     "Have a wonderful day ahead.",
+     "New morning, new hopes. Good morning!",
+     "Start your day with a smile."
+    ],
+    "friend": [
+     "Wake up, buddy, today is your day!",
+     "The tea is ready, only your smile is missing.",
+     "Good morning with all the sweetness of friendship!"
+    ],
+    "family": [
+     "May your morning be full of love and calm.",
+     "Every morning with family is special.",
+     "Wishing you a healthy, happy day."
+    ],
+    "sibling": [
+     "Good morning, my dear brother/sister!",
+     "May today bring you lots of joy.",
+     "Rise and shine, something good is on its way."
+    ],
+    "spouse": [
+     "My morning is complete with your smile.",
+     "Good morning to the best part of my life!",
+     "Another day that belongs to you."
+    ],
+    "business": [
+     "Wishing you a successful and productive day.",
+     "Thank you for staying with us. Have a great day!",
+     "New morning, new opportunities."
+    ],
+    "devotional": [
+     "Start the day with God's name. Jai Shri Krishna!",
+     "May the Lord bless everything you do today.",
+     "Ram Ram! May your day be blessed."
+    ]
+   },
+   "thoughts": [
+    "Small steps can take you to big destinations.",
+    "Let go of yesterday and make today better.",
+    "There is no shortcut to hard work.",
+    "A smile costs nothing but means a lot.",
+    "Helping others lightens your own heart.",
+    "Mistakes are fine; not learning from them isn't.",
+    "Be patient; good things happen at the right time.",
+    "Compare yourself only with who you were yesterday.",
+    "A calm mind makes the best decisions.",
+    "Be grateful for what you already have.",
+    "Don't put off today's work until tomorrow.",
+    "Good thoughts are the seeds of good deeds.",
+    "Health is the greatest wealth; take care of it.",
+    "Kind words cost nothing.",
+    "Every morning is a new chance.",
+    "Victory lies just beyond fear.",
+    "True relationships are built on time and trust.",
+    "Never stop learning, whatever your age.",
+    "Respect others and you will be respected.",
+    "Speak less, listen more.",
+    "Dream big and find the courage to chase it.",
+    "Happiness is a habit; practise it daily.",
+    "Challenges come to make us stronger.",
+    "Give your best and leave the rest to God.",
+    "Value time; it never comes back.",
+    "True beauty lies in simplicity.",
+    "Where there's a will, there's a way.",
+    "Say something kind to someone today.",
+    "Try once more before you give up.",
+    "With a clear heart, every day is a festival."
+   ],
+   "theme": {
+    "primary": "#E76F00",
+    "secondary": "#F7C21A",
+    "ink": "#FFFFFF",
+    "accent": "#F2A007"
+   },
+   "motif": "sun"
+  }
+ }
+}
