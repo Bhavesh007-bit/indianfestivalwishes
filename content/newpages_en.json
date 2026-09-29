@@ -36,51 +36,51 @@
    "types": [
     {
      "key": "shraddhanjali",
-     "label": "Shraddhanjali (Tribute)",
+     "label": "Tribute",
      "title": "Heartfelt Tribute",
-     "top": "Om Shanti"
+     "top": "In Loving Memory"
     },
     {
      "key": "besnu",
-     "label": "Besnu",
-     "title": "Besnu (Prayer Meeting)",
-     "top": "Om Shanti"
+     "label": "Prayer meeting (besnu)",
+     "title": "Prayer Meeting",
+     "top": "In Loving Memory"
     },
     {
      "key": "uthamna",
-     "label": "Uthamnu / Uthamna",
-     "title": "Uthamna",
-     "top": "Om Shanti"
+     "label": "Condolence meeting (uthamna)",
+     "title": "Condolence Meeting",
+     "top": "In Loving Memory"
     },
     {
      "key": "prarthana",
-     "label": "Prarthana Sabha",
-     "title": "Prayer Meeting",
-     "top": "Om Shanti"
+     "label": "Prayer service",
+     "title": "Prayer Service",
+     "top": "In Loving Memory"
     },
     {
      "key": "panidhol",
-     "label": "Panidhol",
-     "title": "Panidhol",
-     "top": "Om Shanti"
+     "label": "Water offering ritual (panidhol)",
+     "title": "Water Offering Ritual",
+     "top": "In Loving Memory"
     },
     {
      "key": "barmu",
-     "label": "Barmu",
-     "title": "Barmu",
-     "top": "Om Shanti"
+     "label": "Twelfth-day ritual",
+     "title": "Twelfth-Day Ritual",
+     "top": "In Loving Memory"
     },
     {
      "key": "terahvi",
-     "label": "Terahvi",
-     "title": "Terahvi",
-     "top": "Om Shanti"
+     "label": "Thirteenth-day ritual",
+     "title": "Thirteenth-Day Ritual",
+     "top": "In Loving Memory"
     },
     {
      "key": "pagdi",
-     "label": "Terahvi and Pagdi Rasam",
-     "title": "Terahvi and Pagdi Rasam",
-     "top": "Om Shanti"
+     "label": "Thirteenth-day & turban ceremony",
+     "title": "Thirteenth-Day & Turban Ceremony",
+     "top": "In Loving Memory"
     }
    ],
    "wordings": [

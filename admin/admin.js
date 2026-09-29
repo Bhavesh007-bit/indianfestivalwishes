@@ -4,47 +4,81 @@
 
   /* ================================================================ data */
 
-  var LANGS = [["hi", "हिंदी"], ["gu", "ગુજરાતી"], ["en", "English"]];
-  var LANG_SHORT = { hi: "Hindi", gu: "Gujarati", en: "English" };
+  /* ---- UI language (hi / gu / en). Strings live in i18n.js (I18N). ---- */
+  var LANG_KEY = "ifw-admin-lang";
+  var UI_LANGS = [["hi", "हिं", "हिंदी"], ["gu", "ગુ", "ગુજરાતી"], ["en", "EN", "English"]];
+  var LOCALES = { hi: "hi-IN", gu: "gu-IN", en: "en-IN" };
+  var LANG = pickLang();
 
+  function pickLang() {
+    try {
+      var s = localStorage.getItem(LANG_KEY);
+      if (s && I18N[s]) return s;
+    } catch (e) { /* storage blocked */ }
+    var list = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""]);
+    for (var i = 0; i < list.length; i++) {
+      var p = String(list[i] || "").toLowerCase().slice(0, 2);
+      if (p === "gu" || p === "hi" || p === "en") return p;
+    }
+    return "en";
+  }
+  function has(key) { return Object.prototype.hasOwnProperty.call(I18N[LANG], key); }
+  // t("key", {x: 1}) -> translated string with {x} filled in; falls back to English, then the key.
+  function t(key, vars) {
+    var d = I18N[LANG] || I18N.en;
+    var s = d[key];
+    if (s == null) s = I18N.en[key];
+    if (s == null) s = key;
+    if (vars) s = s.replace(/\{(\w+)\}/g, function (m, k) { return vars[k] != null ? String(vars[k]) : m; });
+    return s;
+  }
+  // count-aware: uses "key.one" when n === 1 and the current language defines it
+  function tn(key, n, vars) {
+    vars = vars || {};
+    vars.n = n;
+    return t(n === 1 && has(key + ".one") ? key + ".one" : key, vars);
+  }
+  function langName(code) { return t("lang.name." + code); }
+  function pageName(k) { return k === "all" ? t("page.all") : (I18N.en["page." + k] ? t("page." + k) : k); }
+
+  // Content languages (the site's languages; settings are stored per language)
+  var LANGS = [["hi"], ["gu"], ["en"]];
+
+  // [page tag, flag "new"] — tags match data-aff / pageTag in build.js
   var PAGES = [
-    ["home", "Home"], ["navratri", "Navratri"], ["navratri-day", "Navratri ke 9 din"],
-    ["recipes", "Vrat recipes"], ["garba", "Garba"],
-    ["dussehra", "Dussehra", 1], ["karva-chauth", "Karva Chauth", 1], ["diwali", "Diwali", 1],
-    ["birthday", "Birthday"], ["anniversary", "Anniversary"], ["wedding", "Wedding"],
-    ["engagement", "Engagement"], ["good-morning", "Good Morning"], ["info", "About/Contact"]
+    ["home"], ["navratri"], ["navratri-day"], ["recipes"], ["garba"],
+    ["dussehra"], ["karva-chauth"], ["diwali"],
+    ["birthday"], ["anniversary"], ["wedding"], ["engagement"], ["good-morning"],
+    ["shraddhanjali", 1], ["invitations", 1],
+    ["invite-wedding", 1], ["invite-engagement", 1], ["invite-birthday-party", 1], ["invite-griha-pravesh", 1],
+    ["invite-baby-shower", 1], ["invite-naming-ceremony", 1], ["invite-puja", 1], ["invite-shop-opening", 1],
+    ["info"]
   ];
-  var PAGE_NAME = {};
-  PAGES.forEach(function (p) { PAGE_NAME[p[0]] = p[1]; });
-  PAGE_NAME.all = "Sabhi pages";
 
   var ALL_RELS = ["all", "friend", "family", "sibling", "spouse", "business", "devotional"];
   var OCCASIONS = [
-    ["navratri", "Navratri", ALL_RELS],
-    ["dussehra", "Dussehra", ALL_RELS],
-    ["karva-chauth", "Karva Chauth", ["all", "spouse", "family", "friend", "devotional"]],
-    ["diwali", "Diwali", ALL_RELS],
-    ["birthday", "Birthday", ALL_RELS],
-    ["anniversary", "Anniversary", ALL_RELS],
-    ["wedding", "Wedding", ["all", "friend", "family", "sibling", "business", "devotional"]],
-    ["engagement", "Engagement", ["all", "friend", "family", "sibling", "business", "devotional"]],
-    ["good-morning", "Good Morning", ALL_RELS]
+    ["navratri", ALL_RELS],
+    ["dussehra", ALL_RELS],
+    ["karva-chauth", ["all", "spouse", "family", "friend", "devotional"]],
+    ["diwali", ALL_RELS],
+    ["birthday", ALL_RELS],
+    ["anniversary", ALL_RELS],
+    ["wedding", ["all", "friend", "family", "sibling", "business", "devotional"]],
+    ["engagement", ["all", "friend", "family", "sibling", "business", "devotional"]],
+    ["good-morning", ALL_RELS]
   ];
   var OCC = {};
   OCCASIONS.forEach(function (o) { OCC[o[0]] = o; });
-  var RELS = { all: "Sabhi", friend: "Dost", family: "Parivar", sibling: "Bhai/Bahen", spouse: "Pati/Patni", business: "Business/Grahak", devotional: "Bhaktimay" };
+  function relName(r) { return I18N.en["rel." + r] ? t("rel." + r) : r; }
   var SPEEDS = { slow: 35, medium: 60, fast: 95 };
 
+  // [id, icon]; titles come from "view.<id>.title/.sub/.tab"
   var VIEWS = [
-    ["dashboard", "Haalat", "Site par abhi kya chalu hai", "grid"],
-    ["products", "Products", "Amazon affiliate products", "bag"],
-    ["telegram", "Telegram", "Channel box aur neeche ki patti", "send"],
-    ["patti", "Patti", "Upar chalti announcement patti", "megaphone"],
-    ["ads", "Ads", "AdSense aur Google Analytics", "chart"],
-    ["wishes", "Wishes", "Apni wishes aur suvichar", "message"],
-    ["backup", "Backup", "Purane versions, export aur import", "database"],
-    ["account", "Account", "Password aur login", "shield"]
+    ["dashboard", "grid"], ["products", "bag"], ["telegram", "send"], ["patti", "megaphone"],
+    ["ads", "chart"], ["wishes", "message"], ["backup", "database"], ["account", "shield"]
   ];
+  function viewTitle(id) { return t("view." + id + ".title"); }
+  function viewTab(id) { return has("view." + id + ".tab") ? t("view." + id + ".tab") : viewTitle(id); }
   var TABS = ["dashboard", "products", "patti", "wishes"];
 
   /* =============================================================== icons */
@@ -142,16 +176,16 @@
   function reduceMotion() { return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches; }
   function fmtDate(d) {
     try {
-      return new Date(d).toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "2-digit" });
+      return new Date(d).toLocaleString(LOCALES[LANG] || "en-IN", { day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "2-digit", hourCycle: LANG === "en" ? "h12" : "h23" });
     } catch (e) { return String(d); }
   }
   function fmtSize(b) { return b < 1024 ? b + " B" : (b / 1024).toFixed(1) + " KB"; }
   function ago(ts) {
     var s = Math.round((Date.now() - ts) / 1000);
-    if (s < 60) return "abhi abhi";
-    if (s < 3600) return Math.round(s / 60) + " minute pehle";
-    if (s < 86400) return Math.round(s / 3600) + " ghante pehle";
-    return Math.round(s / 86400) + " din pehle";
+    if (s < 60) return t("ago.now");
+    if (s < 3600) return tn("ago.min", Math.round(s / 60));
+    if (s < 86400) return tn("ago.hour", Math.round(s / 3600));
+    return tn("ago.day", Math.round(s / 86400));
   }
 
   /* ================================================================= api */
@@ -167,39 +201,47 @@
     if (opts.headers) Object.keys(opts.headers).forEach(function (k) { headers[k] = opts.headers[k]; });
     return fetch(url, init).then(function (r) {
       var ct = r.headers.get("Content-Type") || "";
-      var p = ct.indexOf("json") >= 0 ? r.json().catch(function () { return {}; }) : r.text().then(function (t) { return { text: t }; });
+      var p = ct.indexOf("json") >= 0 ? r.json().catch(function () { return {}; }) : r.text().then(function (txt) { return { text: txt }; });
       return p.then(function (data) {
         if (r.status === 401 && !opts.allow401) { sessionExpired(); }
         if (!r.ok) {
-          var e = new Error((data && data.error) || ("Error " + r.status));
+          var e = new Error(errText(r.status, data));
           e.status = r.status; e.data = data;
           throw e;
         }
         return data;
       });
     }, function () {
-      var e = new Error("Server se connection nahi ho paaya. Internet check karo.");
+      var e = new Error(t("net.err"));
       e.status = 0;
       throw e;
     });
+  }
+
+  // Server error texts are English; show them as-is in English, a translated summary otherwise.
+  function errText(status, data) {
+    if (LANG === "en" && data && data.error) return data.error;
+    if (status === 413) return t("err.tooBig", { n: status });
+    if (status === 400) return t("err.invalid", { n: status });
+    return t("err.status", { n: status });
   }
 
   /* ============================================================== toasts */
 
   function toast(text, kind) {
     kind = kind || "info";
-    var closeBtn = h("button", { class: "icon-btn", type: "button", "aria-label": "Band karo" }, icon("x"));
-    var t = h("div", { class: "toast " + kind },
+    var closeBtn = h("button", { class: "icon-btn", type: "button", "aria-label": t("btn.close") }, icon("x"));
+    var el = h("div", { class: "toast " + kind },
       h("span", { class: "t-ic" }, icon(kind === "ok" ? "check" : kind === "err" ? "alert" : "info")),
       h("p", { text: text }), closeBtn);
     function kill() {
-      if (!t.parentNode) return;
-      t.classList.add("out");
-      setTimeout(function () { if (t.parentNode) t.parentNode.removeChild(t); }, reduceMotion() ? 0 : 240);
+      if (!el.parentNode) return;
+      el.classList.add("out");
+      setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, reduceMotion() ? 0 : 240);
     }
     closeBtn.addEventListener("click", kill);
     var box = $("toasts");
-    box.appendChild(t);
+    box.appendChild(el);
     while (box.children.length > 3) box.removeChild(box.firstChild);
     setTimeout(kill, kind === "err" ? 8000 : 4200);
   }
@@ -208,10 +250,10 @@
 
   function ask(opts) {
     var d = $("dialog");
-    $("dlg-title").textContent = opts.title || "Pakka?";
+    $("dlg-title").textContent = opts.title || t("dlg.title");
     $("dlg-text").textContent = opts.text || "";
-    $("dlg-ok").textContent = opts.ok || "Haan";
-    $("dlg-cancel").textContent = opts.cancel || "Nahi";
+    $("dlg-ok").textContent = opts.ok || t("dlg.yes");
+    $("dlg-cancel").textContent = opts.cancel || t("dlg.no");
     $("dlg-ok").className = "btn btn-primary" + (opts.danger ? " danger-ok" : "");
     var ic = $("dlg-icon");
     ic.className = "dialog-icon" + (opts.danger ? " danger" : "");
@@ -235,15 +277,16 @@
   var backups = null;
   var openProducts = typeof WeakSet === "function" ? new WeakSet() : null;
   var ui = { lang: {}, wLang: "hi", wOcc: "navratri", wRel: "all", tLang: "hi", pFilter: "", pSearch: "" };
+  var pwState = { cur: "", next: "", again: "" };   // account form; kept here so a language switch keeps typed text
 
   function ensure(d) {
     if (!d || typeof d !== "object" || Array.isArray(d)) d = {};
     function obj(o, k) { if (!o[k] || typeof o[k] !== "object" || Array.isArray(o[k])) o[k] = {}; return o[k]; }
     var a = obj(d, "affiliate");
     if (!Array.isArray(a.products)) a.products = [];
-    var t = obj(d, "telegram");
-    ["title", "text", "button"].forEach(function (k) { obj(t, k); });
-    if (!Array.isArray(t.pages)) t.pages = ["all"];
+    var tg = obj(d, "telegram");
+    ["title", "text", "button"].forEach(function (k) { obj(tg, k); });
+    if (!Array.isArray(tg.pages)) tg.pages = ["all"];
     var an = obj(d, "announcement");
     obj(an, "text");
     obj(d, "ads");
@@ -271,7 +314,7 @@
       $("savebar").hidden = !d;
       var chip = $("save-chip");
       chip.classList.toggle("dirty", d);
-      $("save-chip-text").textContent = d ? "Save baaki hai" : "Sab save hai";
+      $("save-chip-text").textContent = t(d ? "chip.dirty" : "chip.saved");
       refreshNavBadges();
       if (view === "dashboard") renderDashboard();
     });
@@ -279,7 +322,8 @@
 
   /* ================================================================ auth */
 
-  var lockTimer = null;
+  var lockTimer = null, locked = false;
+  var loginMsgState = { fn: null, kind: null };
   function showLogin(msg, kind) {
     document.body.classList.remove("is-booting");
     $("app").hidden = true;
@@ -288,9 +332,16 @@
     loginMsg(msg || "", kind);
     setTimeout(function () { ($("lg-user").value ? $("lg-pass") : $("lg-user")).focus(); }, 30);
   }
+  // text may be a string or a function returning one (re-run when the UI language changes)
   function loginMsg(text, kind) {
-    var m = $("login-msg");
+    var fn = typeof text === "function" ? text : text ? function () { return text; } : null;
+    loginMsgState = { fn: fn, kind: kind };
+    paintLoginMsg();
+  }
+  function paintLoginMsg() {
+    var m = $("login-msg"), kind = loginMsgState.kind;
     clear(m);
+    var text = loginMsgState.fn ? loginMsgState.fn() : "";
     if (!text) { m.hidden = true; return; }
     m.hidden = false;
     m.className = "login-msg" + (kind === "info" ? " info" : "");
@@ -302,11 +353,13 @@
     var end = Date.now() + seconds * 1000;
     clearInterval(lockTimer);
     btn.disabled = true;
+    locked = true;
     function tick() {
       var left = Math.max(0, Math.round((end - Date.now()) / 1000));
-      if (!left) { clearInterval(lockTimer); btn.disabled = false; loginMsg("Ab dobara koshish kar sakte ho.", "info"); return; }
+      if (!left) { clearInterval(lockTimer); locked = false; btn.disabled = false; loginMsg(function () { return t("login.retryNow"); }, "info"); return; }
       var mm = Math.floor(left / 60), ss = left % 60;
-      loginMsg("Bahut baar galat password. " + mm + ":" + (ss < 10 ? "0" : "") + ss + " minute baad dobara koshish karo.");
+      var time = mm + ":" + (ss < 10 ? "0" : "") + ss;
+      loginMsg(function () { return t("login.locked", { time: time }); });
     }
     tick();
     lockTimer = setInterval(tick, 1000);
@@ -316,7 +369,7 @@
     var inp = $("lg-pass"), show = inp.type === "password";
     inp.type = show ? "text" : "password";
     this.setAttribute("aria-pressed", show ? "true" : "false");
-    this.setAttribute("aria-label", show ? "Password chhupao" : "Password dikhao");
+    this.setAttribute("aria-label", t(show ? "login.hide" : "login.show"));
     clear(this).appendChild(icon(show ? "eyeOff" : "eye"));
     inp.focus();
   });
@@ -324,7 +377,7 @@
   $("login-form").addEventListener("submit", function (e) {
     e.preventDefault();
     var u = $("lg-user").value.trim(), p = $("lg-pass").value;
-    if (!u || !p) { loginMsg("Username aur password dono daalo."); (u ? $("lg-pass") : $("lg-user")).focus(); return; }
+    if (!u || !p) { loginMsg(function () { return t("login.both"); }); (u ? $("lg-pass") : $("lg-user")).focus(); return; }
     var btn = $("lg-submit");
     btn.classList.add("is-busy");
     btn.disabled = true;
@@ -337,16 +390,17 @@
       if (err.status === 429) { lockout((err.data && err.data.retryAfter) || 900); return; }
       if (err.status === 401) {
         var left = err.data && err.data.attemptsLeft;
-        loginMsg("Username ya password galat hai." + (left ? " " + left + " koshish baaki." : ""));
+        loginMsg(function () { return t("login.wrong") + (left ? " " + tn("login.left", left) : ""); });
         $("lg-pass").select();
       } else if (err.status === 503) {
-        loginMsg("Server par admin login set nahi hai (ADMIN_USER / ADMIN_PASSWORD).");
+        loginMsg(function () { return t("login.noCreds"); });
       } else {
-        loginMsg(err.message || "Login nahi ho paaya.");
+        var em = err.message;
+        loginMsg(err.status === 0 ? function () { return t("net.err"); } : function () { return em || t("login.failed"); });
       }
     }).then(function () {
       btn.classList.remove("is-busy");
-      if (!lockTimer || $("login-msg").textContent.indexOf("minute baad") < 0) btn.disabled = false;
+      if (!locked) btn.disabled = false;
     });
   });
 
@@ -354,7 +408,8 @@
   function sessionExpired() {
     if (expiredShown || $("app").hidden) return;
     expiredShown = true;
-    showLogin(isDirty() ? "Session khatam ho gaya. Dobara login karo, aapke badlav abhi bhi yahan hain." : "Session khatam ho gaya. Dobara login karo.", "info");
+    var dirty = isDirty();
+    showLogin(function () { return t(dirty ? "session.expiredDirty" : "session.expired"); }, "info");
   }
 
   function enterApp() {
@@ -370,7 +425,7 @@
       $("side-avatar").textContent = name.charAt(0).toUpperCase();
       go(viewFromHash(), true);
       changed();
-      if (keep) toast("Wapas aa gaye. Badlav save karna mat bhoolna.", "info");
+      if (keep) toast(t("session.welcomeBack"), "info");
     });
   }
 
@@ -384,13 +439,13 @@
   }
 
   $("btn-logout").addEventListener("click", function () {
-    var p = isDirty() ? ask({ title: "Logout karein?", text: "Kuch badlav save nahi hue hain. Logout karne par wo chale jaayenge.", ok: "Haan, logout", danger: true, icon: "logout" }) : Promise.resolve(true);
+    var p = isDirty() ? ask({ title: t("logout.ask.title"), text: t("logout.ask.text"), ok: t("logout.ask.ok"), danger: true, icon: "logout" }) : Promise.resolve(true);
     p.then(function (yes) {
       if (!yes) return;
       api("POST", "/api/logout", {}, { allow401: true }).catch(function () {}).then(function () {
         S = null; saved = ""; ME = null;
         $("savebar").hidden = true;
-        showLogin("Logout ho gaya.", "info");
+        showLogin(function () { return t("logout.done"); }, "info");
       });
     });
   });
@@ -404,18 +459,18 @@
 
   function buildNav() {
     var nav = clear($("side-nav"));
-    nav.appendChild(h("div", { class: "nav-group", text: "Menu" }));
+    nav.appendChild(h("div", { class: "nav-group", text: t("nav.menu") }));
     VIEWS.forEach(function (v, i) {
-      if (i === 6) nav.appendChild(h("div", { class: "nav-group", text: "System" }));
+      if (i === 6) nav.appendChild(h("div", { class: "nav-group", text: t("nav.system") }));
       nav.appendChild(h("button", { class: "nav-item", type: "button", "data-go": v[0], on: { click: function () { go(v[0]); closeDrawer(); } } },
-        icon(v[3]), h("span", { text: v[1] }), h("span", { class: "badge", "data-badge": v[0], hidden: true })));
+        icon(v[1]), h("span", { text: viewTitle(v[0]) }), h("span", { class: "badge", "data-badge": v[0], hidden: true })));
     });
     var tb = clear($("tabbar"));
     TABS.forEach(function (k) {
       var v = VIEWS.filter(function (x) { return x[0] === k; })[0];
-      tb.appendChild(h("button", { class: "tab", type: "button", "data-go": k, on: { click: function () { go(k); } } }, icon(v[3]), h("span", { text: v[1] })));
+      tb.appendChild(h("button", { class: "tab", type: "button", "data-go": k, on: { click: function () { go(k); } } }, icon(v[1]), h("span", { text: viewTab(k) })));
     });
-    tb.appendChild(h("button", { class: "tab", type: "button", id: "tab-more", "aria-controls": "side", "aria-expanded": "false", on: { click: openDrawer } }, icon("more"), h("span", { text: "Aur" })));
+    tb.appendChild(h("button", { class: "tab", type: "button", id: "tab-more", "aria-controls": "side", "aria-expanded": $("side").classList.contains("open") ? "true" : "false", on: { click: openDrawer } }, icon("more"), h("span", { text: t("tab.more") })));
   }
 
   function refreshNavBadges() {
@@ -428,10 +483,9 @@
     if (!VIEWS.some(function (v) { return v[0] === name; })) name = "dashboard";
     var prev = view;
     view = name;
-    var meta = VIEWS.filter(function (v) { return v[0] === name; })[0];
-    $("view-title").textContent = meta[1];
-    $("view-sub").textContent = meta[2];
-    document.title = meta[1] + " | IFW Admin";
+    $("view-title").textContent = viewTitle(name);
+    $("view-sub").textContent = t("view." + name + ".sub");
+    document.title = viewTitle(name) + " | " + t("app.short");
     document.querySelectorAll("[data-go]").forEach(function (b) {
       if (b.getAttribute("data-go") === name) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
     });
@@ -538,12 +592,12 @@
 
   function pageChips(legend, list, withAll, onChange) {
     var fs = h("fieldset", { class: "chips" }, h("legend", { text: legend }));
-    var opts = (withAll ? [["all", "Sabhi pages"]] : []).concat(PAGES);
+    var opts = (withAll ? [["all"]] : []).concat(PAGES);
     opts.forEach(function (pg) {
       var cb = h("input", { type: "checkbox", value: pg[0] });
       cb.checked = list.indexOf(pg[0]) >= 0;
-      var lab = h("label", { class: "chip" + (cb.checked ? " on" : "") + (pg[2] ? " tag-new" : "") }, cb,
-        h("span", { class: "chk", "aria-hidden": "true" }, icon("check")), h("span", { text: pg[1] }));
+      var lab = h("label", { class: "chip" + (cb.checked ? " on" : "") + (pg[1] ? " tag-new" : ""), "data-new": pg[1] ? t("chip.new") : null }, cb,
+        h("span", { class: "chk", "aria-hidden": "true" }, icon("check")), h("span", { text: pageName(pg[0]) }));
       cb.addEventListener("change", function () {
         var i = list.indexOf(pg[0]);
         if (cb.checked && i < 0) list.push(pg[0]);
@@ -582,7 +636,7 @@
   // Language tabs: build(langCode, panel) fills the panel for that language.
   function langTabs(key, build, filled) {
     var wrap = h("div", { class: "ltabs-wrap" });
-    var list = h("div", { class: "ltabs", role: "tablist", "aria-label": "Bhasha" });
+    var list = h("div", { class: "ltabs", role: "tablist", "aria-label": t("lang.label") });
     var panel = h("div", { role: "tabpanel" });
     var pid = nextId("lp");
     panel.id = pid;
@@ -602,7 +656,7 @@
     }
     LANGS.forEach(function (l, i) {
       var b = h("button", { class: "ltab", type: "button", role: "tab", id: nextId("lt"), "data-l": l[0], "aria-controls": pid },
-        filled ? h("span", { class: "fill-dot", "aria-hidden": "true" }) : null, h("span", { text: l[1] }));
+        filled ? h("span", { class: "fill-dot", "aria-hidden": "true" }) : null, h("span", { text: langName(l[0]) }));
       b.addEventListener("click", function () { cur = ui.lang[key] = l[0]; paint(); });
       b.addEventListener("keydown", function (e) {
         var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
@@ -628,24 +682,24 @@
 
   /* ========================================================== validation */
 
-  function vTelegram(v) { return v && !/^https:\/\/(t\.me|telegram\.me)\/[A-Za-z0-9_+\/-]+$/.test(v) ? "Link https://t.me/channelname jaisa hona chahiye." : ""; }
-  function vHttps(v) { return v && !/^https:\/\/\S+$/.test(v) ? "Link https:// se shuru hona chahiye." : ""; }
+  function vTelegram(v) { return v && !/^https:\/\/(t\.me|telegram\.me)\/[A-Za-z0-9_+\/-]+$/.test(v) ? t("v.telegram") : ""; }
+  function vHttps(v) { return v && !/^https:\/\/\S+$/.test(v) ? t("v.https") : ""; }
   function vImage(v) {
     if (!v) return "";
     if (/^https:\/\/\S+$/.test(v)) return "";
     if (v.indexOf(location.origin + "/uploads/") === 0) return "";
-    return "Photo link https:// se shuru hona chahiye.";
+    return t("v.image");
   }
-  function vAdsense(v) { return v && !/^ca-pub-\d{10,20}$/.test(v) ? "Publisher ID ca-pub- aur number jaisa hona chahiye." : ""; }
-  function vSlot(v) { return v && !/^\d{6,15}$/.test(v) ? "Slot ID sirf number hota hai." : ""; }
-  function vGa(v) { return v && !/^G-[A-Z0-9]{4,15}$/.test(v) ? "Measurement ID G- se shuru hota hai." : ""; }
-  function vTag(v) { return v && !/^[A-Za-z0-9_.-]{2,40}$/.test(v) ? "Tracking ID me space ya ajeeb akshar nahi hone chahiye." : ""; }
+  function vAdsense(v) { return v && !/^ca-pub-\d{10,20}$/.test(v) ? t("v.adsense") : ""; }
+  function vSlot(v) { return v && !/^\d{6,15}$/.test(v) ? t("v.slot") : ""; }
+  function vGa(v) { return v && !/^G-[A-Z0-9]{4,15}$/.test(v) ? t("v.ga") : ""; }
+  function vTag(v) { return v && !/^[A-Za-z0-9_.-]{2,40}$/.test(v) ? t("v.tag") : ""; }
 
   function validateAll() {
-    var t = S.telegram;
-    if (t.enabled && !t.url) return ["telegram", "Telegram chalu hai par channel link khali hai."];
-    var e = vTelegram(t.url || ""); if (e) return ["telegram", e];
-    e = vHttps(S.announcement.url || ""); if (e) return ["patti", "Patti: " + e];
+    var tg = S.telegram;
+    if (tg.enabled && !tg.url) return ["telegram", t("v.tgEmpty")];
+    var e = vTelegram(tg.url || ""); if (e) return ["telegram", e];
+    e = vHttps(S.announcement.url || ""); if (e) return ["patti", t("v.patti", { e: e })];
     e = vAdsense(S.ads.adsenseClient || ""); if (e) return ["ads", e];
     e = vSlot(S.ads.slotTop || "") || vSlot(S.ads.slotMiddle || ""); if (e) return ["ads", e];
     e = vGa(S.ads.gaId || ""); if (e) return ["ads", e];
@@ -653,7 +707,7 @@
     for (var i = 0; i < S.affiliate.products.length; i++) {
       var p = S.affiliate.products[i];
       e = vHttps(p.url || "") || vImage(p.image || "");
-      if (e) return ["products", "Product " + (i + 1) + ": " + e];
+      if (e) return ["products", t("v.product", { n: i + 1, e: e })];
     }
     return null;
   }
@@ -676,14 +730,14 @@
       S.version = r.version;
       saved = JSON.stringify(S);
       changed();
-      toast("Save ho gaya. Site par turant dikhega.", "ok");
+      toast(t("save.ok"), "ok");
       loadBackups();
     }).catch(function (err) {
       if (err.status === 409) {
-        return ask({ title: "File kahin aur se badli hai", text: "Aapke login ke baad settings kisi aur jagah se save hui hain. Apne badlav se unhe badal dein?", ok: "Haan, mere badlav rakho", cancel: "Ruko" })
+        return ask({ title: t("conflict.title"), text: t("conflict.text"), ok: t("conflict.ok"), cancel: t("conflict.cancel") })
           .then(function (yes) { saving = false; if (yes) save(true); });
       }
-      if (err.status !== 401) toast("Save nahi hua: " + err.message, "err");
+      if (err.status !== 401) toast(t("save.fail", { msg: err.message }), "err");
     }).then(function () {
       saving = false;
       btn.classList.remove("is-busy");
@@ -692,13 +746,13 @@
   }
   $("btn-save").addEventListener("click", function () { save(); });
   $("btn-discard").addEventListener("click", function () {
-    ask({ title: "Badlav wapas lein?", text: "Jo badlav save nahi hue, wo hat jaayenge aur pichhli saved settings wapas aa jaayengi.", ok: "Haan, wapas lo", danger: true, icon: "restore" })
+    ask({ title: t("discard.title"), text: t("discard.text"), ok: t("discard.ok"), danger: true, icon: "restore" })
       .then(function (yes) {
         if (!yes) return;
         S = ensure(JSON.parse(saved));
         renderAll();
         changed();
-        toast("Badlav wapas le liye.", "info");
+        toast(t("discard.done"), "info");
       });
   });
   window.addEventListener("beforeunload", function (e) { if (isDirty()) { e.preventDefault(); e.returnValue = ""; } });
@@ -743,28 +797,28 @@
     var focusedGo = document.activeElement && v.contains(document.activeElement) ? document.activeElement.getAttribute("data-dash") : null;
     clear(v);
     var hour = new Date().getHours();
-    var greet = hour < 12 ? "Suprabhat" : hour < 17 ? "Namaste" : "Shubh sandhya";
+    var greet = t(hour < 12 ? "dash.greet.morning" : hour < 17 ? "dash.greet.day" : "dash.greet.evening");
     var ver = Number(S.version);
-    var lastSaved = ver > 1e12 ? ago(ver) + " (" + fmtDate(ver) + ")" : "Abhi tak is panel se save nahi hua";
+    var lastSaved = ver > 1e12 ? ago(ver) + " (" + fmtDate(ver) + ")" : t("dash.never");
 
     v.appendChild(h("div", { class: "hero" },
       (function () { var s = h("span", { class: "hero-flower", "aria-hidden": "true" }); s.innerHTML = FLOWER; return s; })(),
       h("small", { text: "Indian Festival Wishes" }),
-      h("h2", { text: greet + ", " + ((ME && ME.user) || "admin") }),
-      h("p", { text: isDirty() ? "Kuch badlav abhi save nahi hue hain. Neeche wali patti se Save karo." : "Sab kuch save hai. Koi bhi hissa chuno aur badlav karo." }),
+      h("h2", null, greet + ", ", h("span", { class: "ud", text: (ME && ME.user) || "admin" })),
+      h("p", { text: t(isDirty() ? "dash.dirty" : "dash.clean") }),
       h("div", { class: "hero-meta" },
-        h("span", null, icon("clock"), "Last save: " + lastSaved),
-        h("span", null, icon("database"), (backups ? backups.length : "–") + " backups"))));
+        h("span", null, icon("clock"), t("dash.lastSave", { x: lastSaved })),
+        h("span", null, icon("database"), backups ? tn("dash.backups", backups.length) : t("dash.backups", { n: "–" })))));
 
     var tag = (S.affiliate.amazonTag || "").trim();
     var live = liveProducts();
     var rows = [
-      ["telegram", "send", "Telegram", S.telegram.enabled ? "Chalu" : "Band", S.telegram.enabled ? "on" : "off"],
-      ["patti", "megaphone", "Announcement patti", S.announcement.enabled ? "Chalu" : "Band", S.announcement.enabled ? "on" : "off"],
-      ["products", "tag", "Amazon tracking ID", tag || "Nahi daala", tag ? "on" : "warn"],
-      ["products", "bag", "Site par dikhte products", live + " / " + S.affiliate.products.length, live ? "on" : "warn"],
-      ["ads", "chart", "AdSense", S.ads.adsenseClient ? "Chalu" : "Band", S.ads.adsenseClient ? "on" : "off"],
-      ["ads", "globe", "Analytics", S.ads.gaId || "Band", S.ads.gaId ? "on" : "off"]
+      ["telegram", "send", "Telegram", t(S.telegram.enabled ? "state.on" : "state.off"), S.telegram.enabled ? "on" : "off"],
+      ["patti", "megaphone", t("dash.stat.patti"), t(S.announcement.enabled ? "state.on" : "state.off"), S.announcement.enabled ? "on" : "off"],
+      ["products", "tag", t("dash.stat.tag"), tag || t("state.notSet"), tag ? "on" : "warn"],
+      ["products", "bag", t("dash.stat.live"), live + " / " + S.affiliate.products.length, live ? "on" : "warn"],
+      ["ads", "chart", "AdSense", t(S.ads.adsenseClient ? "state.on" : "state.off"), S.ads.adsenseClient ? "on" : "off"],
+      ["ads", "globe", t("dash.stat.ga"), S.ads.gaId || t("state.off"), S.ads.gaId ? "on" : "off"]
     ];
     var grid = h("div", { class: "stats" });
     rows.forEach(function (r, i) {
@@ -772,25 +826,25 @@
         h("span", { class: "s-icon" }, icon(r[1])),
         h("span", { class: "s-label", text: r[2] }),
         h("span", { class: "s-value", text: r[3] }),
-        h("span", { class: "pill " + r[4], text: r[4] === "on" ? "Live" : r[4] === "warn" ? "Dhyan do" : "Band" })));
+        h("span", { class: "pill " + r[4], text: t(r[4] === "on" ? "pill.live" : r[4] === "warn" ? "pill.warn" : "pill.off") })));
     });
     v.appendChild(grid);
 
-    v.appendChild(h("h3", { class: "section-title", text: "Jaldi kaam" }));
+    v.appendChild(h("h3", { class: "section-title", text: t("dash.quick") }));
     var q = h("div", { class: "quick" });
-    [["products", "plus", "Naya product", "Amazon box me jodo"], ["patti", "megaphone", "Patti ka text", "Upar ki chalti line"],
-     ["wishes", "message", "Wishes jodo", "Card ki list me"], ["backup", "database", "Backup", "Purana version wapas"]].forEach(function (t, i) {
+    [["products", "plus", "dash.q.product", true], ["patti", "megaphone", "dash.q.patti"],
+     ["wishes", "message", "dash.q.wishes"], ["backup", "database", "dash.q.backup"]].forEach(function (qa, i) {
       q.appendChild(h("button", { type: "button", "data-dash": "q" + i, on: { click: function () {
-        go(t[0]);
-        if (t[2] === "Naya product") addProduct();
-      } } }, icon(t[1]), h("span", null, t[2], h("small", { text: t[3] }))));
+        go(qa[0]);
+        if (qa[3]) addProduct();
+      } } }, icon(qa[1]), h("span", null, t(qa[2]), h("small", { text: t(qa[2] + ".sub") }))));
     });
     v.appendChild(q);
 
     var cw = countWishes();
-    v.appendChild(h("h3", { class: "section-title", text: "Aur jaankari" }));
+    v.appendChild(h("h3", { class: "section-title", text: t("dash.more") }));
     v.appendChild(h("div", { class: "note info" }, icon("info"),
-      h("span", { text: "Apni jodi hui wishes aur suvichar: " + cw + ". Har save se pehle server apne aap purani settings ka backup rakhta hai (aakhri 50)." })));
+      h("span", { text: t("dash.info", { n: cw }) })));
 
     if (focusedGo) { var f = v.querySelector('[data-dash="' + focusedGo + '"]'); if (f) f.focus(); }
   }
@@ -803,11 +857,11 @@
     var v = clear(viewEl("products"));
     var A = S.affiliate;
     v.appendChild(card({
-      icon: "tag", title: "Amazon Associates", desc: "Tracking ID ke bina search wale products site par nahi dikhte.",
+      icon: "tag", title: t("prod.assoc"), desc: t("prod.assoc.desc"),
       body: h("div", { class: "grid-2" },
-        textField("Tracking ID", A, "amazonTag", { placeholder: "yourname-21", validate: vTag, hint: "Jaise saverhub-21" }),
+        textField(t("prod.tag"), A, "amazonTag", { placeholder: "yourname-21", validate: vTag, hint: t("prod.tag.hint") }),
         (function () {
-          var f = textField("Ek box me kitne products", A, "maxPerSlot", { type: "number", inputmode: "numeric", hint: "1 se 8 tak" });
+          var f = textField(t("prod.max"), A, "maxPerSlot", { type: "number", inputmode: "numeric", hint: t("prod.max.hint") });
           var inp = f._input;
           inp.min = 1; inp.max = 8;
           inp.addEventListener("input", function () { A.maxPerSlot = Math.min(8, Math.max(1, parseInt(inp.value, 10) || 4)); changed(); });
@@ -815,15 +869,15 @@
         })())
     }));
 
-    var filterOpts = [["", "Sabhi pages"]].concat(PAGES.map(function (p) { return [p[0], p[1]]; }));
-    var fSel = select("Page se chuno", filterOpts, ui.pFilter, function (val) { ui.pFilter = val; drawProductList(); });
+    var filterOpts = [["", t("page.all")]].concat(PAGES.map(function (p) { return [p[0], pageName(p[0])]; }));
+    var fSel = select(t("prod.filter"), filterOpts, ui.pFilter, function (val) { ui.pFilter = val; drawProductList(); });
     var sid = nextId("q");
-    var sInp = h("input", { id: sid, type: "search", placeholder: "Naam ya search shabd", autocomplete: "off", value: ui.pSearch });
+    var sInp = h("input", { id: sid, type: "search", placeholder: t("prod.search.ph"), autocomplete: "off", value: ui.pSearch });
     sInp.addEventListener("input", function () { ui.pSearch = sInp.value; drawProductList(); });
-    var sField = h("div", { class: "field" }, h("label", { for: sid, text: "Dhoondo" }), h("div", { class: "input-icon" }, h("span", { "data-icon": "search" }), sInp));
+    var sField = h("div", { class: "field" }, h("label", { for: sid, text: t("prod.search") }), h("div", { class: "input-icon" }, h("span", { "data-icon": "search" }), sInp));
     hydrateIcons(sField);
     v.appendChild(h("div", { class: "toolbar" }, sField, fSel,
-      h("button", { class: "btn btn-primary", type: "button", on: { click: addProduct } }, icon("plus"), "Naya product")));
+      h("button", { class: "btn btn-primary", type: "button", on: { click: addProduct } }, icon("plus"), t("prod.new"))));
     countLineEl = h("p", { class: "count-line", "aria-live": "polite" });
     v.appendChild(countLineEl);
     productListEl = h("div", { class: "plist" });
@@ -848,16 +902,16 @@
       shown++;
       productListEl.appendChild(productCard(p, i));
     });
-    countLineEl.textContent = list.length ? (shown === list.length ? list.length + " products" : shown + " / " + list.length + " products dikh rahe hain") : "";
+    countLineEl.textContent = list.length ? (shown === list.length ? tn("prod.count", list.length) : t("prod.countOf", { a: shown, b: list.length })) : "";
     if (!list.length) {
-      productListEl.appendChild(h("div", { class: "empty" }, icon("bag"), h("strong", { text: "Abhi koi product nahi hai" }),
-        h("p", { text: "Upar \"Naya product\" dabake pehla product jodo." })));
+      productListEl.appendChild(h("div", { class: "empty" }, icon("bag"), h("strong", { text: t("prod.empty") }),
+        h("p", { text: t("prod.empty.hint") })));
     } else if (!shown) {
-      productListEl.appendChild(h("div", { class: "empty" }, icon("search"), h("strong", { text: "Kuch nahi mila" }), h("p", { text: "Filter ya search badal ke dekho." })));
+      productListEl.appendChild(h("div", { class: "empty" }, icon("search"), h("strong", { text: t("prod.none") }), h("p", { text: t("prod.none.hint") })));
     }
     if (focusIndex != null) {
       var c = productListEl.querySelector('[data-idx="' + focusIndex + '"]');
-      if (c) { var t = c.querySelector(focusSel || ".p-main"); if (t && !t.disabled) t.focus(); else c.querySelector(".p-main").focus(); }
+      if (c) { var tgt = c.querySelector(focusSel || ".p-main"); if (tgt && !tgt.disabled) tgt.focus(); else c.querySelector(".p-main").focus(); }
     }
   }
 
@@ -865,14 +919,14 @@
   function setOpen(p, on) { if (openProducts) { if (on) openProducts.add(p); else openProducts.delete(p); } }
 
   function thumb(p) {
-    var t = h("span", { class: "p-thumb", "aria-hidden": "true" });
+    var box = h("span", { class: "p-thumb", "aria-hidden": "true" });
     var src = p.image && !vImage(p.image) ? p.image : "";
     if (src) {
       var im = h("img", { src: src, alt: "", loading: "lazy" });
-      im.addEventListener("error", function () { clear(t).appendChild(icon("image")); });
-      t.appendChild(im);
-    } else t.appendChild(icon("bag"));
-    return t;
+      im.addEventListener("error", function () { clear(box).appendChild(icon("image")); });
+      box.appendChild(im);
+    } else box.appendChild(icon("bag"));
+    return box;
   }
 
   function productCard(p, i) {
@@ -885,42 +939,42 @@
     var subEl = h("span", { class: "p-sub" });
     var tagsEl = h("span", { class: "p-tags" });
     function paintHead() {
-      titleEl.textContent = p.title.hi || p.title.en || p.title.gu || "Naya product";
-      var src = p.url ? "Direct link" : p.search ? "Search: " + p.search : "Link nahi hai";
-      subEl.textContent = (p.title.en && p.title.hi ? p.title.en + " · " : "") + src;
+      titleEl.textContent = p.title[LANG] || p.title.hi || p.title.gu || p.title.en || t("prod.new");
+      clear(subEl);
+      if (p.url) subEl.appendChild(document.createTextNode(t("prod.direct")));
+      else if (p.search) { subEl.appendChild(document.createTextNode(t("prod.searchSrc") + " ")); subEl.appendChild(h("span", { class: "ud", text: p.search })); }
+      else subEl.appendChild(document.createTextNode(t("prod.noLink")));
       clear(tagsEl);
-      if (!p.pages.length) tagsEl.appendChild(h("span", { class: "none", text: "Kisi page par nahi" }));
-      p.pages.forEach(function (pg) { tagsEl.appendChild(h("span", { text: PAGE_NAME[pg] || pg })); });
+      if (!p.pages.length) tagsEl.appendChild(h("span", { class: "none", text: t("prod.noPage") }));
+      p.pages.forEach(function (pg) { tagsEl.appendChild(h("span", { text: pageName(pg) })); });
     }
     paintHead();
     var th = thumb(p);
 
-    var cb = h("input", { type: "checkbox", role: "switch", "aria-label": "Site par dikhao" });
+    var cb = h("input", { type: "checkbox", role: "switch", "aria-label": t("prod.show") });
     cb.checked = p.enabled !== false;
     cb.addEventListener("change", function () { p.enabled = cb.checked; cardEl.classList.toggle("off", !cb.checked); changed(); });
 
     var main = h("button", { class: "p-main", type: "button", "aria-expanded": open ? "true" : "false", "aria-controls": bodyId }, titleEl, subEl, tagsEl);
-    var chev = h("button", { class: "icon-btn p-chev", type: "button", "aria-label": (open ? "Band karo: " : "Kholo: ") + titleEl.textContent, "aria-expanded": open ? "true" : "false", "aria-controls": bodyId }, icon("chevDown"));
+    var chev = h("button", { class: "icon-btn p-chev", type: "button", "aria-label": t(open ? "prod.collapse" : "prod.expand", { name: titleEl.textContent }), "aria-expanded": open ? "true" : "false", "aria-controls": bodyId }, icon("chevDown"));
     function toggle() { setOpen(p, !isOpen(p)); drawProductList(i, ".p-main"); }
     main.addEventListener("click", toggle);
     chev.addEventListener("click", function () { setOpen(p, !isOpen(p)); drawProductList(i, ".p-chev"); });
 
     cardEl.appendChild(h("div", { class: "p-row" }, th, main,
-      h("div", { class: "p-side" }, h("span", { class: "switch", title: "Site par dikhao" }, cb, h("span", { class: "track", "aria-hidden": "true" })), chev)));
+      h("div", { class: "p-side" }, h("span", { class: "switch", title: t("prod.show") }, cb, h("span", { class: "track", "aria-hidden": "true" })), chev)));
 
     if (!open) return cardEl;
 
     var body = h("div", { class: "p-body", id: bodyId });
     body.appendChild(h("div", { class: "grid-3" },
-      textField("Naam (हिंदी)", p.title, "hi", { onInput: paintHead, spell: true }),
-      textField("Naam (ગુજરાતી)", p.title, "gu", { onInput: paintHead, spell: true }),
-      textField("Naam (English)", p.title, "en", { onInput: paintHead, spell: true })));
+      LANGS.map(function (l) { return textField(t("prod.name", { lang: langName(l[0]) }), p.title, l[0], { onInput: paintHead, spell: true }); })));
     body.appendChild(h("div", { class: "grid-2" },
-      textField("Amazon search shabd", p, "search", { placeholder: "jaise: chaniya choli", hint: "Isse apne aap tracking ID wala search link banta hai.", onInput: paintHead }),
-      textField("Direct link (zaroori nahi)", p, "url", { placeholder: "https://amzn.to/...", type: "url", validate: vHttps, hint: "Ek khaas product ka link ho to yahan daalo.", onInput: paintHead })));
+      textField(t("prod.searchTerm"), p, "search", { placeholder: t("prod.searchTerm.ph"), hint: t("prod.searchTerm.hint"), onInput: paintHead }),
+      textField(t("prod.url"), p, "url", { placeholder: "https://amzn.to/...", type: "url", validate: vHttps, hint: t("prod.url.hint"), onInput: paintHead })));
     body.appendChild(h("div", { class: "grid-2" },
-      textField("Keemat", p, "price", { placeholder: "₹499 se" }),
-      textField("Store", p, "store", { placeholder: "Amazon" })));
+      textField(t("prod.price"), p, "price", { placeholder: t("prod.price.ph") }),
+      textField(t("prod.store"), p, "store", { placeholder: "Amazon" })));
 
     // image
     var prev = h("div", { class: "img-prev" });
@@ -928,37 +982,37 @@
       clear(prev);
       var src = p.image && !vImage(p.image) ? p.image : "";
       if (src) {
-        var im = h("img", { src: src, alt: "Product photo preview" });
+        var im = h("img", { src: src, alt: t("prod.imgAlt") });
         im.addEventListener("error", function () { clear(prev).appendChild(icon("image")); });
         prev.appendChild(im);
       } else prev.appendChild(icon("image"));
       var nt = thumb(p); th.replaceWith(nt); th = nt;
     }
     paintPrev();
-    var imgField = textField("Photo link", p, "image", { placeholder: "https://...", type: "url", validate: vImage, hint: "Link daalo ya photo upload karo (JPG, PNG, WebP, 2 MB tak).", onInput: paintPrev });
-    var fileInp = h("input", { type: "file", accept: "image/jpeg,image/png,image/webp", "aria-label": "Photo upload karo" });
-    var upBtn = h("span", { class: "btn btn-soft btn-sm file-btn" }, icon("upload"), h("span", { class: "btn-label", text: "Photo upload" }), h("span", { class: "spinner", "aria-hidden": "true" }), fileInp);
+    var imgField = textField(t("prod.img"), p, "image", { placeholder: "https://...", type: "url", validate: vImage, hint: t("prod.img.hint"), onInput: paintPrev });
+    var fileInp = h("input", { type: "file", accept: "image/jpeg,image/png,image/webp", "aria-label": t("prod.upload") });
+    var upBtn = h("span", { class: "btn btn-soft btn-sm file-btn" }, icon("upload"), h("span", { class: "btn-label", text: t("prod.upload") }), h("span", { class: "spinner", "aria-hidden": "true" }), fileInp);
     fileInp.addEventListener("change", function () {
       var f = fileInp.files && fileInp.files[0];
       fileInp.value = "";
       if (!f) return;
-      if (["image/jpeg", "image/png", "image/webp"].indexOf(f.type) < 0) { toast("Sirf JPG, PNG ya WebP photo chalegi.", "err"); return; }
-      if (f.size > 2 * 1024 * 1024) { toast("Photo 2 MB se chhoti honi chahiye.", "err"); return; }
+      if (["image/jpeg", "image/png", "image/webp"].indexOf(f.type) < 0) { toast(t("prod.upload.type"), "err"); return; }
+      if (f.size > 2 * 1024 * 1024) { toast(t("prod.upload.size"), "err"); return; }
       upBtn.classList.add("is-busy");
       api("POST", "/api/upload", f, { raw: true, type: f.type }).then(function (r) {
         p.image = location.origin + r.url;
         imgField._input.value = p.image;
         imgField._input.dispatchEvent(new Event("input"));
-        toast("Photo upload ho gayi. Save karna mat bhoolna.", "ok");
-      }).catch(function (e) { if (e.status !== 401) toast("Upload nahi hua: " + e.message, "err"); })
+        toast(t("prod.upload.ok"), "ok");
+      }).catch(function (e) { if (e.status !== 401) toast(t("prod.upload.fail", { msg: e.message }), "err"); })
         .then(function () { upBtn.classList.remove("is-busy"); });
     });
     var clearImg = h("button", { class: "btn btn-ghost btn-sm", type: "button", on: { click: function () {
       imgField._input.value = ""; imgField._input.dispatchEvent(new Event("input"));
-    } } }, icon("x"), "Photo hatao");
+    } } }, icon("x"), t("prod.imgClear"));
     body.appendChild(h("div", { class: "img-field" }, prev, h("div", { class: "img-ctrl" }, imgField, h("div", { class: "row-actions" }, upBtn, clearImg))));
 
-    body.appendChild(pageChips("Kin pages par dikhe", p.pages, false, paintHead));
+    body.appendChild(pageChips(t("prod.pages"), p.pages, false, paintHead));
 
     function move(d) {
       var j = i + d;
@@ -967,26 +1021,26 @@
       changed();
       drawProductList(j, d < 0 ? ".mv-up" : ".mv-down");
     }
-    var up = h("button", { class: "btn btn-ghost btn-sm mv-up", type: "button", disabled: i === 0, on: { click: function () { move(-1); } } }, icon("arrowUp"), "Upar");
-    var down = h("button", { class: "btn btn-ghost btn-sm mv-down", type: "button", disabled: i === list.length - 1, on: { click: function () { move(1); } } }, icon("arrowDown"), "Neeche");
+    var up = h("button", { class: "btn btn-ghost btn-sm mv-up", type: "button", disabled: i === 0, on: { click: function () { move(-1); } } }, icon("arrowUp"), t("prod.up"));
+    var down = h("button", { class: "btn btn-ghost btn-sm mv-down", type: "button", disabled: i === list.length - 1, on: { click: function () { move(1); } } }, icon("arrowDown"), t("prod.down"));
     var dup = h("button", { class: "btn btn-ghost btn-sm", type: "button", on: { click: function () {
       var c = clone(p);
       list.splice(i + 1, 0, c);
       setOpen(p, false); setOpen(c, true);
       changed();
       drawProductList(i + 1, ".p-main");
-      toast("Product ki copy ban gayi.", "info");
-    } } }, icon("copy"), "Copy");
+      toast(t("prod.dup.done"), "info");
+    } } }, icon("copy"), t("prod.dup"));
     var del = h("button", { class: "btn btn-danger btn-sm", type: "button", on: { click: function () {
-      ask({ title: "Product hatayein?", text: "\"" + titleEl.textContent + "\" list se hat jaayega. Save karne ke baad hi site se hatega.", ok: "Haan, hatao", danger: true, icon: "trash" })
+      ask({ title: t("prod.del.title"), text: t("prod.del.text", { name: titleEl.textContent }), ok: t("prod.del.ok"), danger: true, icon: "trash" })
         .then(function (yes) {
           if (!yes) return;
           list.splice(i, 1);
           changed();
           drawProductList(Math.min(i, list.length - 1), ".p-main");
-          toast("Product hata diya.", "info");
+          toast(t("prod.del.done"), "info");
         });
-    } } }, icon("trash"), "Hatao");
+    } } }, icon("trash"), t("prod.del"));
     body.appendChild(h("div", { class: "p-foot" }, h("div", { class: "grp" }, up, down, dup), h("div", { class: "grp" }, del)));
     cardEl.appendChild(body);
     return cardEl;
@@ -1013,33 +1067,33 @@
   function renderTelegram() {
     var v = clear(viewEl("telegram"));
     var T = S.telegram;
-    var prevBox = h("div", { class: "preview-page" });
+    var prevBox = h("div", { class: "preview-page", "data-ud": "" });
     function paintPrev() {
       clear(prevBox);
       var L = ui.lang.tg || "hi";
       function tx(o) { return (o || {})[L] || (o || {}).en || ""; }
       if (!T.enabled) {
         prevBox.appendChild(h("div", { class: "fake" }, h("b"), h("b"), h("b")));
-        prevBox.appendChild(h("p", { class: "hint preview-note", text: "Telegram band hai, isliye site par kuch nahi dikhega." }));
+        prevBox.appendChild(h("p", { class: "hint preview-note", text: t("tg.off") }));
         return;
       }
       prevBox.appendChild(h("div", { class: "fake" }, h("b"), h("b"), h("b")));
       if (T.inline !== false) {
         prevBox.appendChild(h("div", { class: "tg-prev" }, h("span", { class: "tg-ic" }, icon("send")),
-          h("strong", { text: tx(T.title) || "Heading" }), h("p", { text: tx(T.text) || "Chhota text" }), h("span", { class: "tg-btn", text: tx(T.button) || "Button" })));
+          h("strong", { text: tx(T.title) || t("tg.heading") }), h("p", { text: tx(T.text) || t("tg.text") }), h("span", { class: "tg-btn", text: tx(T.button) || t("tg.button") })));
       }
       if (T.sticky !== false) {
-        prevBox.appendChild(h("div", { class: "tg-sticky" }, icon("send"), h("span", { text: tx(T.title) || "Heading" }), h("b", { text: tx(T.button) || "Button" })));
+        prevBox.appendChild(h("div", { class: "tg-sticky" }, icon("send"), h("span", { text: tx(T.title) || t("tg.heading") }), h("b", { text: tx(T.button) || t("tg.button") })));
       }
     }
 
     v.appendChild(card({
-      icon: "send", title: "Telegram promotion", desc: "Page ke beech me box aur neeche chipki patti.",
+      icon: "send", title: t("tg.card"), desc: t("tg.card.desc"),
       body: [
-        switchRow("Telegram promotion chalu karo", "Band karne par site par kahin nahi dikhega", T, "enabled", false, paintPrev),
-        h("div", { class: "stack" }, textField("Channel link", T, "url", { placeholder: "https://t.me/yourchannel", type: "url", validate: vTelegram, hint: "Link https://t.me/ se shuru hona chahiye." })),
-        switchRow("Page ke beech me box", "Content ke beech ek bada card", T, "inline", true, paintPrev),
-        switchRow("Neeche chipki patti", "Screen ke neeche hamesha dikhne wali patti", T, "sticky", true, paintPrev)
+        switchRow(t("tg.enable"), t("tg.enable.desc"), T, "enabled", false, paintPrev),
+        h("div", { class: "stack" }, textField(t("tg.url"), T, "url", { placeholder: "https://t.me/yourchannel", type: "url", validate: vTelegram, hint: t("tg.url.hint") })),
+        switchRow(t("tg.inline"), t("tg.inline.desc"), T, "inline", true, paintPrev),
+        switchRow(t("tg.sticky"), t("tg.sticky.desc"), T, "sticky", true, paintPrev)
       ]
     }));
 
@@ -1049,18 +1103,18 @@
         var holder = T[k] = T[k] || {};
         return textField(label, holder, L, { multiline: multi, rows: multi ? 3 : null, spell: true, onInput: function () { paintPrev(); tabs && tabs.refreshDots(); } });
       }
-      var ta = f("Chhota text", "text", true);
+      var ta = f(t("tg.text"), "text", true);
       ta._input.style.minHeight = "96px";
-      panel.appendChild(h("div", { class: "stack" }, f("Heading", "title"), ta, f("Button", "button")));
+      panel.appendChild(h("div", { class: "stack" }, f(t("tg.heading"), "title"), ta, f(t("tg.button"), "button")));
       paintPrev();
     }, filled);
 
     v.appendChild(h("div", { class: "grid-2" },
-      card({ icon: "file", tone: "violet", title: "Text", desc: "Teeno bhasha me likho. Hara nishaan = poora bhara hua.", body: tabs }),
-      card({ icon: "eye", tone: "gold", title: "Preview", desc: "Site par lagbhag aisa dikhega.", body: h("div", { class: "preview-shell" },
+      card({ icon: "file", tone: "violet", title: t("tg.textCard"), desc: t("tg.textCard.desc"), body: tabs }),
+      card({ icon: "eye", tone: "gold", title: t("tg.preview"), desc: t("tg.preview.desc"), body: h("div", { class: "preview-shell" },
         h("div", { class: "preview-top" }, h("i"), h("i"), h("i"), h("span", { text: "indianfestivalwishes.com" })), prevBox) })));
 
-    v.appendChild(card({ icon: "globe", title: "Kin pages par", desc: "\"Sabhi pages\" chuna to poori site par dikhega.", body: pageChips("Pages", T.pages, true) }));
+    v.appendChild(card({ icon: "globe", title: t("tg.pages"), desc: t("tg.pages.desc"), body: pageChips(t("tg.pages.legend"), T.pages, true) }));
     paintPrev();
   }
 
@@ -1070,7 +1124,7 @@
   function renderPatti() {
     var v = clear(viewEl("patti"));
     var A = S.announcement;
-    tickerEl = h("div", { class: "ticker" });
+    tickerEl = h("div", { class: "ticker", "data-ud": "" });
     var prevNote = h("p", { class: "hint preview-note" });
 
     function paintTicker() {
@@ -1080,13 +1134,13 @@
       tickerEl.className = "ticker";
       if (!A.enabled) {
         tickerEl.classList.add("is-static", "empty-state");
-        tickerEl.textContent = "Patti band hai";
-        prevNote.textContent = "Patti chalu karne par har page ke upar dikhegi.";
+        tickerEl.textContent = t("patti.off");
+        prevNote.textContent = t("patti.off.note");
         return;
       }
       if (!text) {
         tickerEl.classList.add("is-static", "empty-state");
-        tickerEl.textContent = "Is bhasha me text khali hai, ye patti " + LANG_SHORT[L] + " page par nahi dikhegi";
+        tickerEl.textContent = t("patti.empty", { lang: langName(L) });
         prevNote.textContent = "";
         return;
       }
@@ -1094,10 +1148,10 @@
       if (still) {
         tickerEl.classList.add("is-static");
         tickerEl.textContent = text;
-        prevNote.textContent = A.scroll === false ? "Text ek jagah ruka hua dikhega." : "Aapke device par animation band hai, isliye preview ruka hua hai.";
+        prevNote.textContent = t(A.scroll === false ? "patti.still" : "patti.noAnim");
         return;
       }
-      prevNote.textContent = "Raftaar: " + ({ slow: "Dheemi", medium: "Madhyam", fast: "Tez" }[A.speed || "medium"] || "Madhyam") + (A.url ? " · Click karne par link khulega" : "");
+      prevNote.textContent = t("patti.speedNote", { s: t("speed." + (SPEEDS[A.speed] ? A.speed : "medium")) }) + (A.url ? " · " + t("patti.linkNote") : "");
       var track = h("div", { class: "ticker-track", "aria-hidden": "true" });
       function group() { return h("span", { class: "ticker-group" }, h("span", { text: text }), icon("sparkle")); }
       tickerEl.setAttribute("aria-label", text);
@@ -1112,27 +1166,27 @@
       track.style.animationDuration = Math.max(6, (one * need) / px) + "s";
     }
 
-    var speedSeg = segmented(nextId("speed"), "Chalne ki raftaar", [["slow", "Dheemi"], ["medium", "Madhyam"], ["fast", "Tez"]], A.speed || "medium", function (val) { A.speed = val; paintTicker(); });
+    var speedSeg = segmented(nextId("speed"), t("patti.speed"), [["slow", t("speed.slow")], ["medium", t("speed.medium")], ["fast", t("speed.fast")]], A.speed || "medium", function (val) { A.speed = val; paintTicker(); });
 
     v.appendChild(card({
-      icon: "megaphone", title: "Announcement patti", desc: "Har page ke upar ek chalti hui line.",
+      icon: "megaphone", title: t("patti.card"), desc: t("patti.card.desc"),
       body: [
-        switchRow("Patti dikhao", "Site ke har page ke upar", A, "enabled", false, paintTicker),
-        switchRow("Text chalta hua dikhao (ticker)", "Band karne par text ek jagah ruka rahega", A, "scroll", true, paintTicker),
+        switchRow(t("patti.show"), t("patti.show.desc"), A, "enabled", false, paintTicker),
+        switchRow(t("patti.scroll"), t("patti.scroll.desc"), A, "scroll", true, paintTicker),
         h("div", { class: "grid-2" }, speedSeg,
-          textField("Link (zaroori nahi)", A, "url", { placeholder: "https://...", type: "url", validate: vHttps, onInput: paintTicker }))
+          textField(t("patti.url"), A, "url", { placeholder: "https://...", type: "url", validate: vHttps, onInput: paintTicker }))
       ]
     }));
 
     function filled(L) { return !!(A.text || {})[L]; }
     var tabs = langTabs("an", function (L, panel) {
-      var f = textField("Patti ka text (" + LANG_SHORT[L] + ")", A.text, L, { spell: true, placeholder: "Jaise: Navratri 2026 ke card banayein", onInput: function () { paintTicker(); tabs && tabs.refreshDots(); } });
+      var f = textField(t("patti.text", { lang: langName(L) }), A.text, L, { spell: true, placeholder: t("patti.text.ph"), onInput: function () { paintTicker(); tabs && tabs.refreshDots(); } });
       panel.appendChild(f);
       requestAnimationFrame(paintTicker);
     }, filled);
 
-    v.appendChild(card({ icon: "file", tone: "violet", title: "Patti ka text", desc: "Teeno bhasha me alag-alag likho. Khali bhasha me patti nahi dikhti.", body: [tabs,
-      h("div", { class: "preview-block" }, h("span", { class: "label" }, "Live preview (chuni hui bhasha)"),
+    v.appendChild(card({ icon: "file", tone: "violet", title: t("patti.textCard"), desc: t("patti.textCard.desc"), body: [tabs,
+      h("div", { class: "preview-block" }, h("span", { class: "label" }, t("patti.live")),
         h("div", { class: "preview-shell" }, h("div", { class: "preview-top" }, h("i"), h("i"), h("i"), h("span", { text: "indianfestivalwishes.com" })),
           h("div", { class: "preview-page" }, tickerEl, prevNote, h("div", { class: "fake" }, h("b"), h("b"), h("b")))))] }));
   }
@@ -1147,18 +1201,18 @@
   function renderAds() {
     var v = clear(viewEl("ads"));
     var D = S.ads;
-    v.appendChild(h("div", { class: "note warn ads-note" }, icon("alert"), h("span", { text: "AdSense approve hone ke baad hi Publisher ID daalna. Galat ID se site par khaali jagah dikh sakti hai." })));
+    v.appendChild(h("div", { class: "note warn ads-note" }, icon("alert"), h("span", { text: t("ads.note") })));
     v.appendChild(card({
-      icon: "chart", title: "Google AdSense", desc: "Slot ID AdSense me \"Ads > By ad unit\" se milta hai. Sirf Auto ads chahiye to slot khali chhod do.",
+      icon: "chart", title: t("ads.adsense"), desc: t("ads.adsense.desc"),
       body: h("div", { class: "stack" },
-        textField("Publisher ID", D, "adsenseClient", { placeholder: "ca-pub-1234567890123456", validate: vAdsense }),
+        textField(t("ads.pub"), D, "adsenseClient", { placeholder: "ca-pub-1234567890123456", validate: vAdsense }),
         h("div", { class: "grid-2" },
-          textField("Slot: upar wali jagah", D, "slotTop", { placeholder: "1234567890", inputmode: "numeric", validate: vSlot }),
-          textField("Slot: beech wali jagah", D, "slotMiddle", { placeholder: "1234567890", inputmode: "numeric", validate: vSlot })))
+          textField(t("ads.slotTop"), D, "slotTop", { placeholder: "1234567890", inputmode: "numeric", validate: vSlot }),
+          textField(t("ads.slotMid"), D, "slotMiddle", { placeholder: "1234567890", inputmode: "numeric", validate: vSlot })))
     }));
     v.appendChild(card({
-      icon: "globe", tone: "gold", title: "Google Analytics", desc: "Kitne log site par aaye, ye dekhne ke liye.",
-      body: textField("Measurement ID", D, "gaId", { placeholder: "G-XXXXXXXXXX", validate: vGa })
+      icon: "globe", tone: "gold", title: t("ads.ga"), desc: t("ads.ga.desc"),
+      body: textField(t("ads.gaId"), D, "gaId", { placeholder: "G-XXXXXXXXXX", validate: vGa })
     }));
   }
 
@@ -1169,7 +1223,7 @@
     var W = S.custom.wishes, TH = S.custom.thoughts;
     if (!OCC[ui.wOcc]) ui.wOcc = "navratri";
 
-    var ta = h("textarea", { id: nextId("cw"), spellcheck: "true", autocomplete: "off", placeholder: "Ek line me ek wish likho..." });
+    var ta = h("textarea", { id: nextId("cw"), spellcheck: "true", autocomplete: "off", placeholder: t("wish.ph") });
     var counter = h("div", { class: "counter", "aria-live": "polite" });
     var combos = h("div", { class: "combos" });
     var relField;
@@ -1179,8 +1233,8 @@
       var ls = lines(ta.value);
       var long = ls.filter(function (x) { return x.length > 160; }).length;
       clear(counter);
-      counter.appendChild(h("span", { text: ls.length + " wish jodi hui hain" }));
-      if (long) counter.appendChild(h("span", { class: "warn", text: long + " line 160 akshar se lambi hai, kaat di jaayegi" }));
+      counter.appendChild(h("span", { text: tn("wish.count", ls.length) }));
+      if (long) counter.appendChild(h("span", { class: "warn", text: tn("wish.long", long) }));
     }
     function show() { ta.value = current().join("\n"); paintCount(); }
     function paintCombos() {
@@ -1195,12 +1249,12 @@
             any = true;
             combos.appendChild(h("button", { class: "combo", type: "button", on: { click: function () {
               ui.wLang = l[0]; ui.wOcc = o; ui.wRel = r; renderWishes();
-              var t = viewEl("wishes").querySelector("textarea"); if (t) t.focus();
-            } } }, h("span", { text: LANG_SHORT[l[0]] + " · " + ((OCC[o] || [0, o])[1]) + " · " + (RELS[r] || r) }), h("b", { text: String(n) })));
+              var area = viewEl("wishes").querySelector("textarea"); if (area) area.focus();
+            } } }, h("span", { text: langName(l[0]) + " · " + pageName(o) + " · " + relName(r) }), h("b", { text: String(n) })));
           });
         });
       });
-      if (!any) combos.appendChild(h("p", { class: "hint", text: "Abhi koi apni wish nahi jodi gayi." }));
+      if (!any) combos.appendChild(h("p", { class: "hint", text: t("wish.noneYet") }));
     }
 
     ta.addEventListener("input", function () {
@@ -1218,37 +1272,38 @@
       changed();
     });
 
-    function relOpts() { return OCC[ui.wOcc][2].map(function (r) { return [r, RELS[r]]; }); }
-    var langSel = select("Bhasha", LANGS, ui.wLang, function (val) { ui.wLang = val; show(); });
-    var occSel = select("Mauka", OCCASIONS.map(function (o) { return [o[0], o[1]]; }), ui.wOcc, function (val) {
+    function relOpts() { return OCC[ui.wOcc][1].map(function (r) { return [r, relName(r)]; }); }
+    var langOpts = LANGS.map(function (l) { return [l[0], langName(l[0])]; });
+    var langSel = select(t("wish.lang"), langOpts, ui.wLang, function (val) { ui.wLang = val; show(); });
+    var occSel = select(t("wish.occ"), OCCASIONS.map(function (o) { return [o[0], pageName(o[0])]; }), ui.wOcc, function (val) {
       ui.wOcc = val;
-      if (OCC[val][2].indexOf(ui.wRel) < 0) ui.wRel = "all";
+      if (OCC[val][1].indexOf(ui.wRel) < 0) ui.wRel = "all";
       var s = relField._select;
       clear(s);
       relOpts().forEach(function (o) { s.appendChild(h("option", { value: o[0], text: o[1] })); });
       s.value = ui.wRel;
       show();
     });
-    if (OCC[ui.wOcc][2].indexOf(ui.wRel) < 0) ui.wRel = "all";
-    relField = select("Kiske liye", relOpts(), ui.wRel, function (val) { ui.wRel = val; show(); });
+    if (OCC[ui.wOcc][1].indexOf(ui.wRel) < 0) ui.wRel = "all";
+    relField = select(t("wish.rel"), relOpts(), ui.wRel, function (val) { ui.wRel = val; show(); });
 
-    var taField = h("div", { class: "field" }, h("label", { for: ta.id, text: "Wishes (ek line = ek wish)" }), ta, counter);
+    var taField = h("div", { class: "field" }, h("label", { for: ta.id, text: t("wish.field") }), ta, counter);
     v.appendChild(card({
-      icon: "message", title: "Apni wishes", desc: "Yahan likhi lines card banane wale page ki list me sabse neeche jud jaati hain.",
+      icon: "message", title: t("wish.card"), desc: t("wish.card.desc"),
       body: h("div", { class: "stack" }, h("div", { class: "grid-3" }, langSel, occSel, relField), taField)
     }));
-    v.appendChild(card({ icon: "sparkle", tone: "gold", title: "Jodi hui wishes", desc: "Kisi par dabao to wo khul jaayegi.", body: combos }));
+    v.appendChild(card({ icon: "sparkle", tone: "gold", title: t("wish.added"), desc: t("wish.added.desc"), body: combos }));
 
     // thoughts
-    var tt = h("textarea", { id: nextId("th"), spellcheck: "true", autocomplete: "off", placeholder: "Ek line me ek suvichar..." });
+    var tt = h("textarea", { id: nextId("th"), spellcheck: "true", autocomplete: "off", placeholder: t("th.ph") });
     var tcount = h("div", { class: "counter", "aria-live": "polite" });
     function showT() { tt.value = (TH[ui.tLang] || []).join("\n"); paintT(); }
-    function paintT() { clear(tcount); tcount.appendChild(h("span", { text: lines(tt.value).length + " suvichar jode hue hain" })); }
+    function paintT() { clear(tcount); tcount.appendChild(h("span", { text: tn("th.count", lines(tt.value).length) })); }
     tt.addEventListener("input", function () { TH[ui.tLang] = lines(tt.value); paintT(); changed(); });
-    var tLang = select("Bhasha", LANGS, ui.tLang, function (val) { ui.tLang = val; showT(); });
+    var tLang = select(t("wish.lang"), langOpts, ui.tLang, function (val) { ui.tLang = val; showT(); });
     v.appendChild(card({
-      icon: "sparkle", tone: "violet", title: "Good Morning ke suvichar", desc: "Good Morning card par \"agla suvichar\" me ye bhi aayenge.",
-      body: h("div", { class: "stack" }, tLang, h("div", { class: "field" }, h("label", { for: tt.id, text: "Suvichar (ek line = ek suvichar)" }), tt, tcount))
+      icon: "sparkle", tone: "violet", title: t("th.card"), desc: t("th.card.desc"),
+      body: h("div", { class: "stack" }, tLang, h("div", { class: "field" }, h("label", { for: tt.id, text: t("th.field") }), tt, tcount))
     }));
 
     show(); showT(); paintCombos();
@@ -1269,9 +1324,9 @@
   function paintBackups() {
     if (!backupListEl) return;
     clear(backupListEl);
-    if (!backups) { backupListEl.appendChild(h("p", { class: "hint", text: "Load ho raha hai..." })); return; }
+    if (!backups) { backupListEl.appendChild(h("p", { class: "hint", text: t("bk.loading") })); return; }
     if (!backups.length) {
-      backupListEl.appendChild(h("div", { class: "empty" }, icon("database"), h("strong", { text: "Abhi koi backup nahi" }), h("p", { text: "Pehli baar save karte hi yahan backup ban jaayega." })));
+      backupListEl.appendChild(h("div", { class: "empty" }, icon("database"), h("strong", { text: t("bk.empty") }), h("p", { text: t("bk.empty.hint") })));
       return;
     }
     var list = showAllBackups ? backups : backups.slice(0, 8);
@@ -1280,34 +1335,34 @@
       var label = fmtDate(b.date);
       box.appendChild(h("div", { class: "bitem" },
         h("span", { class: "b-ic" }, icon("file")),
-        h("span", { class: "b-text" }, h("strong", { text: label }), h("small", { text: (i === 0 ? "Sabse naya · " : "") + ago(new Date(b.date).getTime()) + " · " + fmtSize(b.size) })),
+        h("span", { class: "b-text" }, h("strong", { text: label }), h("small", { text: (i === 0 ? t("bk.latest") + " · " : "") + ago(new Date(b.date).getTime()) + " · " + fmtSize(b.size) })),
         h("span", { class: "b-act" },
-          h("button", { class: "icon-btn", type: "button", "aria-label": "Download: " + label, title: "Download", on: { click: function () { downloadBackup(b.name); } } }, icon("download")),
-          h("button", { class: "btn btn-ghost btn-sm", type: "button", "aria-label": "Wapas lagao: " + label, on: { click: function () { restoreBackup(b, label); } } }, icon("restore"), h("span", { class: "hide-xs", text: "Wapas lagao" })))));
+          h("button", { class: "icon-btn", type: "button", "aria-label": t("bk.downloadOf", { label: label }), title: t("bk.download"), on: { click: function () { downloadBackup(b.name); } } }, icon("download")),
+          h("button", { class: "btn btn-ghost btn-sm", type: "button", "aria-label": t("bk.restoreOf", { label: label }), on: { click: function () { restoreBackup(b, label); } } }, icon("restore"), h("span", { class: "hide-xs", text: t("bk.restore") })))));
     });
     backupListEl.appendChild(box);
     if (backups.length > 8) {
       backupListEl.appendChild(h("div", { class: "more-row" }, h("button", { class: "btn btn-ghost btn-sm", type: "button", on: { click: function () { showAllBackups = !showAllBackups; paintBackups(); } } },
-        icon(showAllBackups ? "arrowUp" : "chevDown"), showAllBackups ? "Kam dikhao" : "Sabhi " + backups.length + " dikhao")));
+        icon(showAllBackups ? "arrowUp" : "chevDown"), showAllBackups ? t("bk.less") : t("bk.all", { n: backups.length }))));
     }
   }
 
   function downloadBackup(name) {
     api("GET", "/api/backups/" + encodeURIComponent(name)).then(function (data) {
       saveFile(JSON.stringify(data, null, 2), name);
-    }).catch(function (e) { if (e.status !== 401) toast("Download nahi hua: " + e.message, "err"); });
+    }).catch(function (e) { if (e.status !== 401) toast(t("bk.download.fail", { msg: e.message }), "err"); });
   }
 
   function restoreBackup(b, label) {
-    ask({ title: "Ye backup wapas lagayein?", text: label + " wali settings site par turant lag jaayengi. Abhi wali settings ka bhi backup ban jaayega." + (isDirty() ? " Aapke unsaved badlav hat jaayenge." : ""), ok: "Haan, wapas lagao", icon: "restore" })
+    ask({ title: t("bk.restore.title"), text: t("bk.restore.text", { label: label }) + (isDirty() ? " " + t("bk.restore.dirty") : ""), ok: t("bk.restore.ok"), icon: "restore" })
       .then(function (yes) {
         if (!yes) return;
         return api("POST", "/api/backups/" + encodeURIComponent(b.name) + "/restore", {}).then(function () {
           return loadSettings();
         }).then(function () {
           changed();
-          toast("Backup wapas lag gaya.", "ok");
-        }).catch(function (e) { if (e.status !== 401) toast("Restore nahi hua: " + e.message, "err"); });
+          toast(t("bk.restore.done"), "ok");
+        }).catch(function (e) { if (e.status !== 401) toast(t("bk.restore.fail", { msg: e.message }), "err"); });
       });
   }
 
@@ -1323,38 +1378,38 @@
     var v = clear(viewEl("backup"));
     backupListEl = h("div");
     v.appendChild(card({
-      icon: "database", title: "Server par backups", desc: "Har save se pehle purani settings apne aap yahan rakh di jaati hain (aakhri 50).",
-      side: h("button", { class: "btn btn-ghost btn-sm", type: "button", on: { click: function () { loadBackups().then(function () { toast("List taaza ho gayi.", "info"); }); } } }, icon("restore"), "Refresh"),
+      icon: "database", title: t("bk.card"), desc: t("bk.card.desc"),
+      side: h("button", { class: "btn btn-ghost btn-sm", type: "button", on: { click: function () { loadBackups().then(function () { toast(t("bk.refresh.done"), "info"); }); } } }, icon("restore"), t("bk.refresh")),
       body: backupListEl
     }));
     paintBackups();
 
-    var fileInp = h("input", { type: "file", accept: "application/json,.json", "aria-label": "Backup file chuno" });
+    var fileInp = h("input", { type: "file", accept: "application/json,.json", "aria-label": t("bk.pick") });
     fileInp.addEventListener("change", function () {
       var f = fileInp.files && fileInp.files[0];
       fileInp.value = "";
       if (!f) return;
-      if (f.size > 1024 * 1024) { toast("File bahut badi hai.", "err"); return; }
-      f.text().then(function (t) {
-        var d = JSON.parse(t);
+      if (f.size > 1024 * 1024) { toast(t("bk.tooBig"), "err"); return; }
+      f.text().then(function (txt) {
+        var d = JSON.parse(txt);
         if (!d || typeof d !== "object" || Array.isArray(d) || !d.affiliate || !d.telegram) throw new Error("bad");
         var ver = S.version;
         S = ensure(d);
         S.version = ver;
         renderAll();
         changed();
-        toast("File load ho gayi. Site par lagane ke liye Save dabao.", "info");
-      }).catch(function () { toast("Ye sahi settings file nahi hai.", "err"); });
+        toast(t("bk.loaded"), "info");
+      }).catch(function () { toast(t("bk.bad"), "err"); });
     });
 
     v.appendChild(card({
-      icon: "download", tone: "gold", title: "Export / Import", desc: "Apne computer ya phone me copy rakho, ya purani file se settings wapas lao.",
+      icon: "download", tone: "gold", title: t("bk.io"), desc: t("bk.io.desc"),
       body: h("div", { class: "row-actions" },
         h("button", { class: "btn btn-ghost", type: "button", on: { click: function () {
           saveFile(JSON.stringify(S, null, 2) + "\n", "site-settings-" + new Date().toISOString().slice(0, 10) + ".json");
-          toast("File download ho gayi.", "ok");
-        } } }, icon("download"), "JSON download"),
-        h("span", { class: "btn btn-ghost file-btn" }, icon("upload"), "JSON file se lao", fileInp))
+          toast(t("bk.io.done"), "ok");
+        } } }, icon("download"), t("bk.io.down")),
+        h("span", { class: "btn btn-ghost file-btn" }, icon("upload"), t("bk.io.up"), fileInp))
     }));
   }
 
@@ -1362,18 +1417,20 @@
 
   function renderAccount() {
     var v = clear(viewEl("account"));
-    var pw = { cur: "", next: "", again: "" };
+    var pw = pwState;
     function pwField(label, key, ac) {
       var f = textField(label, pw, key, { type: "password", raw: true });
       f._input.setAttribute("autocomplete", ac);
       return f;
     }
-    var fCur = pwField("Abhi ka password", "cur", "current-password");
-    var fNext = pwField("Naya password (kam se kam 10 akshar)", "next", "new-password");
-    var fAgain = pwField("Naya password dobara", "again", "new-password");
+    var fCur = pwField(t("acc.cur"), "cur", "current-password");
+    var fNext = pwField(t("acc.next"), "next", "new-password");
+    var fAgain = pwField(t("acc.again"), "again", "new-password");
     var meter = h("div", { class: "pw-meter", "aria-hidden": "true" }, h("i"));
     fNext.insertBefore(meter, fNext.querySelector(".field-err"));
-    fNext._input.addEventListener("input", function () {
+    fNext._input.addEventListener("input", paintMeter);
+    if (pw.next) paintMeter();
+    function paintMeter() {
       var val = pw.next, s = 0;
       if (val.length >= 10) s++;
       if (val.length >= 14) s++;
@@ -1382,38 +1439,40 @@
       var bar = meter.firstChild;
       bar.style.width = Math.max(8, s * 25) + "%";
       bar.style.background = s >= 3 ? "var(--ok)" : s === 2 ? "var(--marigold)" : "var(--err)";
-    });
+    }
     // password fields should not mark settings dirty
     [fCur, fNext, fAgain].forEach(function (f) { f._input.addEventListener("input", function (e) { e.stopPropagation(); }); });
 
-    var btn = h("button", { class: "btn btn-primary", type: "submit" }, h("span", { class: "btn-label", text: "Password badlo" }), h("span", { class: "spinner", "aria-hidden": "true" }));
+    var btn = h("button", { class: "btn btn-primary", type: "submit" }, h("span", { class: "btn-label", text: t("acc.change") }), h("span", { class: "spinner", "aria-hidden": "true" }));
     var form = h("form", { class: "stack", novalidate: true }, h("input", { type: "text", name: "username", autocomplete: "username", value: (ME && ME.user) || "", hidden: true, "aria-hidden": "true", tabindex: "-1" }),
       fCur, h("div", { class: "grid-2" }, fNext, fAgain), h("div", { class: "row-actions" }, btn));
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      if (!pw.cur) { toast("Abhi ka password daalo.", "err"); fCur._input.focus(); return; }
-      if (pw.next.length < 10) { toast("Naya password kam se kam 10 akshar ka rakho.", "err"); fNext._input.focus(); return; }
-      if (pw.next !== pw.again) { toast("Dono naye password ek jaise nahi hain.", "err"); fAgain._input.focus(); return; }
+      if (!pw.cur) { toast(t("acc.needCur"), "err"); fCur._input.focus(); return; }
+      if (pw.next.length < 10) { toast(t("acc.short"), "err"); fNext._input.focus(); return; }
+      if (pw.next !== pw.again) { toast(t("acc.mismatch"), "err"); fAgain._input.focus(); return; }
       btn.classList.add("is-busy"); btn.disabled = true;
       api("POST", "/api/password", { current: pw.cur, next: pw.next }, { allow401: true }).then(function () {
         [fCur, fNext, fAgain].forEach(function (f) { f._input.value = ""; });
         pw.cur = pw.next = pw.again = "";
         meter.firstChild.style.width = "0";
-        toast("Password badal gaya. Baaki sab jagah se logout ho gaya.", "ok");
+        toast(t("acc.done"), "ok");
       }).catch(function (err) {
-        toast(err.status === 403 ? "Abhi ka password galat hai." : err.status === 401 ? "Session khatam, dobara login karo." : "Password nahi badla: " + err.message, "err");
+        toast(err.status === 403 ? t("acc.wrongCur") : err.status === 401 ? t("session.expired") : t("acc.fail", { msg: err.message }), "err");
         if (err.status === 401) sessionExpired();
       }).then(function () { btn.classList.remove("is-busy"); btn.disabled = false; });
     });
 
-    v.appendChild(card({ icon: "key", title: "Password badlo", desc: "Naya password sirf server par (scrypt hash) save hota hai. Badalne ke baad purane login band ho jaate hain.", body: form }));
+    v.appendChild(card({ icon: "key", title: t("acc.change"), desc: t("acc.card.desc"), body: form }));
 
     var expTxt = ME && ME.exp ? fmtDate(ME.exp) : "–";
     v.appendChild(card({
-      icon: "user", tone: "violet", title: "Login", desc: "Is browser ka login 12 ghante tak chalta hai.",
+      icon: "user", tone: "violet", title: t("acc.login"), desc: t("acc.login.desc"),
       body: h("div", { class: "stack" },
-        h("div", { class: "note info" }, icon("info"), h("span", { text: "Login: " + ((ME && ME.user) || "admin") + " · Session khatam: " + expTxt + (ME && ME.customPassword ? " · Panel se badla hua password chal raha hai" : "") })),
-        h("div", { class: "row-actions" }, h("button", { class: "btn btn-danger", type: "button", on: { click: function () { $("btn-logout").click(); } } }, icon("logout"), "Logout")))
+        h("div", { class: "note info" }, icon("info"), h("span", null,
+          t("acc.user", { user: "" }), h("span", { class: "ud", text: (ME && ME.user) || "admin" }),
+          " · " + t("acc.exp", { exp: expTxt }) + (ME && ME.customPassword ? " · " + t("acc.custom") : ""))),
+        h("div", { class: "row-actions" }, h("button", { class: "btn btn-danger", type: "button", on: { click: function () { $("btn-logout").click(); } } }, icon("logout"), t("logout"))))
     }));
   }
 
@@ -1429,13 +1488,70 @@
       ring.innerHTML = s;
     }
   })();
+  /* ======================================================= UI language */
+
+  // [data-i18n] -> text, [data-i18n-aria] -> aria-label (static markup in index.html)
+  function applyStatic() {
+    document.querySelectorAll("[data-i18n]").forEach(function (n) { n.textContent = t(n.getAttribute("data-i18n")); });
+    document.querySelectorAll("[data-i18n-aria]").forEach(function (n) { n.setAttribute("aria-label", t(n.getAttribute("data-i18n-aria"))); });
+  }
+
+  // हिं / ગુ / EN segmented control; one per .lang-slot (login card, sidebar, mobile top bar)
+  function langSwitch(where) {
+    var g = h("div", { class: "lang-switch", role: "group", "aria-label": t("lang.switch") });
+    UI_LANGS.forEach(function (l) {
+      g.appendChild(h("button", {
+        class: "ls-btn", type: "button", lang: l[0], "data-setlang": l[0], "aria-label": l[2], title: l[2],
+        "aria-pressed": l[0] === LANG ? "true" : "false",
+        on: { click: function () { setLang(l[0], where); } }
+      }, l[1]));
+    });
+    return g;
+  }
+  function mountSwitches() {
+    document.querySelectorAll(".lang-slot").forEach(function (slot) { clear(slot).appendChild(langSwitch(slot.getAttribute("data-ls"))); });
+  }
+
+  function applyLang() {
+    document.documentElement.lang = LANG;
+    applyStatic();
+    mountSwitches();
+    var eye = $("lg-eye");
+    eye.setAttribute("aria-label", t($("lg-pass").type === "password" ? "login.show" : "login.hide"));
+    paintLoginMsg();
+    buildNav();
+    refreshNavBadges();
+    if (!$("app").hidden) {
+      // everything re-renders from S (the working copy), so unsaved edits survive
+      var y = window.scrollY;
+      if (S) renderAll();
+      go(view, true);
+      changed();
+      window.scrollTo(0, y);
+    } else {
+      document.title = t("login.docTitle") + " | Indian Festival Wishes";
+    }
+  }
+
+  function setLang(code, where) {
+    if (!I18N[code]) return;
+    LANG = code;
+    try { localStorage.setItem(LANG_KEY, code); } catch (e) { /* storage blocked */ }
+    applyLang();
+    if (where) {
+      var b = document.querySelector('.lang-slot[data-ls="' + where + '"] [data-setlang="' + code + '"]');
+      if (b) b.focus();
+    }
+  }
+
   hydrateIcons();
-  buildNav();
+  applyLang();
 
   api("GET", "/api/me", undefined, { allow401: true }).then(function (me) {
     ME = me;
     return enterApp();
   }).catch(function (err) {
-    showLogin(err.status && err.status !== 401 ? "Server se baat nahi ho paayi (" + err.status + ")." : err.status === 0 ? err.message : "", err.status === 401 ? null : undefined);
+    var st = err.status;
+    showLogin(st && st !== 401 ? function () { return t("boot.serverErr", { n: st }); } : st === 0 ? function () { return t("net.err"); } : "", st === 401 ? null : undefined);
   });
 })();

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -10,12 +10,12 @@
 <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@500;600;700&family=Mukta:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@500;600;700&family=Anek+Gujarati:wght@500;600;700&family=Mukta:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="admin.css">
 </head>
 <body class="is-booting">
 
-<a class="skip" href="#main">Seedha content par jao</a>
+<a class="skip" href="#main" data-i18n="skip"></a>
 
 <!-- ======================= LOGIN ======================= -->
 <div class="login" id="login" hidden>
@@ -29,23 +29,24 @@
     <div class="login-brand">
       <span class="brand-mark"></span>
       <p class="login-kicker">Indian Festival Wishes</p>
-      <h1 class="login-h">Site ka control room</h1>
-      <p class="login-sub">Products, Telegram, patti, ads aur wishes, sab ek jagah se badlo.</p>
+      <h1 class="login-h" data-i18n="login.h"></h1>
+      <p class="login-sub" data-i18n="login.sub"></p>
     </div>
   </div>
 
   <div class="login-panel">
     <form class="login-card" id="login-form" novalidate>
+      <div class="login-lang lang-slot" data-ls="login"></div>
       <div class="login-card-head">
         <span class="login-lock" data-icon="lock"></span>
         <div>
-          <h2>Admin login</h2>
-          <p>Apna username aur password daalo.</p>
+          <h2 data-i18n="login.title"></h2>
+          <p data-i18n="login.lead"></p>
         </div>
       </div>
 
       <div class="field">
-        <label for="lg-user">Username</label>
+        <label for="lg-user" data-i18n="login.user"></label>
         <div class="input-icon">
           <span data-icon="user"></span>
           <input id="lg-user" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required>
@@ -53,11 +54,11 @@
       </div>
 
       <div class="field">
-        <label for="lg-pass">Password</label>
+        <label for="lg-pass" data-i18n="login.pass"></label>
         <div class="input-icon has-action">
           <span data-icon="key"></span>
           <input id="lg-pass" name="password" type="password" autocomplete="current-password" required>
-          <button class="input-action" type="button" id="lg-eye" aria-label="Password dikhao" aria-pressed="false" aria-controls="lg-pass">
+          <button class="input-action" type="button" id="lg-eye" data-i18n-aria="login.show" aria-pressed="false" aria-controls="lg-pass">
             <span data-icon="eye"></span>
           </button>
         </div>
@@ -66,45 +67,47 @@
       <div class="login-msg" id="login-msg" role="alert" aria-live="assertive" hidden></div>
 
       <button class="btn btn-primary btn-block" type="submit" id="lg-submit">
-        <span class="btn-label">Login karo</span>
+        <span class="btn-label" data-i18n="login.submit"></span>
         <span class="spinner" aria-hidden="true"></span>
       </button>
 
-      <p class="login-foot"><span data-icon="shield"></span> 5 galat koshish ke baad 15 minute ke liye login ruk jaata hai.</p>
+      <p class="login-foot"><span data-icon="shield"></span><span data-i18n="login.foot"></span></p>
     </form>
   </div>
 </div>
 
 <!-- ======================= APP ======================= -->
 <div class="shell" id="app" hidden>
-  <aside class="side" id="side" aria-label="Admin menu">
+  <aside class="side" id="side" data-i18n-aria="side.aria">
     <div class="side-head">
       <span class="brand-mark small"></span>
       <div class="side-title">
-        <strong>IFW Admin</strong>
+        <strong data-i18n="side.title"></strong>
         <span>indianfestivalwishes.com</span>
       </div>
-      <button class="icon-btn side-close" type="button" id="side-close" aria-label="Menu band karo"><span data-icon="x"></span></button>
+      <button class="icon-btn side-close" type="button" id="side-close" data-i18n-aria="side.close"><span data-icon="x"></span></button>
     </div>
-    <nav class="side-nav" id="side-nav" aria-label="Sections"></nav>
+    <nav class="side-nav" id="side-nav" data-i18n-aria="nav.aria"></nav>
     <div class="side-foot">
-      <a class="side-link" href="/" target="_blank" rel="noopener"><span data-icon="external"></span><span>Site kholo</span></a>
-      <button class="side-link" type="button" id="btn-logout"><span data-icon="logout"></span><span>Logout</span></button>
-      <div class="side-user"><span class="avatar" id="side-avatar">A</span><span><small>Login hai</small><strong id="side-user">admin</strong></span></div>
+      <a class="side-link" href="/" target="_blank" rel="noopener"><span data-icon="external"></span><span data-i18n="side.openSite"></span></a>
+      <button class="side-link" type="button" id="btn-logout"><span data-icon="logout"></span><span data-i18n="logout"></span></button>
+      <div class="side-lang"><span class="side-lang-label" data-i18n="lang.label"></span><div class="lang-slot" data-ls="side"></div></div>
+      <div class="side-user"><span class="avatar" id="side-avatar">A</span><span><small data-i18n="side.signedIn"></small><strong id="side-user">admin</strong></span></div>
     </div>
   </aside>
   <div class="scrim" id="scrim" hidden></div>
 
   <div class="main-wrap">
     <header class="topbar">
-      <button class="icon-btn menu-btn" type="button" id="menu-btn" aria-label="Menu kholo" aria-controls="side" aria-expanded="false"><span data-icon="menu"></span></button>
+      <button class="icon-btn menu-btn" type="button" id="menu-btn" data-i18n-aria="menu.open" aria-controls="side" aria-expanded="false"><span data-icon="menu"></span></button>
       <div class="topbar-title">
-        <h1 id="view-title">Haalat</h1>
-        <p id="view-sub">Site par abhi kya chalu hai</p>
+        <h1 id="view-title"></h1>
+        <p id="view-sub"></p>
       </div>
       <div class="topbar-actions">
-        <span class="save-chip" id="save-chip"><span class="dot"></span><span id="save-chip-text">Sab save hai</span></span>
-        <a class="btn btn-ghost btn-sm hide-sm" href="/" target="_blank" rel="noopener"><span data-icon="external"></span>Site</a>
+        <div class="lang-slot top-lang" data-ls="top"></div>
+        <span class="save-chip" id="save-chip"><span class="dot"></span><span id="save-chip-text" data-i18n="chip.saved"></span></span>
+        <a class="btn btn-ghost btn-sm hide-sm" href="/" target="_blank" rel="noopener"><span data-icon="external"></span><span data-i18n="top.site"></span></a>
       </div>
     </header>
 
@@ -120,15 +123,15 @@
     </main>
   </div>
 
-  <nav class="tabbar" id="tabbar" aria-label="Jaldi menu"></nav>
+  <nav class="tabbar" id="tabbar" data-i18n-aria="tabbar.aria"></nav>
 
-  <div class="savebar" id="savebar" role="region" aria-label="Save" hidden>
+  <div class="savebar" id="savebar" role="region" data-i18n-aria="savebar.aria" hidden>
     <div class="savebar-inner">
       <span class="savebar-icon" data-icon="alert"></span>
-      <p class="savebar-text"><strong>Badlav save nahi hue</strong><span id="savebar-sub">Site par lagane ke liye Save dabao</span></p>
+      <p class="savebar-text"><strong data-i18n="savebar.title"></strong><span id="savebar-sub" data-i18n="savebar.sub"></span></p>
       <div class="savebar-actions">
-        <button class="btn btn-ghost-dark" type="button" id="btn-discard">Wapas lo</button>
-        <button class="btn btn-primary" type="button" id="btn-save"><span class="btn-label">Save karo</span><span class="spinner" aria-hidden="true"></span></button>
+        <button class="btn btn-ghost-dark" type="button" id="btn-discard" data-i18n="btn.discard"></button>
+        <button class="btn btn-primary" type="button" id="btn-save"><span class="btn-label" data-i18n="btn.save"></span><span class="spinner" aria-hidden="true"></span></button>
       </div>
     </div>
   </div>
@@ -139,15 +142,16 @@
 <dialog class="dialog" id="dialog" aria-labelledby="dlg-title" aria-describedby="dlg-text">
   <form method="dialog" class="dialog-card">
     <span class="dialog-icon" id="dlg-icon" data-icon="alert"></span>
-    <h2 id="dlg-title">Pakka?</h2>
+    <h2 id="dlg-title"></h2>
     <p id="dlg-text"></p>
     <div class="dialog-actions">
-      <button class="btn btn-ghost" value="cancel" id="dlg-cancel">Nahi</button>
-      <button class="btn btn-primary" value="ok" id="dlg-ok">Haan</button>
+      <button class="btn btn-ghost" value="cancel" id="dlg-cancel"></button>
+      <button class="btn btn-primary" value="ok" id="dlg-ok"></button>
     </div>
   </form>
 </dialog>
 
+<script src="i18n.js"></script>
 <script src="admin.js"></script>
 </body>
 </html>

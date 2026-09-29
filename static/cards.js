@@ -44,6 +44,8 @@
       return Math.floor((d - start) / 86400000) % K.thoughts.length;
     })(),
     photoMode: !!K.photoDefault,
+    pz: 1, px: 0, py: 0,
+    bgImg: null, bgTone: 0.5,
     photo: null,
     made: false
   };
@@ -98,7 +100,20 @@
     g.addColorStop(0, "#FFF6D2"); g.addColorStop(0.45, "#FFD36B"); g.addColorStop(0.75, "#F2A93B"); g.addColorStop(1, "#C9821E");
     return g;
   }
+  // title fonts per template style
+  var TFONTS = {
+    deco: { hi: ["'Yatra One', " + FD, 400], gu: ["'Shrikhand', " + FD, 400], en: ["'Cinzel', serif", 700] },
+    script: { hi: ["'Kalam', " + FD, 700], gu: ["'Mogra', " + FD, 400], en: ["'Great Vibes', cursive", 400] },
+    classic: { hi: [FD, FDW], gu: [FD, FDW], en: [FD, FDW] }
+  };
+  var TF = [FD, FDW]; // current title font
+  function setTitleFont(style) { var t = (TFONTS[style] || TFONTS.classic)[D.lang] || TFONTS.classic.en; TF = t; }
+
   function palette(d) {
+    if (d.tpl) {
+      var c = d.colors, dark = d.tone === "dark";
+      return { dark: dark, tpl: true, title: c.title, text: c.text, soft: dark ? "rgba(255,248,236,.85)" : c.text, accent: c.accent, line: c.accent, ribbon: dark ? ["#E0115F", "#B80D4D"] : [c.title, c.title], shadow: dark ? "rgba(0,0,0,.55)" : "rgba(255,255,255,.85)" };
+    }
     if (d.tone === "dark") return { dark: true, title: "gold", text: "#FFF8EC", soft: "rgba(255,248,236,.88)", accent: "#FFD36B", line: "rgba(255,211,107,.85)", ribbon: ["#E0115F", "#B80D4D"], shadow: "rgba(0,0,0,.5)" };
     return { dark: false, title: d.ink, text: "#2A1633", soft: "rgba(42,22,51,.82)", accent: d.ink, line: d.ink, ribbon: [d.ink, d.ink], shadow: "rgba(255,255,255,.7)" };
   }
@@ -117,9 +132,9 @@
     if (top) list.push({ k: "label", t: top, fam: FB, w: 700, s: 32, min: 22, max: 1, gap: 16 });
     if (INVITE) {
       var f = state.f;
-      list.push({ k: "title", t: title, fam: FD, w: FDW, s: 104, min: 54, max: 2, gap: 16 });
+      list.push({ k: "title", t: title, fam: TF[0], w: TF[1], s: 100, min: 52, max: 2, gap: 16 });
       var names = f.name1 && f.name2 ? f.name1 + (K.join ? "  " + K.join + "  " : "  ") + f.name2 : (f.name1 || "");
-      if (names) list.push({ k: "names", t: names, fam: FD, w: FDW, s: 64, min: 34, max: 2, gap: 12 });
+      if (names) list.push({ k: "names", t: names, fam: TF[0], w: TF[1], s: 64, min: 34, max: 2, gap: 12 });
       if (f.dates) list.push({ k: "detail", t: f.dates, fam: FB, w: 600, s: 30, min: 22, max: 2, gap: 12 });
       list.push({ k: "divider", h: 24, gap: 18 });
       list.push({ k: "wish", t: currentWish(), fam: FB, w: 600, s: 38, min: 24, max: 4, gap: 18 });
@@ -132,8 +147,8 @@
       if (f.note) list.push({ k: "note", t: f.note, fam: FB, w: 500, s: 28, min: 20, max: 2, gap: 0 });
       return list;
     }
-    if (K.kind === "couple" && state.n1 && state.n2) list.push({ k: "names", t: state.n1 + "  &  " + state.n2, fam: FD, w: FDW, s: 62, min: 34, max: 2, gap: 12 });
-    list.push({ k: "title", t: title, fam: FD, w: FDW, s: 118, min: 58, max: 2, gap: 18 });
+    if (K.kind === "couple" && state.n1 && state.n2) list.push({ k: "names", t: state.n1 + "  &  " + state.n2, fam: TF[0], w: TF[1], s: 62, min: 34, max: 2, gap: 12 });
+    list.push({ k: "title", t: title, fam: TF[0], w: TF[1], s: 116, min: 56, max: 2, gap: 18 });
     if (K.kind === "person" && state.to) list.push({ k: "ribbon", t: state.to, fam: FB, w: 700, s: 48, min: 30, max: 1, gap: 24 });
     list.push({ k: "divider", h: 24, gap: 20 });
     list.push({ k: "wish", t: currentWish(), fam: FB, w: 600, s: 46, min: 26, max: 5, gap: 20 });
@@ -154,44 +169,78 @@
         s -= 2; ctx.font = font(b.fam, b.w, s); lines = wrap(b.t, limit);
       }
       b.size = s; b.lines = lines;
-      b.lh = Math.round(s * (b.k === "title" || b.k === "names" ? 1.2 : 1.42));
+      b.lh = Math.round(s * (b.k === "title" || b.k === "names" ? 1.22 : 1.42));
       b.hh = b.lines.length * b.lh + (b.k === "ribbon" ? 30 : 0);
       total += b.hh + gap;
     });
     return total;
   }
 
-  function drawDivider(cx, y, pal) {
+  function drawDivider(x, y, pal, align) {
     ctx.save();
     ctx.strokeStyle = pal.line; ctx.fillStyle = pal.accent; ctx.lineWidth = 3; ctx.lineCap = "round";
-    ctx.beginPath(); ctx.moveTo(cx - 140, y); ctx.lineTo(cx - 32, y); ctx.moveTo(cx + 32, y); ctx.lineTo(cx + 140, y); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(cx, y - 12); ctx.lineTo(cx + 12, y); ctx.lineTo(cx, y + 12); ctx.lineTo(cx - 12, y); ctx.closePath(); ctx.fill();
-    [-22, 22].forEach(function (dx) { ctx.beginPath(); ctx.arc(cx + dx, y, 4, 0, Math.PI * 2); ctx.fill(); });
+    if (align === "left") {
+      ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + 150, y); ctx.stroke();
+      ctx.beginPath(); ctx.arc(x + 166, y, 5, 0, Math.PI * 2); ctx.fill();
+    } else {
+      ctx.beginPath(); ctx.moveTo(x - 140, y); ctx.lineTo(x - 32, y); ctx.moveTo(x + 32, y); ctx.lineTo(x + 140, y); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(x, y - 12); ctx.lineTo(x + 12, y); ctx.lineTo(x, y + 12); ctx.lineTo(x - 12, y); ctx.closePath(); ctx.fill();
+      [-22, 22].forEach(function (dx) { ctx.beginPath(); ctx.arc(x + dx, y, 4, 0, Math.PI * 2); ctx.fill(); });
+    }
     ctx.restore();
   }
 
-  function drawPhoto(cx, cy, r, pal) {
-    ctx.save();
-    ctx.shadowColor = "rgba(0,0,0,.35)"; ctx.shadowBlur = 28; ctx.shadowOffsetY = 8;
-    ctx.beginPath(); ctx.arc(cx, cy, r + 12, 0, Math.PI * 2);
-    ctx.fillStyle = pal.dark ? gold(cy - r, cy + r) : "#FFFFFF"; ctx.fill();
-    ctx.restore();
-    ctx.save();
-    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.clip();
-    if (state.photo) {
-      var im = state.photo, s = Math.max((2 * r) / im.width, (2 * r) / im.height);
-      ctx.drawImage(im, cx - (im.width * s) / 2, cy - (im.height * s) / 2, im.width * s, im.height * s);
+  /* ---------- photo: shape paths, zoom and drag ---------- */
+  function archPath(x, y, w, h) {
+    var cx = x + w / 2, sh = y + h * 0.34;
+    ctx.beginPath();
+    ctx.moveTo(x, y + h); ctx.lineTo(x, sh);
+    ctx.bezierCurveTo(x, sh - h * 0.12, x + w * 0.18, y + h * 0.1, cx - w * 0.1, y + h * 0.045);
+    ctx.bezierCurveTo(cx - w * 0.04, y + h * 0.02, cx, y + h * 0.01, cx, y);
+    ctx.bezierCurveTo(cx, y + h * 0.01, cx + w * 0.04, y + h * 0.02, cx + w * 0.1, y + h * 0.045);
+    ctx.bezierCurveTo(x + w - w * 0.18, y + h * 0.1, x + w, sh - h * 0.12, x + w, sh);
+    ctx.lineTo(x + w, y + h); ctx.closePath();
+  }
+  function shapePath(ph) {
+    if (ph.shape === "arch") archPath(ph.x, ph.y, ph.w, ph.h);
+    else if (ph.shape === "rounded") roundRect(ph.x, ph.y, ph.w, ph.h, 28);
+    else { ctx.beginPath(); ctx.arc(ph.cx, ph.cy, ph.r, 0, Math.PI * 2); }
+  }
+  function box(ph) {
+    if (ph.shape === "circle") return { x: ph.cx - ph.r, y: ph.cy - ph.r, w: ph.r * 2, h: ph.r * 2 };
+    return { x: ph.x, y: ph.y, w: ph.w, h: ph.h };
+  }
+  var photoBox = null; // last drawn photo box, for dragging
+  function drawPhotoImage(ph) {
+    var b = box(ph), im = state.photo;
+    ctx.save(); shapePath(ph); ctx.clip();
+    if (im) {
+      var s = Math.max(b.w / im.width, b.h / im.height) * state.pz;
+      var iw = im.width * s, ih = im.height * s;
+      var ox = (iw - b.w) / 2, oy = (ih - b.h) / 2;
+      ctx.drawImage(im, b.x - ox + state.px * ox, b.y - oy + state.py * oy, iw, ih);
     } else {
-      ctx.fillStyle = "#EDE6DC"; ctx.fillRect(cx - r, cy - r, 2 * r, 2 * r);
+      ctx.fillStyle = "#EDE6DC"; ctx.fillRect(b.x, b.y, b.w, b.h);
       ctx.fillStyle = "#C9BDB0";
+      var cx = b.x + b.w / 2, cy = b.y + b.h / 2, r = Math.min(b.w, b.h) / 2;
       ctx.beginPath(); ctx.arc(cx, cy - r * 0.18, r * 0.32, 0, Math.PI * 2); ctx.fill();
       ctx.beginPath(); ctx.ellipse(cx, cy + r * 0.62, r * 0.6, r * 0.42, 0, 0, Math.PI * 2); ctx.fill();
     }
     ctx.restore();
-    if (!pal.dark) { ctx.save(); ctx.strokeStyle = pal.accent; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(cx, cy, r + 12, 0, Math.PI * 2); ctx.stroke(); ctx.restore(); }
+    photoBox = b;
+  }
+  function drawPhotoFrame(ph, pal) {
+    ctx.save();
+    ctx.shadowColor = "rgba(0,0,0,.3)"; ctx.shadowBlur = 24; ctx.shadowOffsetY = 8;
+    if (ph.shape === "circle") { ctx.beginPath(); ctx.arc(ph.cx, ph.cy, ph.r + 12, 0, Math.PI * 2); }
+    else if (ph.shape === "rounded") roundRect(ph.x - 10, ph.y - 10, ph.w + 20, ph.h + 20, 34);
+    else archPath(ph.x - 10, ph.y - 10, ph.w + 20, ph.h + 20);
+    ctx.fillStyle = pal.dark ? gold(ph.cy || ph.y, (ph.cy || ph.y) + 200) : "#FFFFFF"; ctx.fill();
+    ctx.restore();
+    drawPhotoImage(ph);
   }
 
-  // Frosted glass panel: blurred copy of the background + tint + thin border
+  // Frosted glass panel for photo backgrounds
   function drawPanel(img, x, y, w, h, pal) {
     var r = 36;
     ctx.save();
@@ -214,12 +263,85 @@
     ctx.restore();
   }
 
-  function drawCard(img) {
-    var d = DES[state.design];
-    var pal = palette(d);
+  function drawBlocks(list, x0, x1, y, align, pal, scale) {
+    var cx = align === "left" ? x0 : (x0 + x1) / 2;
+    ctx.textAlign = align === "left" ? "left" : "center"; ctx.textBaseline = "middle";
+    list.forEach(function (b) {
+      if (b.k === "divider") { drawDivider(cx, y + b.h / 2, pal, align); y += b.h + b.gap * scale; return; }
+      ctx.font = font(b.fam, b.w, b.size);
+      if (b.k === "ribbon") {
+        var tw = Math.max.apply(null, b.lines.map(function (l) { return ctx.measureText(l).width; })) + 80;
+        var rx = align === "left" ? x0 : cx - tw / 2;
+        ctx.save();
+        var rgx = ctx.createLinearGradient(rx, 0, rx + tw, 0);
+        rgx.addColorStop(0, pal.ribbon[0]); rgx.addColorStop(1, pal.ribbon[1]);
+        ctx.fillStyle = rgx; roundRect(rx, y, tw, b.hh, b.hh / 2); ctx.fill();
+        ctx.restore();
+        ctx.fillStyle = "#FFFFFF";
+        b.lines.forEach(function (l, i) { ctx.fillText(l, align === "left" ? rx + 40 : cx, y + 15 + b.lh * i + b.lh / 2); });
+        y += b.hh + b.gap * scale; return;
+      }
+      b.lines.forEach(function (l) {
+        var ly = y + b.lh / 2;
+        ctx.save();
+        if (b.k === "title" || b.k === "names") {
+          if (pal.title === "gold") {
+            ctx.shadowColor = "rgba(0,0,0,.5)"; ctx.shadowBlur = 16; ctx.shadowOffsetY = 4;
+            ctx.fillStyle = gold(ly - b.size / 2, ly + b.size / 2);
+          } else { ctx.fillStyle = pal.title; if (!pal.tpl) { ctx.shadowColor = pal.shadow; ctx.shadowBlur = 10; } }
+          ctx.fillText(l, cx, ly);
+        } else if (b.k === "label") {
+          ctx.fillStyle = pal.accent;
+          if ("letterSpacing" in ctx) ctx.letterSpacing = "3px";
+          ctx.fillText(l, cx, ly);
+        } else {
+          if (pal.dark) { ctx.shadowColor = "rgba(0,0,0,.5)"; ctx.shadowBlur = 10; }
+          ctx.fillStyle = b.k === "from" || b.k === "detail-b" ? pal.accent : b.k === "thought" || b.k === "note" ? pal.soft : pal.text;
+          ctx.fillText(l, cx, ly);
+        }
+        ctx.restore();
+        y += b.lh;
+      });
+      y += b.gap * scale;
+    });
+  }
+
+  function footerMark(pal) {
     ctx.save();
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.clearRect(0, 0, W, H);
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.font = font(FB, 600, 24);
+    ctx.fillStyle = pal.dark ? "rgba(255,248,236,.75)" : "rgba(42,22,51,.6)";
+    ctx.shadowColor = pal.dark ? "rgba(0,0,0,.7)" : "rgba(255,255,255,.9)"; ctx.shadowBlur = 8;
+    ctx.fillText("indianfestivalwishes.com", W / 2, H - 30);
+    ctx.restore();
+  }
+
+  function fitList(maxW, availH) {
+    var list = blocks(), scale = 1, total = measure(list, maxW, scale);
+    while (total > availH && scale > 0.5) { scale -= 0.04; total = measure(list, maxW, scale); }
+    return { list: list, scale: scale, total: total };
+  }
+
+  function drawTemplate(img, d) {
+    var pal = palette(d);
+    setTitleFont(d.title);
+    if (img) { var c = coverRect(img); ctx.drawImage(img, c[0], c[1], c[2], c[3]); }
+    var z = d.zone.slice(), ph = null;
+    photoBox = null;
+    if (state.photoMode && d.photo) {
+      var p = d.photo;
+      ph = p.shape === "circle" ? { shape: "circle", cx: p.x, cy: p.y, r: p.r } : { shape: p.shape, x: p.x, y: p.y, w: p.w, h: p.h };
+      if (d.slot) drawPhotoImage(ph); else { drawPhotoFrame(ph, pal); var bb = box(ph); if (bb.y + bb.h + 30 > z[1] && (d.align !== "left" || bb.x + bb.w > z[0])) z[1] = bb.y + bb.h + 34; }
+    }
+    var fit = fitList(z[2] - z[0], z[3] - z[1]);
+    var y = z[1] + Math.max(0, (z[3] - z[1] - fit.total) / 2);
+    drawBlocks(fit.list, z[0], z[2], y, d.align, pal, fit.scale);
+    footerMark(pal);
+  }
+
+  function drawPhotoCard(img, d) {
+    var pal = palette(d);
+    setTitleFont("classic");
     if (img) { var c = coverRect(img); ctx.drawImage(img, c[0], c[1], c[2], c[3]); }
     else {
       var g = ctx.createLinearGradient(0, 0, W, H);
@@ -230,66 +352,42 @@
     var textW = Math.min(d.w, 820), padX = 56, padY = 52;
     var panelW = Math.min(W - 80, textW + padX * 2);
     var photoR = state.photoMode ? (INVITE ? 150 : 128) : 0;
-    var list = blocks(), scale = 1;
     var maxPanelH = H - 150 - (photoR ? photoR + 20 : 0);
-    var total = measure(list, textW, scale);
-    // prefer the design's zone; grow outwards if the text needs more room
     var zoneH = Math.max(z1 - z0, 0) - (photoR ? photoR + 20 : 0);
-    while (total + padY * 2 > Math.max(zoneH, maxPanelH * 0.9) && scale > 0.55) { scale -= 0.04; total = measure(list, textW, scale); }
-    var panelH = total + padY * 2 + (photoR ? photoR + 16 : 0);
+    var fit = fitList(textW, Math.max(zoneH, maxPanelH * 0.9) - padY * 2);
+    var panelH = fit.total + padY * 2 + (photoR ? photoR + 16 : 0);
     var blockH = panelH + (photoR ? photoR + 12 : 0);
-    var mid = (z0 + z1) / 2;
-    var top = Math.round(mid - blockH / 2);
+    var top = Math.round((z0 + z1) / 2 - blockH / 2);
     top = Math.max(50, Math.min(top, H - 90 - blockH));
     var panelY = top + (photoR ? photoR + 12 : 0);
     drawPanel(img, cx - panelW / 2, panelY, panelW, panelH, pal);
     var y = panelY + padY;
-    if (photoR) { drawPhoto(cx, panelY, photoR, pal); y += photoR + 16; }
-    ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    list.forEach(function (b) {
-      if (b.k === "divider") { drawDivider(cx, y + b.h / 2, pal); y += b.h + b.gap * scale; return; }
-      ctx.font = font(b.fam, b.w, b.size);
-      if (b.k === "ribbon") {
-        var tw = Math.max.apply(null, b.lines.map(function (l) { return ctx.measureText(l).width; })) + 80;
-        var rh = b.hh;
-        ctx.save();
-        var rgx = ctx.createLinearGradient(cx - tw / 2, 0, cx + tw / 2, 0);
-        rgx.addColorStop(0, pal.ribbon[0]); rgx.addColorStop(1, pal.ribbon[1]);
-        ctx.fillStyle = rgx; roundRect(cx - tw / 2, y, tw, rh, rh / 2); ctx.fill();
-        ctx.restore();
-        ctx.fillStyle = "#FFFFFF";
-        b.lines.forEach(function (l, i) { ctx.fillText(l, cx, y + 15 + b.lh * i + b.lh / 2); });
-        y += rh + b.gap * scale; return;
-      }
-      b.lines.forEach(function (l) {
-        var ly = y + b.lh / 2;
-        ctx.save();
-        if (b.k === "title" || b.k === "names") {
-          if (pal.title === "gold") {
-            ctx.shadowColor = "rgba(0,0,0,.5)"; ctx.shadowBlur = 16; ctx.shadowOffsetY = 4;
-            ctx.fillStyle = gold(ly - b.size / 2, ly + b.size / 2);
-          } else ctx.fillStyle = pal.title;
-          ctx.fillText(l, cx, ly);
-        } else if (b.k === "label") {
-          ctx.fillStyle = pal.accent;
-          if ("letterSpacing" in ctx) ctx.letterSpacing = "3px";
-          ctx.fillText(l, cx, ly);
-        } else {
-          ctx.fillStyle = b.k === "from" || b.k === "detail-b" ? pal.accent : b.k === "thought" || b.k === "note" ? pal.soft : pal.text;
-          ctx.fillText(l, cx, ly);
-        }
-        ctx.restore();
-        y += b.lh;
-      });
-      y += b.gap * scale;
-    });
-    // footer mark
+    photoBox = null;
+    if (photoR) { drawPhotoFrame({ shape: "circle", cx: cx, cy: panelY, r: photoR }, pal); y += photoR + 16; }
+    drawBlocks(fit.list, cx - textW / 2, cx + textW / 2, y, "center", pal, fit.scale);
+    footerMark(pal);
+  }
+
+  function brightness(img) {
+    try {
+      var c = document.createElement("canvas"); c.width = 24; c.height = 30;
+      var x = c.getContext("2d"); x.drawImage(img, 0, 0, 24, 30);
+      var d = x.getImageData(0, 0, 24, 30).data, s = 0;
+      for (var i = 0; i < d.length; i += 4) s += 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+      return s / (d.length / 4) / 255;
+    } catch (e) { return 0.5; }
+  }
+
+  function drawCard(img) {
+    var d = DES[state.design];
     ctx.save();
-    ctx.font = font(FB, 600, 24);
-    ctx.fillStyle = pal.dark ? "rgba(255,248,236,.75)" : "rgba(42,22,51,.6)";
-    ctx.shadowColor = pal.dark ? "rgba(0,0,0,.7)" : "rgba(255,255,255,.9)"; ctx.shadowBlur = 8;
-    ctx.fillText("indianfestivalwishes.com", cx, H - 30);
-    ctx.restore();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    if (state.bgImg) {
+      var tone = state.bgTone < 0.55 ? "dark" : "light";
+      drawPhotoCard(state.bgImg, { tone: tone, ink: "#7A1238", zone: [180, 1170], w: 820 });
+    } else if (d.tpl) drawTemplate(img, d);
+    else drawPhotoCard(img, d);
     ctx.restore();
   }
 
@@ -303,7 +401,10 @@
   function fontsReady() {
     if (!document.fonts || !document.fonts.load) return Promise.resolve();
     var s = sampleText();
+    var d = DES[state.design];
+    if (d && d.tpl) setTitleFont(d.title);
     return Promise.all([
+      document.fonts.load(font(TF[0], TF[1], 100), s),
       document.fonts.load(font(FD, FDW, 100), s),
       document.fonts.load(font(FB, 500, 40), s), document.fonts.load(font(FB, 600, 40), s), document.fonts.load(font(FB, 700, 40), s)
     ]).catch(function () {});
@@ -323,7 +424,7 @@
   /* ---------------- form wiring ---------------- */
   var relSel = $("card-rel"), wishSel = $("card-wish"), err = $("card-error"), status = $("card-status"), shareBox = $("share-actions");
   var customBox = $("custom-box"), customIn = $("card-custom"), typeSel = $("card-type");
-  var photoBox = $("photo-box"), photoIn = $("card-photo");
+  var photoFs = $("photo-box"), photoIn = $("card-photo");
   var modeBtns = document.querySelectorAll("[data-photo-mode]");
   var nextThought = $("next-thought"), thoughtText = $("thought-text");
   var dzBtns = Array.prototype.slice.call(document.querySelectorAll("#design-row .dz"));
@@ -395,6 +496,7 @@
 
   function selectDesign(i, scroll) {
     state.design = i;
+    if (state.bgImg) { state.bgImg = null; if ($("bg-remove")) $("bg-remove").hidden = true; if ($("card-bg")) $("card-bg").value = ""; }
     dzBtns.forEach(function (x, j) { x.setAttribute("aria-pressed", j === i ? "true" : "false"); });
     if (scroll && dzBtns[i]) dzBtns[i].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
     changed();
@@ -406,6 +508,7 @@
   canvas.addEventListener("touchstart", function (e) { sx = e.touches[0].clientX; }, { passive: true });
   canvas.addEventListener("touchend", function (e) {
     if (sx == null) return;
+    if (dragged) { dragged = false; sx = null; return; }
     var dx = e.changedTouches[0].clientX - sx; sx = null;
     if (Math.abs(dx) > 50) selectDesign((state.design + (dx < 0 ? 1 : -1) + DES.length) % DES.length, true);
   }, { passive: true });
@@ -436,7 +539,7 @@
     nextThought.addEventListener("click", function () { state.thought = (state.thought + 1) % K.thoughts.length; showThought(); changed(); });
   }
 
-  if (photoBox) {
+  if (photoFs) {
     var setMode = function (on) {
       state.photoMode = on;
       modeBtns.forEach(function (x) { x.setAttribute("aria-pressed", (x.getAttribute("data-photo-mode") === "with") === on ? "true" : "false"); });
@@ -448,10 +551,50 @@
       var f = photoIn.files && photoIn.files[0];
       if (!f) return;
       var img = new Image();
-      img.onload = function () { state.photo = img; setMode(true); redraw(); };
+      img.onload = function () { state.photo = img; state.pz = 1; state.px = 0; state.py = 0; if (zoomIn) zoomIn.value = "1"; setMode(true); redraw(); };
       img.src = URL.createObjectURL(f);
     });
   }
+
+  /* photo zoom + drag */
+  var zoomIn = $("photo-zoom"), resetBtn = $("photo-reset");
+  if (zoomIn) zoomIn.addEventListener("input", function () { state.pz = parseFloat(zoomIn.value) || 1; redraw(); });
+  if (resetBtn) resetBtn.addEventListener("click", function () { state.pz = 1; state.px = 0; state.py = 0; if (zoomIn) zoomIn.value = "1"; redraw(); });
+  var drag = null, dragged = false;
+  function canvasPt(e) {
+    var r = canvas.getBoundingClientRect();
+    return { x: (e.clientX - r.left) * W / r.width, y: (e.clientY - r.top) * H / r.height };
+  }
+  canvas.addEventListener("pointerdown", function (e) {
+    if (!state.photo || !state.photoMode || !photoBox) return;
+    var p = canvasPt(e), b = photoBox;
+    if (p.x < b.x || p.x > b.x + b.w || p.y < b.y || p.y > b.y + b.h) return;
+    drag = { x: p.x, y: p.y, px: state.px, py: state.py, b: b }; dragged = true;
+    canvas.setPointerCapture(e.pointerId);
+    e.preventDefault();
+  });
+  canvas.addEventListener("pointermove", function (e) {
+    if (!drag) return;
+    var p = canvasPt(e), b = drag.b, im = state.photo;
+    var s = Math.max(b.w / im.width, b.h / im.height) * state.pz;
+    var ox = (im.width * s - b.w) / 2 || 1, oy = (im.height * s - b.h) / 2 || 1;
+    state.px = Math.max(-1, Math.min(1, drag.px + (p.x - drag.x) / ox));
+    state.py = Math.max(-1, Math.min(1, drag.py + (p.y - drag.y) / oy));
+    redraw();
+  });
+  ["pointerup", "pointercancel"].forEach(function (ev) { canvas.addEventListener(ev, function () { drag = null; }); });
+  canvas.style.touchAction = "pan-y";
+
+  /* own background */
+  var bgIn = $("card-bg"), bgRemove = $("bg-remove");
+  if (bgIn) bgIn.addEventListener("change", function () {
+    var f = bgIn.files && bgIn.files[0];
+    if (!f) return;
+    var img = new Image();
+    img.onload = function () { state.bgImg = img; state.bgTone = brightness(img); if (bgRemove) bgRemove.hidden = false; redraw(); };
+    img.src = URL.createObjectURL(f);
+  });
+  if (bgRemove) bgRemove.addEventListener("click", function () { state.bgImg = null; bgRemove.hidden = true; if (bgIn) bgIn.value = ""; redraw(); });
 
   // live preview while typing
   var simple = { "in-from": "from", "in-to": "to", "in-n1": "n1", "in-n2": "n2" };
@@ -499,7 +642,7 @@
   });
 
   if (received) {
-    $("card-heading").textContent = U.card_heading_received;
+    if (!INVITE) $("card-heading").textContent = U.card_heading_received;
     $("received-note").textContent = U.card_now_yours;
   }
   redraw();

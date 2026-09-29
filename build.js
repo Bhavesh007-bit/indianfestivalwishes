@@ -20,6 +20,7 @@ const REC = read("recipes.json");
 const PAGES = read("pages.json");
 const OCC = read("occasions.json");
 const ART = read("articles.json");
+const TPL = read("templates.json");
 const FEST = read("festivals.json");
 const MW = {}, NP = {};
 ["hi", "gu", "en"].forEach((L) => { MW[L] = read(`more_wishes_${L}.json`); NP[L] = read(`newpages_${L}.json`); });
@@ -112,15 +113,7 @@ const DESIGNS = {
   P3: { tone: "dark", zone: [150, 1200], w: 820 }
 };
 const SETS = {
-  shraddhanjali: ["P2", "M4", "C4", "M1", "P1", "U2", "U4", "U5"],
-  "inv-wedding": ["C2", "U1", "U5", "N1", "C4", "U2", "P1", "P3", "D4", "U4"],
-  "inv-engagement": ["C4", "C3", "C1", "U4", "U2", "B4", "U3", "P1", "U6", "C2"],
-  "inv-birthday-party": ["B2", "B1", "B3", "B4", "U6", "U3", "M3", "D3", "U2", "C3"],
-  "inv-griha-pravesh": ["N3", "D1", "N1", "D4", "U1", "U5", "P1", "P3", "S1", "U4"],
-  "inv-baby-shower": ["M3", "C3", "U3", "B4", "B2", "U4", "K2", "M4", "P1", "C4"],
-  "inv-naming-ceremony": ["K2", "M3", "C3", "U3", "B4", "U4", "M4", "B2", "P1", "C4"],
-  "inv-puja": ["N3", "N1", "D1", "S1", "U1", "U5", "P3", "M4", "N2", "P1"],
-  "inv-shop-opening": ["D2", "S2", "U2", "B3", "U5", "U1", "N1", "D4", "P3", "U6"],
+  shraddhanjali: ["M4", "C4", "M1"],
   navratri: ["N1", "N2", "N3", "N4", "U1", "U5", "U2", "U6", "U3", "U4"],
   dussehra: ["S1", "S2", "N1", "N3", "U1", "U5", "U2", "U6", "D2", "U3"],
   "karva-chauth": ["K1", "K2", "U1", "U2", "C1", "C4", "U4", "U6", "D4", "U5"],
@@ -133,7 +126,7 @@ const SETS = {
 };
 const LIGHT_DAY = ["#F7F3EE", "#F5C518"];
 const tileCls = (c) => "day-tile" + (LIGHT_DAY.indexOf(c) >= 0 ? " is-light" : "");
-const designList = (set) => SETS[set].map((id) => Object.assign({ id }, DESIGNS[id]));
+const designList = (set) => (TPL[set] || []).concat((SETS[set] || []).map((id) => Object.assign({ id }, DESIGNS[id])));
 
 /* ------------------------------------------------------------------ icons */
 const I = {
@@ -173,6 +166,11 @@ const FONT_CSS = (() => {
   let css = "";
   css += ff("Rozha One", "rozha-one-devanagari-400-normal", 400, dv) + ff("Rozha One", "rozha-one-latin-400-normal", 400, la);
   [600, 700].forEach((w) => { css += ff("Rasa", `rasa-gujarati-${w}-normal`, w, gu) + ff("Rasa", `rasa-latin-${w}-normal`, w, la); });
+  css += ff("Yatra One", "yatra-one-devanagari-400-normal", 400, dv) + ff("Yatra One", "yatra-one-latin-400-normal", 400, la);
+  css += ff("Kalam", "kalam-devanagari-700-normal", 700, dv) + ff("Kalam", "kalam-latin-700-normal", 700, la);
+  css += ff("Shrikhand", "shrikhand-gujarati-400-normal", 400, gu) + ff("Shrikhand", "shrikhand-latin-400-normal", 400, la);
+  css += ff("Mogra", "mogra-gujarati-400-normal", 400, gu) + ff("Mogra", "mogra-latin-400-normal", 400, la);
+  css += ff("Great Vibes", "great-vibes-latin-400-normal", 400, la) + ff("Cinzel", "cinzel-latin-700-normal", 700, la);
   [400, 500, 600, 700].forEach((w) => {
     css += ff("Hind", `hind-devanagari-${w}-normal`, w, dv) + ff("Hind", `hind-latin-${w}-normal`, w, la);
     css += ff("Hind Vadodara", `hind-vadodara-gujarati-${w}-normal`, w, gu) + ff("Hind Vadodara", `hind-vadodara-latin-${w}-normal`, w, la);
@@ -338,7 +336,12 @@ function cardMaker(L, K) {
   const thought = kind === "morning" ? `<div class="field thought-box"><span class="label" id="thought-label">${esc(u.thought_label)}</span><p class="thought" id="thought-text" aria-labelledby="thought-label"></p><button class="btn btn-soft btn-sm" id="next-thought" type="button">${I.refresh}${esc(u.next_thought)}</button></div>` : "";
   const photo = kind !== "festival" || true ? `<fieldset class="field" id="photo-box"><legend>${esc(u.photo_label)}</legend>
         <div class="segs"><button type="button" class="seg" data-photo-mode="without" aria-pressed="true">${esc(u.without_photo)}</button><button type="button" class="seg" data-photo-mode="with" aria-pressed="false">${esc(u.with_photo)}</button></div>
-        <div id="photo-pick" hidden><label class="btn btn-soft file-btn">${I.image}${esc(u.choose_photo)}<input id="card-photo" type="file" accept="image/*"></label><p class="hint">${esc(u.photo_hint)}</p></div>
+        <div id="photo-pick" hidden><label class="btn btn-soft file-btn">${I.image}${esc(u.choose_photo)}<input id="card-photo" type="file" accept="image/*"></label>
+          <div class="photo-tools"><label for="photo-zoom">${esc(u.photo_zoom)}</label><input id="photo-zoom" type="range" min="1" max="3" step="0.05" value="1"><button class="btn btn-soft btn-sm" id="photo-reset" type="button">${I.refresh}${esc(u.photo_reset)}</button></div>
+          <p class="hint">${esc(u.photo_move_hint)} ${esc(u.photo_hint)}</p></div>
+      </fieldset>
+      <fieldset class="field" id="bg-box"><legend>${esc(u.bg_label)}</legend>
+        <div class="bg-row"><label class="btn btn-soft file-btn">${I.image}${esc(u.bg_choose)}<input id="card-bg" type="file" accept="image/*"></label><button class="btn btn-ghost btn-sm" id="bg-remove" type="button" hidden>${esc(u.bg_remove)}</button></div>
       </fieldset>` : "";
   const designs = K.designs.map((d, i) => `<button type="button" class="dz" data-i="${i}" aria-pressed="${i === 0}" aria-label="${esc(u.step_design)} ${i + 1}"><img src="/static/cards/thumb/${d.id}.webp" alt="" width="108" height="135" loading="lazy" decoding="async"></button>`).join("");
   return `<section class="maker reveal" id="card-maker" aria-labelledby="card-heading">
@@ -346,7 +349,7 @@ function cardMaker(L, K) {
     <div class="canvas-frame"><canvas id="card" width="1080" height="1350" role="img" aria-label="${esc(u.card_heading)}"></canvas><div class="canvas-loading" id="canvas-loading">${esc(u.loading_design)}</div></div>
   </div>
   <div class="maker-form">
-    <h2 id="card-heading" class="maker-h">${esc(u.card_heading)}</h2>
+    <h2 id="card-heading" class="maker-h">${esc(K.heading || u.card_heading)}</h2>
     <p class="received-note" id="received-note"></p>
     <form id="card-form" novalidate>
       <fieldset class="field"><legend><span class="step-n">1</span>${esc(u.step_design)} <span class="muted">· ${esc(fmt(u.designs_count, { n: K.designs.length }))}</span></legend>
@@ -597,7 +600,7 @@ function inviteCard(L, key, C, set, extra) {
 
 function buildTribute(L) {
   const u = UI[L], T = NP[L].shraddhanjali, p = "shraddhanjali/";
-  const K = inviteCard(L, "shraddhanjali", T.card, "shraddhanjali", { types: T.card.types, photoDefault: true, shareMsg: u.tribute_share });
+  const K = inviteCard(L, "shraddhanjali", T.card, "shraddhanjali", { types: T.card.types, photoDefault: true, shareMsg: u.tribute_share, heading: u.tribute_heading });
   const body = `${pageHead(L, { h1: T.h1, sub: T.sub, crumbs: [[u.nav.home, url(L, "")], [T.nav]] })}
 <div class="wrap">
   ${cardMaker(L, K)}
@@ -612,7 +615,7 @@ function buildTribute(L) {
 function inviteTiles(L) {
   return INVITES.map((k, i) => {
     const V = NP[L].invites[k];
-    return `<li class="reveal" style="--d:${i * 50}ms"><a class="inv-tile" href="${url(L, "invitations/" + k + ".html")}"><img src="/static/cards/thumb/${SETS["inv-" + k][0]}.webp" alt="" loading="lazy" width="432" height="540"><span class="inv-shade"></span><span class="inv-name">${esc(V.nav)}</span><span class="fest-go">${I.arrow}</span></a></li>`;
+    return `<li class="reveal" style="--d:${i * 50}ms"><a class="inv-tile" href="${url(L, "invitations/" + k + ".html")}"><img src="/static/cards/preview/${k}-${L}.webp" alt="" loading="lazy" width="432" height="540"><span class="inv-shade"></span><span class="inv-name">${esc(V.nav)}</span><span class="fest-go">${I.arrow}</span></a></li>`;
   }).join("");
 }
 
@@ -631,9 +634,9 @@ function buildInvitesHub(L) {
 
 function buildInvite(L, k) {
   const u = UI[L], V = NP[L].invites[k], H = NP[L].invitations, p = "invitations/" + k + ".html";
-  const K = inviteCard(L, k, V.card, "inv-" + k, { shareMsg: u.invite_share });
+  const K = inviteCard(L, k, V.card, "inv-" + k, { shareMsg: u.invite_share, heading: u.invite_heading });
   const others = INVITES.filter((x) => x !== k).map((x) => `<a class="chip" href="${url(L, "invitations/" + x + ".html")}">${esc(NP[L].invites[x].nav)}</a>`).join("");
-  const body = `${pageHead(L, { h1: V.h1, sub: V.sub, img: SETS["inv-" + k][0], crumbs: [[u.nav.home, url(L, "")], [H.nav, url(L, "invitations/")], [V.nav]] })}
+  const body = `${pageHead(L, { h1: V.h1, sub: V.sub, img: TPL["inv-" + k][0].id, crumbs: [[u.nav.home, url(L, "")], [H.nav, url(L, "invitations/")], [V.nav]] })}
 <div class="wrap">
   ${cardMaker(L, K)}
   ${slots(L)}

@@ -140,7 +140,16 @@
   "tribute_sub": "फ़ोटो के साथ सादर श्रद्धांजलि और प्रार्थना सभा की सूचना",
   "need_name_invite": "कार्ड बनाने के लिए पहला नाम भरें।",
   "invite_share": "आपके लिए निमंत्रण कार्ड:",
-  "tribute_share": "श्रद्धांजलि कार्ड:"
+  "tribute_share": "श्रद्धांजलि कार्ड:",
+  "bg_label": "अपना बैकग्राउंड",
+  "bg_choose": "अपनी फ़ोटो को बैकग्राउंड बनाएँ",
+  "bg_remove": "डिज़ाइन वाला बैकग्राउंड वापस लाएँ",
+  "photo_zoom": "फ़ोटो ज़ूम",
+  "photo_move_hint": "कार्ड पर फ़ोटो को उँगली या माउस से खींचकर सही जगह पर लाएँ।",
+  "photo_reset": "फ़ोटो रीसेट करें",
+  "designs_new": "नए डिज़ाइन",
+  "invite_heading": "अपना निमंत्रण कार्ड बनाएँ",
+  "tribute_heading": "श्रद्धांजलि कार्ड बनाएँ"
  },
  "gu": {
   "lang_name": "ગુજરાતી",
@@ -283,7 +292,16 @@
   "tribute_sub": "ફોટો સાથે ભાવભીની શ્રદ્ધાંજલિ અને બેસણાની જાણ",
   "need_name_invite": "કાર્ડ બનાવવા માટે પહેલું નામ ભરો.",
   "invite_share": "તમારા માટે આમંત્રણ કાર્ડ:",
-  "tribute_share": "શ્રદ્ધાંજલિ કાર્ડ:"
+  "tribute_share": "શ્રદ્ધાંજલિ કાર્ડ:",
+  "bg_label": "તમારું બેકગ્રાઉન્ડ",
+  "bg_choose": "તમારા ફોટાને બેકગ્રાઉન્ડ બનાવો",
+  "bg_remove": "ડિઝાઇનવાળું બેકગ્રાઉન્ડ પાછું લાવો",
+  "photo_zoom": "ફોટો ઝૂમ",
+  "photo_move_hint": "કાર્ડ પર ફોટાને આંગળી કે માઉસથી ખેંચીને યોગ્ય જગ્યાએ ગોઠવો.",
+  "photo_reset": "ફોટો રીસેટ કરો",
+  "designs_new": "નવી ડિઝાઇન",
+  "invite_heading": "તમારું આમંત્રણ કાર્ડ બનાવો",
+  "tribute_heading": "શ્રદ્ધાંજલિ કાર્ડ બનાવો"
  },
  "en": {
   "lang_name": "English",
@@ -426,6 +444,15 @@
   "tribute_sub": "Respectful tribute cards with photo and prayer meeting details",
   "need_name_invite": "Please fill in the first name to make the card.",
   "invite_share": "An invitation for you:",
-  "tribute_share": "Shraddhanjali card:"
+  "tribute_share": "Shraddhanjali card:",
+  "bg_label": "Your own background",
+  "bg_choose": "Use your photo as the background",
+  "bg_remove": "Go back to the design background",
+  "photo_zoom": "Photo zoom",
+  "photo_move_hint": "Drag the photo on the card with your finger or mouse to position it.",
+  "photo_reset": "Reset photo",
+  "designs_new": "New designs",
+  "invite_heading": "Make your invitation card",
+  "tribute_heading": "Make a tribute card"
  }
 }

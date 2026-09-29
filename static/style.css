@@ -625,3 +625,8 @@ textarea:focus { outline: none; border-color: var(--rani); box-shadow: 0 0 0 4px
 .nav-pop a:hover { background: var(--bg-2); color: var(--ink); }
 .nav-pop a[aria-current] { background: var(--rani-soft); color: var(--rani-d); font-weight: 700; }
 .nav-pop a[aria-current]::after { content: ""; margin-left: auto; width: 8px; height: 8px; border-radius: 50%; background: var(--rani); }
+.photo-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 12px; }
+.photo-tools label { font-weight: 600; }
+.photo-tools input[type="range"] { flex: 1; min-width: 140px; accent-color: var(--rani); height: 44px; }
+.bg-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.canvas-frame canvas { cursor: grab; }
