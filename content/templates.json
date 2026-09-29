@@ -3,11 +3,10 @@
   {
    "zone": [
     230,
-    450,
+    440,
     850,
     1160
    ],
-   "align": "center",
    "colors": {
     "title": "#7A0F2E",
     "text": "#3A2330",
@@ -15,857 +14,810 @@
    },
    "tone": "light",
    "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-inv-wedding-1",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    400,
-    930,
-    1210
-   ],
    "align": "center",
-   "colors": {
-    "title": "#8B1030",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 250,
-    "r": 105
-   },
-   "id": "T-inv-wedding-2",
-   "tpl": true
-  },
-  {
-   "zone": [
-    170,
-    420,
-    910,
-    1040
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#0F5132",
-    "text": "#3A2330",
-    "accent": "#A87B1C"
-   },
-   "tone": "light",
-   "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 100
-   },
-   "id": "T-inv-wedding-3",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    330,
-    930,
-    990
-   ],
-   "align": "center",
-   "colors": {
-    "title": "gold",
-    "text": "#FFF8EC",
-    "accent": "#FFD36B"
-   },
-   "tone": "dark",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-inv-wedding-4",
-   "tpl": true
-  },
-  {
-   "zone": [
-    210,
-    440,
-    870,
-    1010
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#3F5E47",
-    "text": "#3A2330",
-    "accent": "#9C7A3C"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 350,
-    "r": 95
-   },
-   "id": "T-inv-wedding-5",
-   "tpl": true
-  },
-  {
-   "zone": [
-    120,
-    640,
-    960,
-    1250
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#7A0F2E",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 520,
-    "r": 120
-   },
-   "id": "T-inv-wedding-6",
-   "tpl": true
-  },
-  {
-   "zone": [
-    380,
-    330,
-    1010,
-    1230
-   ],
-   "align": "left",
-   "colors": {
-    "title": "#8B1030",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "rounded",
-    "x": 380,
-    "y": 110,
-    "w": 200,
-    "h": 200
-   },
-   "id": "T-inv-wedding-7",
-   "tpl": true
-  },
-  {
-   "zone": [
-    110,
-    350,
-    900,
-    920
-   ],
-   "align": "left",
-   "colors": {
-    "title": "#0F5132",
-    "text": "#3A2330",
-    "accent": "#A87B1C"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "rounded",
-    "x": 110,
-    "y": 80,
-    "w": 190,
-    "h": 190
-   },
-   "id": "T-inv-wedding-8",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    400,
-    930,
-    1030
-   ],
-   "align": "center",
-   "colors": {
-    "title": "gold",
-    "text": "#FFF8EC",
-    "accent": "#FFD36B"
-   },
-   "tone": "dark",
-   "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 400,
-    "r": 100
-   },
-   "id": "T-inv-wedding-9",
-   "tpl": true
+   "tpl": true,
+   "id": "T-inv-wedding-1"
   },
   {
    "zone": [
     140,
-    760,
+    680,
     940,
     1260
    ],
-   "align": "center",
    "colors": {
-    "title": "#3F5E47",
+    "title": "#8B1030",
+    "text": "#3A2330",
+    "accent": "#B7791F"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-wedding-2"
+  },
+  {
+   "zone": [
+    150,
+    380,
+    930,
+    1000
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-wedding-3"
+  },
+  {
+   "zone": [
+    200,
+    300,
+    880,
+    1000
+   ],
+   "colors": {
+    "title": "#8B1030",
+    "text": "#3A2330",
+    "accent": "#2D6A4F"
+   },
+   "tone": "light",
+   "title": "classic",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-wedding-4"
+  },
+  {
+   "zone": [
+    200,
+    350,
+    880,
+    1000
+   ],
+   "colors": {
+    "title": "#1B2A4A",
+    "text": "#3A2330",
+    "accent": "#B7892F"
+   },
+   "tone": "light",
+   "title": "classic",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-wedding-5"
+  },
+  {
+   "zone": [
+    130,
+    580,
+    950,
+    1260
+   ],
+   "colors": {
+    "title": "#7A0F2E",
+    "text": "#3A2330",
+    "accent": "#B7791F"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-wedding-6"
+  },
+  {
+   "zone": [
+    380,
+    380,
+    1010,
+    1240
+   ],
+   "colors": {
+    "title": "#7A0F2E",
+    "text": "#3A2330",
+    "accent": "#B7791F"
+   },
+   "tone": "light",
+   "title": "classic",
+   "align": "left",
+   "tpl": true,
+   "id": "T-inv-wedding-7"
+  },
+  {
+   "zone": [
+    170,
+    360,
+    910,
+    1060
+   ],
+   "colors": {
+    "title": "#A4133C",
     "text": "#3A2330",
     "accent": "#9C7A3C"
    },
    "tone": "light",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-wedding-8"
+  },
+  {
+   "zone": [
+    150,
+    300,
+    930,
+    1150
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-wedding-9"
+  },
+  {
+   "zone": [
+    140,
+    720,
+    940,
+    1260
+   ],
+   "colors": {
+    "title": "#7A0F2E",
+    "text": "#3A2330",
+    "accent": "#B7791F"
+   },
+   "tone": "light",
    "title": "classic",
+   "align": "center",
+   "tpl": true,
    "photo": {
     "shape": "arch",
     "x": 302,
     "y": 122,
     "w": 476,
-    "h": 576
+    "h": 536
    },
    "slot": true,
-   "id": "T-inv-wedding-10",
-   "tpl": true
+   "id": "T-inv-wedding-10"
   }
  ],
  "inv-engagement": [
   {
    "zone": [
-    230,
-    450,
-    850,
-    1160
+    130,
+    800,
+    950,
+    1270
    ],
-   "align": "center",
    "colors": {
-    "title": "#A23E5B",
+    "title": "#3F5E47",
     "text": "#3A2330",
     "accent": "#B48A4A"
    },
    "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-inv-engagement-1",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    400,
-    930,
-    1210
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#3F5E47",
-    "text": "#3A2330",
-    "accent": "#9C7A3C"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 250,
-    "r": 105
-   },
-   "id": "T-inv-engagement-2",
-   "tpl": true
-  },
-  {
-   "zone": [
-    170,
-    420,
-    910,
-    1040
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#1B2A4A",
-    "text": "#3A2330",
-    "accent": "#B7892F"
-   },
-   "tone": "light",
    "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 100
-   },
-   "id": "T-inv-engagement-3",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    330,
-    930,
-    990
-   ],
    "align": "center",
-   "colors": {
-    "title": "gold",
-    "text": "#FFF8EC",
-    "accent": "#FFD36B"
-   },
-   "tone": "dark",
-   "title": "deco",
+   "tpl": true,
    "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
+    "shape": "arch",
+    "x": 272,
+    "y": 102,
+    "w": 536,
+    "h": 636
    },
-   "id": "T-inv-engagement-4",
-   "tpl": true
-  },
-  {
-   "zone": [
-    210,
-    440,
-    870,
-    1010
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#5C4A32",
-    "text": "#3F3A34",
-    "accent": "#9C7A3C"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 350,
-    "r": 95
-   },
-   "id": "T-inv-engagement-5",
-   "tpl": true
-  },
-  {
-   "zone": [
-    120,
-    640,
-    960,
-    1250
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#A23E5B",
-    "text": "#3A2330",
-    "accent": "#B48A4A"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 520,
-    "r": 120
-   },
-   "id": "T-inv-engagement-6",
-   "tpl": true
-  },
-  {
-   "zone": [
-    380,
-    330,
-    1010,
-    1230
-   ],
-   "align": "left",
-   "colors": {
-    "title": "#3F5E47",
-    "text": "#3A2330",
-    "accent": "#9C7A3C"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "rounded",
-    "x": 380,
-    "y": 110,
-    "w": 200,
-    "h": 200
-   },
-   "id": "T-inv-engagement-7",
-   "tpl": true
-  },
-  {
-   "zone": [
-    110,
-    350,
-    900,
-    920
-   ],
-   "align": "left",
-   "colors": {
-    "title": "#1B2A4A",
-    "text": "#3A2330",
-    "accent": "#B7892F"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "rounded",
-    "x": 110,
-    "y": 80,
-    "w": 190,
-    "h": 190
-   },
-   "id": "T-inv-engagement-8",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    400,
-    930,
-    1030
-   ],
-   "align": "center",
-   "colors": {
-    "title": "gold",
-    "text": "#FFF8EC",
-    "accent": "#FFD36B"
-   },
-   "tone": "dark",
-   "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 400,
-    "r": 100
-   },
-   "id": "T-inv-engagement-9",
-   "tpl": true
+   "slot": true,
+   "id": "T-inv-engagement-1"
   },
   {
    "zone": [
     140,
-    760,
+    780,
     940,
     1260
    ],
-   "align": "center",
    "colors": {
-    "title": "#5C4A32",
-    "text": "#3F3A34",
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "heart",
+    "x": 290,
+    "y": 180,
+    "w": 500,
+    "h": 500
+   },
+   "slot": true,
+   "id": "T-inv-engagement-2"
+  },
+  {
+   "zone": [
+    140,
+    780,
+    940,
+    1260
+   ],
+   "colors": {
+    "title": "#3F5E47",
+    "text": "#3A2330",
     "accent": "#9C7A3C"
    },
    "tone": "light",
-   "title": "classic",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
    "photo": {
-    "shape": "arch",
-    "x": 302,
-    "y": 122,
-    "w": 476,
-    "h": 576
+    "shape": "rect",
+    "x": 230,
+    "y": 130,
+    "w": 620,
+    "h": 500
    },
    "slot": true,
-   "id": "T-inv-engagement-10",
-   "tpl": true
+   "id": "T-inv-engagement-3"
+  },
+  {
+   "zone": [
+    150,
+    500,
+    930,
+    1220
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "rounded",
+    "x": 340,
+    "y": 110,
+    "w": 400,
+    "h": 380
+   },
+   "id": "T-inv-engagement-4"
+  },
+  {
+   "zone": [
+    170,
+    470,
+    910,
+    1080
+   ],
+   "colors": {
+    "title": "#3F5E47",
+    "text": "#3A2330",
+    "accent": "#9C7A3C"
+   },
+   "tone": "light",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "rounded",
+    "x": 340,
+    "y": 150,
+    "w": 400,
+    "h": 340
+   },
+   "id": "T-inv-engagement-5"
+  },
+  {
+   "zone": [
+    130,
+    730,
+    950,
+    1270
+   ],
+   "colors": {
+    "title": "#3F5E47",
+    "text": "#3A2330",
+    "accent": "#B48A4A"
+   },
+   "tone": "light",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "pill",
+    "x": 302,
+    "y": 132,
+    "w": 476,
+    "h": 536
+   },
+   "slot": true,
+   "id": "T-inv-engagement-6"
+  },
+  {
+   "zone": [
+    150,
+    420,
+    930,
+    1030
+   ],
+   "colors": {
+    "title": "#3F5E47",
+    "text": "#3A2330",
+    "accent": "#B48A4A"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "rounded",
+    "x": 360,
+    "y": 150,
+    "w": 360,
+    "h": 250
+   },
+   "id": "T-inv-engagement-7"
+  },
+  {
+   "zone": [
+    370,
+    460,
+    1010,
+    1180
+   ],
+   "colors": {
+    "title": "#3F5E47",
+    "text": "#3A2330",
+    "accent": "#B48A4A"
+   },
+   "tone": "light",
+   "title": "classic",
+   "align": "left",
+   "tpl": true,
+   "photo": {
+    "shape": "rounded",
+    "x": 370,
+    "y": 100,
+    "w": 330,
+    "h": 330
+   },
+   "id": "T-inv-engagement-8"
+  },
+  {
+   "zone": [
+    150,
+    330,
+    930,
+    1000
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "rounded",
+    "x": 360,
+    "y": 330,
+    "w": 360,
+    "h": 300
+   },
+   "id": "T-inv-engagement-9"
+  },
+  {
+   "zone": [
+    140,
+    740,
+    940,
+    1260
+   ],
+   "colors": {
+    "title": "#3F5E47",
+    "text": "#3A2330",
+    "accent": "#B48A4A"
+   },
+   "tone": "light",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "rounded",
+    "x": 170,
+    "y": 150,
+    "w": 740,
+    "h": 420
+   },
+   "id": "T-inv-engagement-10"
   }
  ],
  "inv-birthday-party": [
   {
    "zone": [
-    230,
-    450,
-    850,
-    1160
+    130,
+    560,
+    950,
+    1250
    ],
-   "align": "center",
-   "colors": {
-    "title": "#7209B7",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-inv-birthday-party-1",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    400,
-    930,
-    1210
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#D62869",
-    "text": "#3A2330",
-    "accent": "#118AB2"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 250,
-    "r": 105
-   },
-   "id": "T-inv-birthday-party-2",
-   "tpl": true
-  },
-  {
-   "zone": [
-    170,
-    420,
-    910,
-    1040
-   ],
-   "align": "center",
    "colors": {
     "title": "#1F4E89",
     "text": "#3A2330",
-    "accent": "#D4A017"
-   },
-   "tone": "light",
-   "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 100
-   },
-   "id": "T-inv-birthday-party-3",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    330,
-    930,
-    990
-   ],
-   "align": "center",
-   "colors": {
-    "title": "gold",
-    "text": "#FFF8EC",
-    "accent": "#FFD36B"
-   },
-   "tone": "dark",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-inv-birthday-party-4",
-   "tpl": true
-  },
-  {
-   "zone": [
-    210,
-    440,
-    870,
-    1010
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#B23A48",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 350,
-    "r": 95
-   },
-   "id": "T-inv-birthday-party-5",
-   "tpl": true
-  },
-  {
-   "zone": [
-    120,
-    640,
-    960,
-    1250
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#7209B7",
-    "text": "#3A2330",
-    "accent": "#B7791F"
+    "accent": "#3A0CA3"
    },
    "tone": "light",
    "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 520,
-    "r": 120
-   },
-   "id": "T-inv-birthday-party-6",
-   "tpl": true
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-birthday-party-1"
   },
   {
    "zone": [
-    380,
+    370,
     330,
     1010,
-    1230
+    1080
    ],
-   "align": "left",
    "colors": {
-    "title": "#D62869",
+    "title": "#6C4AB6",
     "text": "#3A2330",
-    "accent": "#118AB2"
+    "accent": "#3A0CA3"
    },
    "tone": "light",
    "title": "classic",
+   "align": "left",
+   "tpl": true,
    "photo": {
     "shape": "rounded",
-    "x": 380,
-    "y": 110,
+    "x": 370,
+    "y": 90,
     "w": 200,
     "h": 200
    },
-   "id": "T-inv-birthday-party-7",
-   "tpl": true
+   "id": "T-inv-birthday-party-2"
   },
   {
    "zone": [
-    110,
-    350,
-    900,
-    920
+    160,
+    280,
+    920,
+    960
    ],
-   "align": "left",
    "colors": {
-    "title": "#1F4E89",
+    "title": "#3A0CA3",
     "text": "#3A2330",
-    "accent": "#D4A017"
+    "accent": "#6C4AB6"
+   },
+   "tone": "light",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 300,
+    "r": 100
+   },
+   "id": "T-inv-birthday-party-3"
+  },
+  {
+   "zone": [
+    140,
+    770,
+    940,
+    1260
+   ],
+   "colors": {
+    "title": "#3A0CA3",
+    "text": "#3A2330",
+    "accent": "#FFB703"
+   },
+   "tone": "light",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "rect",
+    "x": 230,
+    "y": 130,
+    "w": 620,
+    "h": 500
+   },
+   "slot": true,
+   "id": "T-inv-birthday-party-4"
+  },
+  {
+   "zone": [
+    200,
+    420,
+    880,
+    1000
+   ],
+   "colors": {
+    "title": "#FFB703",
+    "text": "#3A2330",
+    "accent": "#3A0CA3"
    },
    "tone": "light",
    "title": "deco",
+   "align": "center",
+   "tpl": true,
    "photo": {
-    "shape": "rounded",
-    "x": 110,
-    "y": 80,
-    "w": 190,
-    "h": 190
+    "shape": "circle",
+    "x": 540,
+    "y": 380,
+    "r": 90
    },
-   "id": "T-inv-birthday-party-8",
-   "tpl": true
+   "id": "T-inv-birthday-party-5"
   },
   {
    "zone": [
     150,
-    400,
+    420,
     930,
-    1030
+    1000
    ],
-   "align": "center",
    "colors": {
-    "title": "gold",
-    "text": "#FFF8EC",
-    "accent": "#FFD36B"
+    "title": "#3A0CA3",
+    "text": "#3A2330",
+    "accent": "#FFB703"
    },
-   "tone": "dark",
-   "title": "script",
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
    "photo": {
     "shape": "circle",
     "x": 540,
     "y": 400,
     "r": 100
    },
-   "id": "T-inv-birthday-party-9",
-   "tpl": true
+   "id": "T-inv-birthday-party-6"
   },
   {
    "zone": [
-    140,
-    760,
-    940,
-    1260
+    150,
+    330,
+    930,
+    1050
    ],
-   "align": "center",
    "colors": {
-    "title": "#B23A48",
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 330,
+    "r": 100
+   },
+   "id": "T-inv-birthday-party-7"
+  },
+  {
+   "zone": [
+    190,
+    380,
+    890,
+    1020
+   ],
+   "colors": {
+    "title": "#3A0CA3",
     "text": "#3A2330",
-    "accent": "#B7791F"
+    "accent": "#FFB703"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 380,
+    "r": 100
+   },
+   "id": "T-inv-birthday-party-8"
+  },
+  {
+   "zone": [
+    160,
+    240,
+    920,
+    940
+   ],
+   "colors": {
+    "title": "#3A0CA3",
+    "text": "#3A2330",
+    "accent": "#FFB703"
    },
    "tone": "light",
    "title": "classic",
+   "align": "center",
+   "tpl": true,
    "photo": {
-    "shape": "arch",
-    "x": 302,
-    "y": 122,
-    "w": 476,
-    "h": 576
+    "shape": "circle",
+    "x": 540,
+    "y": 280,
+    "r": 90
    },
-   "slot": true,
-   "id": "T-inv-birthday-party-10",
-   "tpl": true
+   "id": "T-inv-birthday-party-9"
+  },
+  {
+   "zone": [
+    150,
+    420,
+    930,
+    1150
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 400,
+    "r": 100
+   },
+   "id": "T-inv-birthday-party-10"
   }
  ],
  "inv-griha-pravesh": [
   {
    "zone": [
-    230,
-    450,
-    850,
-    1160
+    140,
+    720,
+    940,
+    1260
    ],
+   "colors": {
+    "title": "#7B1E1E",
+    "text": "#3A2330",
+    "accent": "#B7791F"
+   },
+   "tone": "light",
+   "title": "deco",
    "align": "center",
+   "tpl": true,
+   "id": "T-inv-griha-pravesh-1"
+  },
+  {
+   "zone": [
+    180,
+    370,
+    900,
+    1180
+   ],
+   "colors": {
+    "title": "#0F5C5A",
+    "text": "#3A2330",
+    "accent": "#B7791F"
+   },
+   "tone": "light",
+   "title": "classic",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-griha-pravesh-2"
+  },
+  {
+   "zone": [
+    130,
+    600,
+    950,
+    1150
+   ],
+   "colors": {
+    "title": "#7B1E1E",
+    "text": "#3A2330",
+    "accent": "#B7791F"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-griha-pravesh-3"
+  },
+  {
+   "zone": [
+    230,
+    430,
+    850,
+    1150
+   ],
    "colors": {
     "title": "#9D0208",
     "text": "#3A2330",
     "accent": "#B7791F"
    },
    "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-inv-griha-pravesh-1",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    400,
-    930,
-    1210
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#0F5132",
-    "text": "#3A2330",
-    "accent": "#A87B1C"
-   },
-   "tone": "light",
    "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 250,
-    "r": 105
-   },
-   "id": "T-inv-griha-pravesh-2",
-   "tpl": true
-  },
-  {
-   "zone": [
-    170,
-    420,
-    910,
-    1040
-   ],
    "align": "center",
-   "colors": {
-    "title": "#05505A",
-    "text": "#3A2330",
-    "accent": "#C08B30"
-   },
-   "tone": "light",
-   "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 100
-   },
-   "id": "T-inv-griha-pravesh-3",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    330,
-    930,
-    990
-   ],
-   "align": "center",
-   "colors": {
-    "title": "gold",
-    "text": "#FFF8EC",
-    "accent": "#FFD36B"
-   },
-   "tone": "dark",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-inv-griha-pravesh-4",
-   "tpl": true
-  },
-  {
-   "zone": [
-    210,
-    440,
-    870,
-    1010
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#5C4A32",
-    "text": "#3F3A34",
-    "accent": "#9C7A3C"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 350,
-    "r": 95
-   },
-   "id": "T-inv-griha-pravesh-5",
-   "tpl": true
+   "tpl": true,
+   "id": "T-inv-griha-pravesh-4"
   },
   {
    "zone": [
     120,
-    640,
-    960,
-    1250
+    360,
+    900,
+    900
    ],
+   "colors": {
+    "title": "#3F5E47",
+    "text": "#3A2330",
+    "accent": "#9C7A3C"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "left",
+   "tpl": true,
+   "id": "T-inv-griha-pravesh-5"
+  },
+  {
+   "zone": [
+    150,
+    460,
+    930,
+    1080
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "deco",
    "align": "center",
+   "tpl": true,
+   "id": "T-inv-griha-pravesh-6"
+  },
+  {
+   "zone": [
+    370,
+    300,
+    1010,
+    1040
+   ],
+   "colors": {
+    "title": "#7B1E1E",
+    "text": "#3A2330",
+    "accent": "#B7791F"
+   },
+   "tone": "light",
+   "title": "classic",
+   "align": "left",
+   "tpl": true,
+   "id": "T-inv-griha-pravesh-7"
+  },
+  {
+   "zone": [
+    150,
+    620,
+    930,
+    1210
+   ],
    "colors": {
     "title": "#9D0208",
     "text": "#3A2330",
@@ -873,73 +825,35 @@
    },
    "tone": "light",
    "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 520,
-    "r": 120
-   },
-   "id": "T-inv-griha-pravesh-6",
-   "tpl": true
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-griha-pravesh-8"
   },
   {
    "zone": [
-    380,
-    330,
-    1010,
-    1230
+    170,
+    520,
+    910,
+    1180
    ],
-   "align": "left",
    "colors": {
-    "title": "#0F5132",
+    "title": "#2D6A4F",
     "text": "#3A2330",
-    "accent": "#A87B1C"
+    "accent": "#B7791F"
    },
    "tone": "light",
    "title": "classic",
-   "photo": {
-    "shape": "rounded",
-    "x": 380,
-    "y": 110,
-    "w": 200,
-    "h": 200
-   },
-   "id": "T-inv-griha-pravesh-7",
-   "tpl": true
-  },
-  {
-   "zone": [
-    110,
-    350,
-    900,
-    920
-   ],
-   "align": "left",
-   "colors": {
-    "title": "#05505A",
-    "text": "#3A2330",
-    "accent": "#C08B30"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "rounded",
-    "x": 110,
-    "y": 80,
-    "w": 190,
-    "h": 190
-   },
-   "id": "T-inv-griha-pravesh-8",
-   "tpl": true
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-griha-pravesh-9"
   },
   {
    "zone": [
     150,
-    400,
+    180,
     930,
-    1030
+    820
    ],
-   "align": "center",
    "colors": {
     "title": "gold",
     "text": "#FFF8EC",
@@ -947,236 +861,53 @@
    },
    "tone": "dark",
    "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 400,
-    "r": 100
-   },
-   "id": "T-inv-griha-pravesh-9",
-   "tpl": true
-  },
-  {
-   "zone": [
-    140,
-    760,
-    940,
-    1260
-   ],
    "align": "center",
-   "colors": {
-    "title": "#5C4A32",
-    "text": "#3F3A34",
-    "accent": "#9C7A3C"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "arch",
-    "x": 302,
-    "y": 122,
-    "w": 476,
-    "h": 576
-   },
-   "slot": true,
-   "id": "T-inv-griha-pravesh-10",
-   "tpl": true
+   "tpl": true,
+   "id": "T-inv-griha-pravesh-10"
   }
  ],
  "inv-baby-shower": [
   {
    "zone": [
-    230,
-    450,
-    850,
-    1160
+    160,
+    670,
+    920,
+    1240
    ],
-   "align": "center",
    "colors": {
-    "title": "#A23E5B",
+    "title": "#3E8E41",
     "text": "#3A2330",
-    "accent": "#B48A4A"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-inv-baby-shower-1",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    400,
-    930,
-    1210
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#1F4E89",
-    "text": "#3A2330",
-    "accent": "#D4A017"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 250,
-    "r": 105
-   },
-   "id": "T-inv-baby-shower-2",
-   "tpl": true
-  },
-  {
-   "zone": [
-    170,
-    420,
-    910,
-    1040
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#1B4332",
-    "text": "#3A2330",
-    "accent": "#B7791F"
+    "accent": "#D4A64A"
    },
    "tone": "light",
    "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 100
-   },
-   "id": "T-inv-baby-shower-3",
-   "tpl": true
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-baby-shower-1"
   },
   {
    "zone": [
     150,
-    330,
+    380,
     930,
-    990
+    980
    ],
-   "align": "center",
    "colors": {
-    "title": "gold",
-    "text": "#FFF8EC",
-    "accent": "#FFD36B"
+    "title": "#B23A48",
+    "text": "#3A2330",
+    "accent": "#3E8E41"
    },
-   "tone": "dark",
-   "title": "deco",
+   "tone": "light",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
    "photo": {
     "shape": "circle",
     "x": 540,
     "y": 330,
-    "r": 110
-   },
-   "id": "T-inv-baby-shower-4",
-   "tpl": true
-  },
-  {
-   "zone": [
-    210,
-    440,
-    870,
-    1010
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#B23A48",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 350,
     "r": 95
    },
-   "id": "T-inv-baby-shower-5",
-   "tpl": true
-  },
-  {
-   "zone": [
-    120,
-    640,
-    960,
-    1250
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#A23E5B",
-    "text": "#3A2330",
-    "accent": "#B48A4A"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 520,
-    "r": 120
-   },
-   "id": "T-inv-baby-shower-6",
-   "tpl": true
-  },
-  {
-   "zone": [
-    380,
-    330,
-    1010,
-    1230
-   ],
-   "align": "left",
-   "colors": {
-    "title": "#1F4E89",
-    "text": "#3A2330",
-    "accent": "#D4A017"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "rounded",
-    "x": 380,
-    "y": 110,
-    "w": 200,
-    "h": 200
-   },
-   "id": "T-inv-baby-shower-7",
-   "tpl": true
-  },
-  {
-   "zone": [
-    110,
-    350,
-    900,
-    920
-   ],
-   "align": "left",
-   "colors": {
-    "title": "#1B4332",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "rounded",
-    "x": 110,
-    "y": 80,
-    "w": 190,
-    "h": 190
-   },
-   "id": "T-inv-baby-shower-8",
-   "tpl": true
+   "id": "T-inv-baby-shower-2"
   },
   {
    "zone": [
@@ -1185,7 +916,6 @@
     930,
     1030
    ],
-   "align": "center",
    "colors": {
     "title": "gold",
     "text": "#FFF8EC",
@@ -1193,245 +923,227 @@
    },
    "tone": "dark",
    "title": "script",
+   "align": "center",
+   "tpl": true,
    "photo": {
     "shape": "circle",
     "x": 540,
-    "y": 400,
+    "y": 380,
     "r": 100
    },
-   "id": "T-inv-baby-shower-9",
-   "tpl": true
+   "id": "T-inv-baby-shower-3"
+  },
+  {
+   "zone": [
+    230,
+    560,
+    850,
+    1220
+   ],
+   "colors": {
+    "title": "#B23A48",
+    "text": "#3A2330",
+    "accent": "#D4A64A"
+   },
+   "tone": "light",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 500,
+    "r": 95
+   },
+   "id": "T-inv-baby-shower-4"
+  },
+  {
+   "zone": [
+    130,
+    600,
+    950,
+    1250
+   ],
+   "colors": {
+    "title": "#B23A48",
+    "text": "#3A2330",
+    "accent": "#D4A64A"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-baby-shower-5"
+  },
+  {
+   "zone": [
+    200,
+    480,
+    880,
+    1080
+   ],
+   "colors": {
+    "title": "#1F6F8B",
+    "text": "#3A2330",
+    "accent": "#D4A64A"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 420,
+    "r": 95
+   },
+   "id": "T-inv-baby-shower-6"
+  },
+  {
+   "zone": [
+    370,
+    360,
+    1010,
+    1060
+   ],
+   "colors": {
+    "title": "#3E8E41",
+    "text": "#3A2330",
+    "accent": "#D4A64A"
+   },
+   "tone": "light",
+   "title": "classic",
+   "align": "left",
+   "tpl": true,
+   "photo": {
+    "shape": "rounded",
+    "x": 370,
+    "y": 110,
+    "w": 200,
+    "h": 200
+   },
+   "id": "T-inv-baby-shower-7"
+  },
+  {
+   "zone": [
+    150,
+    330,
+    930,
+    950
+   ],
+   "colors": {
+    "title": "#B23A48",
+    "text": "#3A2330",
+    "accent": "#D4A64A"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-baby-shower-8"
   },
   {
    "zone": [
     140,
-    760,
+    720,
     940,
     1260
    ],
-   "align": "center",
    "colors": {
     "title": "#B23A48",
     "text": "#3A2330",
-    "accent": "#B7791F"
+    "accent": "#D4A64A"
    },
    "tone": "light",
    "title": "classic",
+   "align": "center",
+   "tpl": true,
    "photo": {
     "shape": "arch",
     "x": 302,
     "y": 122,
     "w": 476,
-    "h": 576
+    "h": 536
    },
    "slot": true,
-   "id": "T-inv-baby-shower-10",
-   "tpl": true
+   "id": "T-inv-baby-shower-9"
+  },
+  {
+   "zone": [
+    150,
+    380,
+    930,
+    1000
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 250,
+    "r": 100
+   },
+   "id": "T-inv-baby-shower-10"
   }
  ],
  "inv-naming-ceremony": [
   {
    "zone": [
-    230,
-    450,
-    850,
-    1160
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#1F4E89",
-    "text": "#3A2330",
-    "accent": "#D4A017"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-inv-naming-ceremony-1",
-   "tpl": true
-  },
-  {
-   "zone": [
     150,
-    400,
+    740,
     930,
-    1210
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#A23E5B",
-    "text": "#3A2330",
-    "accent": "#B48A4A"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 250,
-    "r": 105
-   },
-   "id": "T-inv-naming-ceremony-2",
-   "tpl": true
-  },
-  {
-   "zone": [
-    170,
-    420,
-    910,
-    1040
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#5B4A8B",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 100
-   },
-   "id": "T-inv-naming-ceremony-3",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    330,
-    930,
-    990
-   ],
-   "align": "center",
-   "colors": {
-    "title": "gold",
-    "text": "#FFF8EC",
-    "accent": "#FFD36B"
-   },
-   "tone": "dark",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-inv-naming-ceremony-4",
-   "tpl": true
-  },
-  {
-   "zone": [
-    210,
-    440,
-    870,
-    1010
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#9C4A00",
-    "text": "#3A2330",
-    "accent": "#219EBC"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 350,
-    "r": 95
-   },
-   "id": "T-inv-naming-ceremony-5",
-   "tpl": true
-  },
-  {
-   "zone": [
-    120,
-    640,
-    960,
     1250
    ],
-   "align": "center",
    "colors": {
-    "title": "#1F4E89",
+    "title": "#1F6F8B",
     "text": "#3A2330",
-    "accent": "#D4A017"
+    "accent": "#D4AF37"
    },
    "tone": "light",
    "title": "deco",
+   "align": "center",
+   "tpl": true,
    "photo": {
     "shape": "circle",
     "x": 540,
     "y": 520,
-    "r": 120
+    "r": 170
    },
-   "id": "T-inv-naming-ceremony-6",
-   "tpl": true
+   "slot": true,
+   "id": "T-inv-naming-ceremony-1"
   },
   {
    "zone": [
-    380,
-    330,
-    1010,
-    1230
+    200,
+    560,
+    880,
+    1150
    ],
-   "align": "left",
    "colors": {
-    "title": "#A23E5B",
+    "title": "#3E8E41",
     "text": "#3A2330",
-    "accent": "#B48A4A"
+    "accent": "#D4AF37"
    },
    "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "rounded",
-    "x": 380,
-    "y": 110,
-    "w": 200,
-    "h": 200
-   },
-   "id": "T-inv-naming-ceremony-7",
-   "tpl": true
-  },
-  {
-   "zone": [
-    110,
-    350,
-    900,
-    920
-   ],
-   "align": "left",
-   "colors": {
-    "title": "#5B4A8B",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "rounded",
-    "x": 110,
-    "y": 80,
-    "w": 190,
-    "h": 190
-   },
-   "id": "T-inv-naming-ceremony-8",
-   "tpl": true
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-naming-ceremony-2"
   },
   {
    "zone": [
     150,
-    400,
+    700,
     930,
-    1030
+    1240
    ],
-   "align": "center",
    "colors": {
     "title": "gold",
     "text": "#FFF8EC",
@@ -1439,123 +1151,249 @@
    },
    "tone": "dark",
    "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 400,
-    "r": 100
-   },
-   "id": "T-inv-naming-ceremony-9",
-   "tpl": true
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-naming-ceremony-3"
   },
   {
    "zone": [
     140,
-    760,
+    230,
     940,
-    1260
+    820
    ],
-   "align": "center",
    "colors": {
-    "title": "#9C4A00",
+    "title": "#C2185B",
     "text": "#3A2330",
-    "accent": "#219EBC"
+    "accent": "#1F6F8B"
+   },
+   "tone": "light",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 250,
+    "r": 100
+   },
+   "id": "T-inv-naming-ceremony-4"
+  },
+  {
+   "zone": [
+    140,
+    800,
+    940,
+    1270
+   ],
+   "colors": {
+    "title": "#1F6F8B",
+    "text": "#3A2330",
+    "accent": "#D4AF37"
    },
    "tone": "light",
    "title": "classic",
+   "align": "center",
+   "tpl": true,
    "photo": {
     "shape": "arch",
-    "x": 302,
+    "x": 282,
     "y": 122,
-    "w": 476,
-    "h": 576
+    "w": 516,
+    "h": 616
    },
    "slot": true,
-   "id": "T-inv-naming-ceremony-10",
-   "tpl": true
+   "id": "T-inv-naming-ceremony-5"
+  },
+  {
+   "zone": [
+    150,
+    300,
+    930,
+    1080
+   ],
+   "colors": {
+    "title": "#3E8E41",
+    "text": "#3A2330",
+    "accent": "#C2185B"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 300,
+    "r": 100
+   },
+   "id": "T-inv-naming-ceremony-6"
+  },
+  {
+   "zone": [
+    130,
+    600,
+    950,
+    1250
+   ],
+   "colors": {
+    "title": "#8C5A00",
+    "text": "#3A2330",
+    "accent": "#1F6F8B"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-naming-ceremony-7"
+  },
+  {
+   "zone": [
+    150,
+    420,
+    930,
+    1150
+   ],
+   "colors": {
+    "title": "#6B4C9A",
+    "text": "#3A2330",
+    "accent": "#1F6F8B"
+   },
+   "tone": "light",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-naming-ceremony-8"
+  },
+  {
+   "zone": [
+    150,
+    250,
+    930,
+    900
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 300,
+    "r": 100
+   },
+   "id": "T-inv-naming-ceremony-9"
+  },
+  {
+   "zone": [
+    220,
+    400,
+    860,
+    960
+   ],
+   "colors": {
+    "title": "#1F6F8B",
+    "text": "#3A2330",
+    "accent": "#3E8E41"
+   },
+   "tone": "light",
+   "title": "classic",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 400,
+    "r": 95
+   },
+   "id": "T-inv-naming-ceremony-10"
   }
  ],
  "inv-puja": [
   {
    "zone": [
-    230,
-    450,
-    850,
-    1160
+    200,
+    480,
+    880,
+    1150
    ],
-   "align": "center",
    "colors": {
-    "title": "#9D0208",
+    "title": "#B71C1C",
     "text": "#3A2330",
-    "accent": "#B7791F"
+    "accent": "#4C8C2B"
    },
    "tone": "light",
    "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-puja-1"
+  },
+  {
+   "zone": [
+    230,
+    380,
+    850,
+    1010
+   ],
+   "colors": {
+    "title": "#B71C1C",
+    "text": "#3A2330",
+    "accent": "#C9A227"
    },
-   "id": "T-inv-puja-1",
-   "tpl": true
+   "tone": "light",
+   "title": "classic",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-puja-2"
   },
   {
    "zone": [
     150,
-    400,
+    460,
     930,
-    1210
+    1130
    ],
-   "align": "center",
    "colors": {
-    "title": "#7A0F2E",
+    "title": "#B71C1C",
     "text": "#3A2330",
-    "accent": "#B7791F"
+    "accent": "#C9A227"
    },
    "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 250,
-    "r": 105
-   },
-   "id": "T-inv-puja-2",
-   "tpl": true
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-puja-3"
   },
   {
    "zone": [
     170,
-    420,
+    340,
     910,
-    1040
+    1120
    ],
-   "align": "center",
    "colors": {
-    "title": "#0F5132",
+    "title": "#B71C1C",
     "text": "#3A2330",
-    "accent": "#A87B1C"
+    "accent": "#C9A227"
    },
    "tone": "light",
-   "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 100
-   },
-   "id": "T-inv-puja-3",
-   "tpl": true
+   "title": "classic",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-puja-4"
   },
   {
    "zone": [
     150,
-    330,
+    520,
     930,
-    990
+    1180
    ],
-   "align": "center",
    "colors": {
     "title": "gold",
     "text": "#FFF8EC",
@@ -1563,245 +1401,127 @@
    },
    "tone": "dark",
    "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-inv-puja-4",
-   "tpl": true
-  },
-  {
-   "zone": [
-    210,
-    440,
-    870,
-    1010
-   ],
    "align": "center",
-   "colors": {
-    "title": "#05505A",
-    "text": "#3A2330",
-    "accent": "#C08B30"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 350,
-    "r": 95
-   },
-   "id": "T-inv-puja-5",
-   "tpl": true
+   "tpl": true,
+   "id": "T-inv-puja-5"
   },
   {
    "zone": [
-    120,
-    640,
-    960,
+    130,
+    580,
+    950,
     1250
    ],
-   "align": "center",
    "colors": {
-    "title": "#9D0208",
+    "title": "#B71C1C",
     "text": "#3A2330",
-    "accent": "#B7791F"
+    "accent": "#4C8C2B"
    },
    "tone": "light",
    "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 520,
-    "r": 120
-   },
-   "id": "T-inv-puja-6",
-   "tpl": true
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-puja-6"
   },
   {
    "zone": [
-    380,
-    330,
+    370,
+    300,
     1010,
-    1230
+    1060
    ],
-   "align": "left",
    "colors": {
-    "title": "#7A0F2E",
+    "title": "#B71C1C",
     "text": "#3A2330",
-    "accent": "#B7791F"
+    "accent": "#C9A227"
    },
    "tone": "light",
    "title": "classic",
-   "photo": {
-    "shape": "rounded",
-    "x": 380,
-    "y": 110,
-    "w": 200,
-    "h": 200
-   },
-   "id": "T-inv-puja-7",
-   "tpl": true
-  },
-  {
-   "zone": [
-    110,
-    350,
-    900,
-    920
-   ],
    "align": "left",
-   "colors": {
-    "title": "#0F5132",
-    "text": "#3A2330",
-    "accent": "#A87B1C"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "rounded",
-    "x": 110,
-    "y": 80,
-    "w": 190,
-    "h": 190
-   },
-   "id": "T-inv-puja-8",
-   "tpl": true
+   "tpl": true,
+   "id": "T-inv-puja-7"
   },
   {
    "zone": [
     150,
-    400,
+    330,
     930,
-    1030
+    960
    ],
-   "align": "center",
    "colors": {
-    "title": "gold",
-    "text": "#FFF8EC",
-    "accent": "#FFD36B"
+    "title": "#B71C1C",
+    "text": "#3A2330",
+    "accent": "#4C8C2B"
    },
-   "tone": "dark",
-   "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 400,
-    "r": 100
-   },
-   "id": "T-inv-puja-9",
-   "tpl": true
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-puja-8"
   },
   {
    "zone": [
-    140,
-    760,
-    940,
-    1260
+    200,
+    400,
+    880,
+    960
    ],
-   "align": "center",
    "colors": {
-    "title": "#05505A",
+    "title": "#1F5E1B",
     "text": "#3A2330",
-    "accent": "#C08B30"
+    "accent": "#B7791F"
    },
    "tone": "light",
    "title": "classic",
-   "photo": {
-    "shape": "arch",
-    "x": 302,
-    "y": 122,
-    "w": 476,
-    "h": 576
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-puja-9"
+  },
+  {
+   "zone": [
+    150,
+    480,
+    930,
+    1220
+   ],
+   "colors": {
+    "title": "#B71C1C",
+    "text": "#3A2330",
+    "accent": "#C9A227"
    },
-   "slot": true,
-   "id": "T-inv-puja-10",
-   "tpl": true
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-puja-10"
   }
  ],
  "inv-shop-opening": [
   {
    "zone": [
-    230,
-    450,
-    850,
-    1160
+    140,
+    520,
+    940,
+    1220
    ],
-   "align": "center",
    "colors": {
-    "title": "#7A0F2E",
-    "text": "#3A2330",
+    "title": "#D62828",
+    "text": "#1B2A4A",
     "accent": "#B7791F"
    },
    "tone": "light",
    "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-inv-shop-opening-1",
-   "tpl": true
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-shop-opening-1"
   },
   {
    "zone": [
     150,
-    400,
+    300,
     930,
-    1210
+    1080
    ],
-   "align": "center",
-   "colors": {
-    "title": "#1B2A4A",
-    "text": "#3A2330",
-    "accent": "#B7892F"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 250,
-    "r": 105
-   },
-   "id": "T-inv-shop-opening-2",
-   "tpl": true
-  },
-  {
-   "zone": [
-    170,
-    420,
-    910,
-    1040
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#0F5132",
-    "text": "#3A2330",
-    "accent": "#A87B1C"
-   },
-   "tone": "light",
-   "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 100
-   },
-   "id": "T-inv-shop-opening-3",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    330,
-    930,
-    990
-   ],
-   "align": "center",
    "colors": {
     "title": "gold",
     "text": "#FFF8EC",
@@ -1809,145 +1529,107 @@
    },
    "tone": "dark",
    "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-inv-shop-opening-4",
-   "tpl": true
-  },
-  {
-   "zone": [
-    210,
-    440,
-    870,
-    1010
-   ],
    "align": "center",
-   "colors": {
-    "title": "#9D0208",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 350,
-    "r": 95
-   },
-   "id": "T-inv-shop-opening-5",
-   "tpl": true
-  },
-  {
-   "zone": [
-    120,
-    640,
-    960,
-    1250
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#7A0F2E",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 520,
-    "r": 120
-   },
-   "id": "T-inv-shop-opening-6",
-   "tpl": true
-  },
-  {
-   "zone": [
-    380,
-    330,
-    1010,
-    1230
-   ],
-   "align": "left",
-   "colors": {
-    "title": "#1B2A4A",
-    "text": "#3A2330",
-    "accent": "#B7892F"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "rounded",
-    "x": 380,
-    "y": 110,
-    "w": 200,
-    "h": 200
-   },
-   "id": "T-inv-shop-opening-7",
-   "tpl": true
-  },
-  {
-   "zone": [
-    110,
-    350,
-    900,
-    920
-   ],
-   "align": "left",
-   "colors": {
-    "title": "#0F5132",
-    "text": "#3A2330",
-    "accent": "#A87B1C"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "rounded",
-    "x": 110,
-    "y": 80,
-    "w": 190,
-    "h": 190
-   },
-   "id": "T-inv-shop-opening-8",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    400,
-    930,
-    1030
-   ],
-   "align": "center",
-   "colors": {
-    "title": "gold",
-    "text": "#FFF8EC",
-    "accent": "#FFD36B"
-   },
-   "tone": "dark",
-   "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 400,
-    "r": 100
-   },
-   "id": "T-inv-shop-opening-9",
-   "tpl": true
+   "tpl": true,
+   "id": "T-inv-shop-opening-2"
   },
   {
    "zone": [
     140,
-    760,
+    600,
     940,
-    1260
+    1250
    ],
+   "colors": {
+    "title": "#6A0F1A",
+    "text": "#3A2330",
+    "accent": "#B7791F"
+   },
+   "tone": "light",
+   "title": "deco",
    "align": "center",
+   "tpl": true,
+   "id": "T-inv-shop-opening-3"
+  },
+  {
+   "zone": [
+    150,
+    460,
+    930,
+    1060
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-shop-opening-4"
+  },
+  {
+   "zone": [
+    150,
+    400,
+    930,
+    1000
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-shop-opening-5"
+  },
+  {
+   "zone": [
+    130,
+    580,
+    950,
+    1250
+   ],
+   "colors": {
+    "title": "#D62828",
+    "text": "#3A2330",
+    "accent": "#B7791F"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-shop-opening-6"
+  },
+  {
+   "zone": [
+    370,
+    280,
+    1010,
+    1080
+   ],
+   "colors": {
+    "title": "#1B2A4A",
+    "text": "#3A2330",
+    "accent": "#D62828"
+   },
+   "tone": "light",
+   "title": "classic",
+   "align": "left",
+   "tpl": true,
+   "id": "T-inv-shop-opening-7"
+  },
+  {
+   "zone": [
+    150,
+    370,
+    930,
+    1090
+   ],
    "colors": {
     "title": "#9D0208",
     "text": "#3A2330",
@@ -1955,99 +1637,107 @@
    },
    "tone": "light",
    "title": "classic",
-   "photo": {
-    "shape": "arch",
-    "x": 302,
-    "y": 122,
-    "w": 476,
-    "h": 576
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-shop-opening-8"
+  },
+  {
+   "zone": [
+    190,
+    380,
+    890,
+    980
+   ],
+   "colors": {
+    "title": "#D62828",
+    "text": "#1B2A4A",
+    "accent": "#B7791F"
    },
-   "slot": true,
-   "id": "T-inv-shop-opening-10",
-   "tpl": true
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-shop-opening-9"
+  },
+  {
+   "zone": [
+    150,
+    480,
+    930,
+    1100
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "id": "T-inv-shop-opening-10"
   }
  ],
  "shraddhanjali": [
   {
    "zone": [
-    230,
-    450,
-    850,
-    1160
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#374151",
-    "text": "#374151",
-    "accent": "#8A7A5C"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-shraddhanjali-1",
-   "tpl": true
-  },
-  {
-   "zone": [
     150,
-    400,
+    760,
     930,
-    1210
+    1250
    ],
-   "align": "center",
    "colors": {
-    "title": "#5C4A32",
-    "text": "#3F3A34",
+    "title": "#2F2F35",
+    "text": "#2F2F35",
     "accent": "#9C7A3C"
    },
    "tone": "light",
    "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 250,
-    "r": 105
-   },
-   "id": "T-shraddhanjali-2",
-   "tpl": true
-  },
-  {
-   "zone": [
-    170,
-    420,
-    910,
-    1040
-   ],
    "align": "center",
-   "colors": {
-    "title": "#1B2A4A",
-    "text": "#3A2330",
-    "accent": "#B7892F"
-   },
-   "tone": "light",
-   "title": "classic",
+   "tpl": true,
    "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 100
+    "shape": "rect",
+    "x": 340,
+    "y": 150,
+    "w": 400,
+    "h": 470
    },
-   "id": "T-shraddhanjali-3",
-   "tpl": true
+   "slot": true,
+   "id": "T-shraddhanjali-1"
   },
   {
    "zone": [
     150,
-    330,
+    790,
     930,
-    990
+    1260
    ],
+   "colors": {
+    "title": "#6B2C1F",
+    "text": "#2F2F35",
+    "accent": "#8B5A2B"
+   },
+   "tone": "light",
+   "title": "classic",
    "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "oval",
+    "x": 350,
+    "y": 145,
+    "w": 380,
+    "h": 470
+   },
+   "slot": true,
+   "id": "T-shraddhanjali-2"
+  },
+  {
+   "zone": [
+    150,
+    610,
+    930,
+    1180
+   ],
    "colors": {
     "title": "gold",
     "text": "#FFF8EC",
@@ -2055,245 +1745,207 @@
    },
    "tone": "dark",
    "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-shraddhanjali-4",
-   "tpl": true
-  },
-  {
-   "zone": [
-    210,
-    440,
-    870,
-    1010
-   ],
    "align": "center",
-   "colors": {
-    "title": "#5C4A32",
-    "text": "#3F3A34",
-    "accent": "#9C7A3C"
-   },
-   "tone": "light",
-   "title": "classic",
+   "tpl": true,
    "photo": {
     "shape": "circle",
     "x": 540,
-    "y": 350,
-    "r": 95
+    "y": 360,
+    "r": 200
    },
-   "id": "T-shraddhanjali-5",
-   "tpl": true
-  },
-  {
-   "zone": [
-    120,
-    640,
-    960,
-    1250
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#374151",
-    "text": "#374151",
-    "accent": "#8A7A5C"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 520,
-    "r": 120
-   },
-   "id": "T-shraddhanjali-6",
-   "tpl": true
-  },
-  {
-   "zone": [
-    380,
-    330,
-    1010,
-    1230
-   ],
-   "align": "left",
-   "colors": {
-    "title": "#5C4A32",
-    "text": "#3F3A34",
-    "accent": "#9C7A3C"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "rounded",
-    "x": 380,
-    "y": 110,
-    "w": 200,
-    "h": 200
-   },
-   "id": "T-shraddhanjali-7",
-   "tpl": true
-  },
-  {
-   "zone": [
-    110,
-    350,
-    900,
-    920
-   ],
-   "align": "left",
-   "colors": {
-    "title": "#1B2A4A",
-    "text": "#3A2330",
-    "accent": "#B7892F"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "rounded",
-    "x": 110,
-    "y": 80,
-    "w": 190,
-    "h": 190
-   },
-   "id": "T-shraddhanjali-8",
-   "tpl": true
+   "slot": true,
+   "id": "T-shraddhanjali-3"
   },
   {
    "zone": [
     150,
-    400,
+    720,
     930,
-    1030
+    1200
    ],
-   "align": "center",
    "colors": {
-    "title": "#3F5E47",
-    "text": "#3A2330",
-    "accent": "#9C7A3C"
+    "title": "#2F2F35",
+    "text": "#2F2F35",
+    "accent": "#6B6B73"
    },
    "tone": "light",
    "title": "classic",
+   "align": "center",
+   "tpl": true,
    "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 400,
-    "r": 100
+    "shape": "arch",
+    "x": 372,
+    "y": 242,
+    "w": 336,
+    "h": 416
    },
-   "id": "T-shraddhanjali-9",
-   "tpl": true
+   "slot": true,
+   "id": "T-shraddhanjali-4"
   },
   {
    "zone": [
-    140,
-    760,
-    940,
-    1260
+    150,
+    700,
+    930,
+    1230
    ],
-   "align": "center",
    "colors": {
-    "title": "#5C4A32",
-    "text": "#3F3A34",
-    "accent": "#9C7A3C"
+    "title": "#3F5E47",
+    "text": "#2F2F35",
+    "accent": "#6B8F71"
    },
    "tone": "light",
    "title": "classic",
+   "align": "center",
+   "tpl": true,
    "photo": {
-    "shape": "arch",
-    "x": 302,
-    "y": 122,
-    "w": 476,
-    "h": 576
+    "shape": "rounded",
+    "x": 330,
+    "y": 150,
+    "w": 420,
+    "h": 460
    },
    "slot": true,
-   "id": "T-shraddhanjali-10",
-   "tpl": true
+   "id": "T-shraddhanjali-5"
+  },
+  {
+   "zone": [
+    150,
+    700,
+    930,
+    1240
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "classic",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "oval",
+    "x": 350,
+    "y": 148,
+    "w": 380,
+    "h": 464
+   },
+   "slot": true,
+   "id": "T-shraddhanjali-6"
+  },
+  {
+   "zone": [
+    150,
+    650,
+    930,
+    1230
+   ],
+   "colors": {
+    "title": "#2F2F35",
+    "text": "#2F2F35",
+    "accent": "#6B6B73"
+   },
+   "tone": "light",
+   "title": "classic",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 380,
+    "r": 190
+   },
+   "slot": true,
+   "id": "T-shraddhanjali-7"
+  },
+  {
+   "zone": [
+    150,
+    680,
+    930,
+    1190
+   ],
+   "colors": {
+    "title": "#5C4A32",
+    "text": "#2F2F35",
+    "accent": "#8B5A2B"
+   },
+   "tone": "light",
+   "title": "classic",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "rect",
+    "x": 330,
+    "y": 140,
+    "w": 420,
+    "h": 480
+   },
+   "slot": true,
+   "id": "T-shraddhanjali-8"
+  },
+  {
+   "zone": [
+    120,
+    720,
+    960,
+    1250
+   ],
+   "colors": {
+    "title": "#111111",
+    "text": "#2B2B2B",
+    "accent": "#555555"
+   },
+   "tone": "light",
+   "title": "classic",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "rect",
+    "x": 0,
+    "y": 0,
+    "w": 1080,
+    "h": 640
+   },
+   "slot": true,
+   "id": "T-shraddhanjali-9"
+  },
+  {
+   "zone": [
+    150,
+    740,
+    930,
+    1250
+   ],
+   "colors": {
+    "title": "#7B1E1E",
+    "text": "#2F2F35",
+    "accent": "#7B1E1E"
+   },
+   "tone": "light",
+   "title": "classic",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "rect",
+    "x": 355,
+    "y": 150,
+    "w": 370,
+    "h": 440
+   },
+   "slot": true,
+   "id": "T-shraddhanjali-10"
   }
  ],
  "navratri": [
   {
    "zone": [
-    230,
-    450,
-    850,
-    1160
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#A4133C",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-navratri-1",
-   "tpl": true
-  },
-  {
-   "zone": [
     150,
-    400,
+    380,
     930,
-    1210
+    1030
    ],
-   "align": "center",
-   "colors": {
-    "title": "#9D0208",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 250,
-    "r": 105
-   },
-   "id": "T-navratri-2",
-   "tpl": true
-  },
-  {
-   "zone": [
-    170,
-    420,
-    910,
-    1040
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#5A189A",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 100
-   },
-   "id": "T-navratri-3",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    330,
-    930,
-    990
-   ],
-   "align": "center",
    "colors": {
     "title": "gold",
     "text": "#FFF8EC",
@@ -2301,121 +1953,41 @@
    },
    "tone": "dark",
    "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-navratri-4",
-   "tpl": true
-  },
-  {
-   "zone": [
-    210,
-    440,
-    870,
-    1010
-   ],
    "align": "center",
-   "colors": {
-    "title": "#7A0F2E",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "classic",
+   "tpl": true,
    "photo": {
     "shape": "circle",
     "x": 540,
     "y": 350,
-    "r": 95
+    "r": 100
    },
-   "id": "T-navratri-5",
-   "tpl": true
+   "id": "T-navratri-1"
   },
   {
    "zone": [
-    120,
-    640,
-    960,
-    1250
+    140,
+    520,
+    940,
+    1200
    ],
+   "colors": {
+    "title": "#C1121F",
+    "text": "#3A2330",
+    "accent": "#6A1B9A"
+   },
+   "tone": "light",
+   "title": "deco",
    "align": "center",
-   "colors": {
-    "title": "#A4133C",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 520,
-    "r": 120
-   },
-   "id": "T-navratri-6",
-   "tpl": true
-  },
-  {
-   "zone": [
-    380,
-    330,
-    1010,
-    1230
-   ],
-   "align": "left",
-   "colors": {
-    "title": "#9D0208",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "rounded",
-    "x": 380,
-    "y": 110,
-    "w": 200,
-    "h": 200
-   },
-   "id": "T-navratri-7",
-   "tpl": true
-  },
-  {
-   "zone": [
-    110,
-    350,
-    900,
-    920
-   ],
-   "align": "left",
-   "colors": {
-    "title": "#5A189A",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "rounded",
-    "x": 110,
-    "y": 80,
-    "w": 190,
-    "h": 190
-   },
-   "id": "T-navratri-8",
-   "tpl": true
+   "tpl": true,
+   "id": "T-navratri-2"
   },
   {
    "zone": [
     150,
-    400,
+    280,
     930,
-    1030
+    980
    ],
-   "align": "center",
    "colors": {
     "title": "gold",
     "text": "#FFF8EC",
@@ -2423,369 +1995,407 @@
    },
    "tone": "dark",
    "title": "script",
+   "align": "center",
+   "tpl": true,
    "photo": {
     "shape": "circle",
     "x": 540,
-    "y": 400,
+    "y": 300,
     "r": 100
    },
-   "id": "T-navratri-9",
-   "tpl": true
+   "id": "T-navratri-3"
   },
   {
    "zone": [
     140,
-    760,
+    520,
     940,
-    1260
+    1200
    ],
-   "align": "center",
    "colors": {
-    "title": "#7A0F2E",
+    "title": "#D81B60",
     "text": "#3A2330",
-    "accent": "#B7791F"
+    "accent": "#E0A800"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-navratri-4"
+  },
+  {
+   "zone": [
+    150,
+    250,
+    930,
+    960
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 300,
+    "r": 100
+   },
+   "id": "T-navratri-5"
+  },
+  {
+   "zone": [
+    230,
+    400,
+    850,
+    960
+   ],
+   "colors": {
+    "title": "#C1121F",
+    "text": "#3A2330",
+    "accent": "#6A1B9A"
    },
    "tone": "light",
    "title": "classic",
+   "align": "center",
+   "tpl": true,
    "photo": {
-    "shape": "arch",
-    "x": 302,
-    "y": 122,
-    "w": 476,
-    "h": 576
+    "shape": "circle",
+    "x": 540,
+    "y": 360,
+    "r": 95
    },
-   "slot": true,
-   "id": "T-navratri-10",
-   "tpl": true
+   "id": "T-navratri-6"
+  },
+  {
+   "zone": [
+    370,
+    300,
+    1010,
+    1080
+   ],
+   "colors": {
+    "title": "#1E3A8A",
+    "text": "#3A2330",
+    "accent": "#D81B60"
+   },
+   "tone": "light",
+   "title": "classic",
+   "align": "left",
+   "tpl": true,
+   "photo": {
+    "shape": "rounded",
+    "x": 370,
+    "y": 90,
+    "w": 180,
+    "h": 180
+   },
+   "id": "T-navratri-7"
+  },
+  {
+   "zone": [
+    150,
+    300,
+    930,
+    880
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "id": "T-navratri-8"
+  },
+  {
+   "zone": [
+    220,
+    380,
+    860,
+    980
+   ],
+   "colors": {
+    "title": "#6A1B9A",
+    "text": "#3A2330",
+    "accent": "#0F7C7A"
+   },
+   "tone": "light",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 360,
+    "r": 95
+   },
+   "id": "T-navratri-9"
+  },
+  {
+   "zone": [
+    160,
+    790,
+    920,
+    1200
+   ],
+   "colors": {
+    "title": "#C1121F",
+    "text": "#3A2330",
+    "accent": "#6A1B9A"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-navratri-10"
   }
  ],
  "dussehra": [
   {
    "zone": [
+    130,
     230,
-    450,
-    850,
-    1160
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#9D0208",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-dussehra-1",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    400,
-    930,
-    1210
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#7A0F2E",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 250,
-    "r": 105
-   },
-   "id": "T-dussehra-2",
-   "tpl": true
-  },
-  {
-   "zone": [
-    170,
-    420,
-    910,
-    1040
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#8B1030",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 100
-   },
-   "id": "T-dussehra-3",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    330,
-    930,
-    990
-   ],
-   "align": "center",
-   "colors": {
-    "title": "gold",
-    "text": "#FFF8EC",
-    "accent": "#FFD36B"
-   },
-   "tone": "dark",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-dussehra-4",
-   "tpl": true
-  },
-  {
-   "zone": [
-    210,
-    440,
-    870,
-    1010
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#1B2A4A",
-    "text": "#3A2330",
-    "accent": "#B7892F"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 350,
-    "r": 95
-   },
-   "id": "T-dussehra-5",
-   "tpl": true
-  },
-  {
-   "zone": [
-    120,
-    640,
-    960,
-    1250
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#9D0208",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 520,
-    "r": 120
-   },
-   "id": "T-dussehra-6",
-   "tpl": true
-  },
-  {
-   "zone": [
-    380,
-    330,
-    1010,
-    1230
-   ],
-   "align": "left",
-   "colors": {
-    "title": "#7A0F2E",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "rounded",
-    "x": 380,
-    "y": 110,
-    "w": 200,
-    "h": 200
-   },
-   "id": "T-dussehra-7",
-   "tpl": true
-  },
-  {
-   "zone": [
-    110,
-    350,
     900,
-    920
+    860
    ],
-   "align": "left",
-   "colors": {
-    "title": "#8B1030",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "rounded",
-    "x": 110,
-    "y": 80,
-    "w": 190,
-    "h": 190
-   },
-   "id": "T-dussehra-8",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    400,
-    930,
-    1030
-   ],
-   "align": "center",
    "colors": {
     "title": "gold",
     "text": "#FFF8EC",
     "accent": "#FFD36B"
    },
    "tone": "dark",
-   "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 400,
-    "r": 100
-   },
-   "id": "T-dussehra-9",
-   "tpl": true
+   "title": "deco",
+   "align": "left",
+   "tpl": true,
+   "id": "T-dussehra-1"
   },
   {
    "zone": [
     140,
-    760,
+    380,
     940,
-    1260
+    1100
    ],
-   "align": "center",
    "colors": {
-    "title": "#1B2A4A",
+    "title": "#8C1C00",
     "text": "#3A2330",
-    "accent": "#B7892F"
+    "accent": "#B7791F"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 340,
+    "r": 100
+   },
+   "id": "T-dussehra-2"
+  },
+  {
+   "zone": [
+    150,
+    480,
+    930,
+    1000
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-dussehra-3"
+  },
+  {
+   "zone": [
+    150,
+    500,
+    930,
+    1220
+   ],
+   "colors": {
+    "title": "#8C1C00",
+    "text": "#3A2330",
+    "accent": "#B7791F"
    },
    "tone": "light",
    "title": "classic",
-   "photo": {
-    "shape": "arch",
-    "x": 302,
-    "y": 122,
-    "w": 476,
-    "h": 576
+   "align": "center",
+   "tpl": true,
+   "id": "T-dussehra-4"
+  },
+  {
+   "zone": [
+    200,
+    420,
+    880,
+    1000
+   ],
+   "colors": {
+    "title": "#8C1C00",
+    "text": "#3A2330",
+    "accent": "#9D0208"
    },
-   "slot": true,
-   "id": "T-dussehra-10",
-   "tpl": true
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 370,
+    "r": 90
+   },
+   "id": "T-dussehra-5"
+  },
+  {
+   "zone": [
+    150,
+    200,
+    930,
+    880
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 260,
+    "r": 100
+   },
+   "id": "T-dussehra-6"
+  },
+  {
+   "zone": [
+    130,
+    600,
+    950,
+    1250
+   ],
+   "colors": {
+    "title": "#C62828",
+    "text": "#3A2330",
+    "accent": "#B7791F"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-dussehra-7"
+  },
+  {
+   "zone": [
+    150,
+    250,
+    930,
+    900
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "classic",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 290,
+    "r": 100
+   },
+   "id": "T-dussehra-8"
+  },
+  {
+   "zone": [
+    370,
+    280,
+    1010,
+    1060
+   ],
+   "colors": {
+    "title": "#8C1C00",
+    "text": "#3A2330",
+    "accent": "#2D6A4F"
+   },
+   "tone": "light",
+   "title": "classic",
+   "align": "left",
+   "tpl": true,
+   "photo": {
+    "shape": "rounded",
+    "x": 370,
+    "y": 80,
+    "w": 180,
+    "h": 180
+   },
+   "id": "T-dussehra-9"
+  },
+  {
+   "zone": [
+    170,
+    370,
+    910,
+    1000
+   ],
+   "colors": {
+    "title": "#8C1C00",
+    "text": "#3A2330",
+    "accent": "#C62828"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-dussehra-10"
   }
  ],
  "karva-chauth": [
   {
    "zone": [
-    230,
-    450,
-    850,
+    140,
+    560,
+    940,
+    1080
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "id": "T-karva-chauth-1"
+  },
+  {
+   "zone": [
+    150,
+    480,
+    930,
     1160
    ],
-   "align": "center",
-   "colors": {
-    "title": "#8B1E3F",
-    "text": "#3A2330",
-    "accent": "#C9973B"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-karva-chauth-1",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    400,
-    930,
-    1210
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#1B2A4A",
-    "text": "#3A2330",
-    "accent": "#B7892F"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 250,
-    "r": 105
-   },
-   "id": "T-karva-chauth-2",
-   "tpl": true
-  },
-  {
-   "zone": [
-    170,
-    420,
-    910,
-    1040
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#A4133C",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 100
-   },
-   "id": "T-karva-chauth-3",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    330,
-    930,
-    990
-   ],
-   "align": "center",
    "colors": {
     "title": "gold",
     "text": "#FFF8EC",
@@ -2793,245 +2403,310 @@
    },
    "tone": "dark",
    "title": "deco",
+   "align": "center",
+   "tpl": true,
    "photo": {
     "shape": "circle",
     "x": 540,
-    "y": 330,
-    "r": 110
+    "y": 300,
+    "r": 120
    },
-   "id": "T-karva-chauth-4",
-   "tpl": true
+   "id": "T-karva-chauth-2"
   },
   {
    "zone": [
-    210,
-    440,
-    870,
-    1010
+    150,
+    420,
+    930,
+    1040
    ],
-   "align": "center",
-   "colors": {
-    "title": "#5A189A",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 350,
-    "r": 95
-   },
-   "id": "T-karva-chauth-5",
-   "tpl": true
-  },
-  {
-   "zone": [
-    120,
-    640,
-    960,
-    1250
-   ],
-   "align": "center",
    "colors": {
     "title": "#8B1E3F",
+    "text": "#3A2330",
+    "accent": "#C75B12"
+   },
+   "tone": "light",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "id": "T-karva-chauth-3"
+  },
+  {
+   "zone": [
+    150,
+    860,
+    930,
+    1260
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "heart",
+    "x": 310,
+    "y": 330,
+    "w": 460,
+    "h": 440
+   },
+   "slot": true,
+   "id": "T-karva-chauth-4"
+  },
+  {
+   "zone": [
+    130,
+    560,
+    950,
+    1080
+   ],
+   "colors": {
+    "title": "#B3001B",
     "text": "#3A2330",
     "accent": "#C9973B"
    },
    "tone": "light",
    "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 520,
-    "r": 120
-   },
-   "id": "T-karva-chauth-6",
-   "tpl": true
+   "align": "center",
+   "tpl": true,
+   "id": "T-karva-chauth-5"
   },
   {
    "zone": [
-    380,
+    180,
+    330,
+    900,
+    760
+   ],
+   "colors": {
+    "title": "#6D0F1A",
+    "text": "#3A2330",
+    "accent": "#8B5A2B"
+   },
+   "tone": "light",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "id": "T-karva-chauth-6"
+  },
+  {
+   "zone": [
+    370,
     330,
     1010,
-    1230
+    1080
    ],
-   "align": "left",
    "colors": {
-    "title": "#1B2A4A",
+    "title": "#6D0F1A",
     "text": "#3A2330",
-    "accent": "#B7892F"
+    "accent": "#C75B12"
    },
    "tone": "light",
    "title": "classic",
-   "photo": {
-    "shape": "rounded",
-    "x": 380,
-    "y": 110,
-    "w": 200,
-    "h": 200
-   },
-   "id": "T-karva-chauth-7",
-   "tpl": true
-  },
-  {
-   "zone": [
-    110,
-    350,
-    900,
-    920
-   ],
    "align": "left",
-   "colors": {
-    "title": "#A4133C",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "deco",
+   "tpl": true,
    "photo": {
     "shape": "rounded",
-    "x": 110,
-    "y": 80,
+    "x": 370,
+    "y": 110,
     "w": 190,
     "h": 190
    },
-   "id": "T-karva-chauth-8",
-   "tpl": true
+   "id": "T-karva-chauth-7"
   },
   {
    "zone": [
     150,
-    400,
+    420,
     930,
-    1030
+    1060
    ],
-   "align": "center",
    "colors": {
     "title": "gold",
     "text": "#FFF8EC",
     "accent": "#FFD36B"
    },
    "tone": "dark",
-   "title": "script",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
    "photo": {
     "shape": "circle",
     "x": 540,
-    "y": 400,
-    "r": 100
+    "y": 230,
+    "r": 125
    },
-   "id": "T-karva-chauth-9",
-   "tpl": true
+   "id": "T-karva-chauth-8"
   },
   {
    "zone": [
-    140,
-    760,
-    940,
+    150,
+    720,
+    930,
     1260
    ],
-   "align": "center",
    "colors": {
-    "title": "#5A189A",
+    "title": "#B3001B",
     "text": "#3A2330",
-    "accent": "#B7791F"
+    "accent": "#C9973B"
    },
    "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "arch",
-    "x": 302,
-    "y": 122,
-    "w": 476,
-    "h": 576
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "id": "T-karva-chauth-9"
+  },
+  {
+   "zone": [
+    150,
+    330,
+    930,
+    940
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
    },
-   "slot": true,
-   "id": "T-karva-chauth-10",
-   "tpl": true
+   "tone": "dark",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 300,
+    "r": 100
+   },
+   "id": "T-karva-chauth-10"
   }
  ],
  "diwali": [
   {
    "zone": [
-    230,
-    450,
-    850,
-    1160
+    140,
+    400,
+    940,
+    1120
    ],
-   "align": "center",
    "colors": {
-    "title": "#5A189A",
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 470,
+    "r": 100
+   },
+   "id": "T-diwali-1"
+  },
+  {
+   "zone": [
+    140,
+    380,
+    940,
+    980
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 360,
+    "r": 100
+   },
+   "id": "T-diwali-2"
+  },
+  {
+   "zone": [
+    140,
+    590,
+    940,
+    1180
+   ],
+   "colors": {
+    "title": "#9D0208",
     "text": "#3A2330",
     "accent": "#B7791F"
    },
    "tone": "light",
    "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-diwali-1",
-   "tpl": true
+   "align": "center",
+   "tpl": true,
+   "id": "T-diwali-3"
   },
   {
    "zone": [
     150,
-    400,
+    250,
     930,
-    1210
+    1080
    ],
-   "align": "center",
    "colors": {
-    "title": "#7A0F2E",
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 330,
+    "r": 105
+   },
+   "id": "T-diwali-4"
+  },
+  {
+   "zone": [
+    220,
+    380,
+    860,
+    1150
+   ],
+   "colors": {
+    "title": "#9D0208",
     "text": "#3A2330",
     "accent": "#B7791F"
    },
    "tone": "light",
    "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 250,
-    "r": 105
-   },
-   "id": "T-diwali-2",
-   "tpl": true
-  },
-  {
-   "zone": [
-    170,
-    420,
-    910,
-    1040
-   ],
    "align": "center",
-   "colors": {
-    "title": "#1B2A4A",
-    "text": "#3A2330",
-    "accent": "#B7892F"
-   },
-   "tone": "light",
-   "title": "script",
+   "tpl": true,
    "photo": {
     "shape": "circle",
     "x": 540,
     "y": 330,
     "r": 100
    },
-   "id": "T-diwali-3",
-   "tpl": true
+   "id": "T-diwali-5"
   },
   {
    "zone": [
-    150,
-    330,
-    930,
-    990
+    140,
+    560,
+    940,
+    1120
    ],
-   "align": "center",
    "colors": {
     "title": "gold",
     "text": "#FFF8EC",
@@ -3039,121 +2714,42 @@
    },
    "tone": "dark",
    "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-diwali-4",
-   "tpl": true
-  },
-  {
-   "zone": [
-    210,
-    440,
-    870,
-    1010
-   ],
    "align": "center",
-   "colors": {
-    "title": "#0F5132",
-    "text": "#3A2330",
-    "accent": "#A87B1C"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 350,
-    "r": 95
-   },
-   "id": "T-diwali-5",
-   "tpl": true
+   "tpl": true,
+   "id": "T-diwali-6"
   },
   {
    "zone": [
-    120,
-    640,
-    960,
-    1250
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#5A189A",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 520,
-    "r": 120
-   },
-   "id": "T-diwali-6",
-   "tpl": true
-  },
-  {
-   "zone": [
-    380,
-    330,
+    390,
+    260,
     1010,
-    1230
+    1100
    ],
-   "align": "left",
    "colors": {
-    "title": "#7A0F2E",
+    "title": "#6D0F24",
     "text": "#3A2330",
     "accent": "#B7791F"
    },
    "tone": "light",
    "title": "classic",
-   "photo": {
-    "shape": "rounded",
-    "x": 380,
-    "y": 110,
-    "w": 200,
-    "h": 200
-   },
-   "id": "T-diwali-7",
-   "tpl": true
-  },
-  {
-   "zone": [
-    110,
-    350,
-    900,
-    920
-   ],
    "align": "left",
-   "colors": {
-    "title": "#1B2A4A",
-    "text": "#3A2330",
-    "accent": "#B7892F"
-   },
-   "tone": "light",
-   "title": "deco",
+   "tpl": true,
    "photo": {
     "shape": "rounded",
-    "x": 110,
-    "y": 80,
-    "w": 190,
-    "h": 190
+    "x": 390,
+    "y": 90,
+    "w": 180,
+    "h": 180
    },
-   "id": "T-diwali-8",
-   "tpl": true
+   "id": "T-diwali-7"
   },
   {
    "zone": [
     150,
-    400,
+    360,
     930,
-    1030
+    1180
    ],
-   "align": "center",
    "colors": {
     "title": "gold",
     "text": "#FFF8EC",
@@ -3161,171 +2757,75 @@
    },
    "tone": "dark",
    "title": "script",
+   "align": "center",
+   "tpl": true,
    "photo": {
     "shape": "circle",
     "x": 540,
     "y": 400,
     "r": 100
    },
-   "id": "T-diwali-9",
-   "tpl": true
+   "id": "T-diwali-8"
   },
   {
    "zone": [
-    140,
-    760,
-    940,
-    1260
+    160,
+    360,
+    920,
+    1060
    ],
-   "align": "center",
    "colors": {
-    "title": "#0F5132",
+    "title": "#9D0208",
     "text": "#3A2330",
-    "accent": "#A87B1C"
+    "accent": "#B7791F"
    },
    "tone": "light",
-   "title": "classic",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
    "photo": {
-    "shape": "arch",
-    "x": 302,
-    "y": 122,
-    "w": 476,
-    "h": 576
+    "shape": "circle",
+    "x": 540,
+    "y": 330,
+    "r": 100
+   },
+   "id": "T-diwali-9"
+  },
+  {
+   "zone": [
+    150,
+    720,
+    930,
+    1200
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "rounded",
+    "x": 300,
+    "y": 110,
+    "w": 480,
+    "h": 560
    },
    "slot": true,
-   "id": "T-diwali-10",
-   "tpl": true
+   "id": "T-diwali-10"
   }
  ],
  "birthday": [
   {
    "zone": [
-    230,
-    450,
-    850,
-    1160
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#D62869",
-    "text": "#3A2330",
-    "accent": "#118AB2"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-birthday-1",
-   "tpl": true
-  },
-  {
-   "zone": [
     150,
-    400,
-    930,
-    1210
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#7209B7",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 250,
-    "r": 105
-   },
-   "id": "T-birthday-2",
-   "tpl": true
-  },
-  {
-   "zone": [
-    170,
     420,
-    910,
-    1040
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#1F4E89",
-    "text": "#3A2330",
-    "accent": "#D4A017"
-   },
-   "tone": "light",
-   "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 100
-   },
-   "id": "T-birthday-3",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    330,
     930,
-    990
+    1000
    ],
-   "align": "center",
-   "colors": {
-    "title": "gold",
-    "text": "#FFF8EC",
-    "accent": "#FFD36B"
-   },
-   "tone": "dark",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-birthday-4",
-   "tpl": true
-  },
-  {
-   "zone": [
-    210,
-    440,
-    870,
-    1010
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#A23E5B",
-    "text": "#3A2330",
-    "accent": "#B48A4A"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 350,
-    "r": 95
-   },
-   "id": "T-birthday-5",
-   "tpl": true
-  },
-  {
-   "zone": [
-    120,
-    640,
-    960,
-    1250
-   ],
-   "align": "center",
    "colors": {
     "title": "#D62869",
     "text": "#3A2330",
@@ -3333,334 +2833,281 @@
    },
    "tone": "light",
    "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 520,
-    "r": 120
-   },
-   "id": "T-birthday-6",
-   "tpl": true
-  },
-  {
-   "zone": [
-    380,
-    330,
-    1010,
-    1230
-   ],
-   "align": "left",
-   "colors": {
-    "title": "#7209B7",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "rounded",
-    "x": 380,
-    "y": 110,
-    "w": 200,
-    "h": 200
-   },
-   "id": "T-birthday-7",
-   "tpl": true
-  },
-  {
-   "zone": [
-    110,
-    350,
-    900,
-    920
-   ],
-   "align": "left",
-   "colors": {
-    "title": "#1F4E89",
-    "text": "#3A2330",
-    "accent": "#D4A017"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "rounded",
-    "x": 110,
-    "y": 80,
-    "w": 190,
-    "h": 190
-   },
-   "id": "T-birthday-8",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    400,
-    930,
-    1030
-   ],
    "align": "center",
-   "colors": {
-    "title": "gold",
-    "text": "#FFF8EC",
-    "accent": "#FFD36B"
-   },
-   "tone": "dark",
-   "title": "script",
+   "tpl": true,
    "photo": {
     "shape": "circle",
     "x": 540,
     "y": 400,
     "r": 100
    },
-   "id": "T-birthday-9",
-   "tpl": true
+   "id": "T-birthday-1"
+  },
+  {
+   "zone": [
+    150,
+    330,
+    930,
+    1050
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 330,
+    "r": 100
+   },
+   "id": "T-birthday-2"
+  },
+  {
+   "zone": [
+    190,
+    380,
+    890,
+    1020
+   ],
+   "colors": {
+    "title": "#D62869",
+    "text": "#3A2330",
+    "accent": "#118AB2"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 380,
+    "r": 100
+   },
+   "id": "T-birthday-3"
+  },
+  {
+   "zone": [
+    160,
+    240,
+    920,
+    940
+   ],
+   "colors": {
+    "title": "#D62869",
+    "text": "#3A2330",
+    "accent": "#118AB2"
+   },
+   "tone": "light",
+   "title": "classic",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 280,
+    "r": 90
+   },
+   "id": "T-birthday-4"
+  },
+  {
+   "zone": [
+    150,
+    420,
+    930,
+    1150
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 400,
+    "r": 100
+   },
+   "id": "T-birthday-5"
+  },
+  {
+   "zone": [
+    130,
+    560,
+    950,
+    1250
+   ],
+   "colors": {
+    "title": "#1F4E89",
+    "text": "#3A2330",
+    "accent": "#D62869"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-birthday-6"
+  },
+  {
+   "zone": [
+    370,
+    330,
+    1010,
+    1080
+   ],
+   "colors": {
+    "title": "#6C4AB6",
+    "text": "#3A2330",
+    "accent": "#D62869"
+   },
+   "tone": "light",
+   "title": "classic",
+   "align": "left",
+   "tpl": true,
+   "photo": {
+    "shape": "rounded",
+    "x": 370,
+    "y": 90,
+    "w": 200,
+    "h": 200
+   },
+   "id": "T-birthday-7"
+  },
+  {
+   "zone": [
+    160,
+    280,
+    920,
+    960
+   ],
+   "colors": {
+    "title": "#D62869",
+    "text": "#3A2330",
+    "accent": "#6C4AB6"
+   },
+   "tone": "light",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 300,
+    "r": 100
+   },
+   "id": "T-birthday-8"
   },
   {
    "zone": [
     140,
-    760,
+    770,
     940,
     1260
    ],
-   "align": "center",
    "colors": {
-    "title": "#A23E5B",
+    "title": "#D62869",
     "text": "#3A2330",
-    "accent": "#B48A4A"
+    "accent": "#118AB2"
    },
    "tone": "light",
-   "title": "classic",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
    "photo": {
-    "shape": "arch",
-    "x": 302,
-    "y": 122,
-    "w": 476,
-    "h": 576
+    "shape": "rect",
+    "x": 230,
+    "y": 130,
+    "w": 620,
+    "h": 500
    },
    "slot": true,
-   "id": "T-birthday-10",
-   "tpl": true
+   "id": "T-birthday-9"
+  },
+  {
+   "zone": [
+    200,
+    420,
+    880,
+    1000
+   ],
+   "colors": {
+    "title": "#118AB2",
+    "text": "#3A2330",
+    "accent": "#D62869"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 380,
+    "r": 90
+   },
+   "id": "T-birthday-10"
   }
  ],
  "anniversary": [
   {
    "zone": [
-    230,
-    450,
-    850,
-    1160
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#A4133C",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-anniversary-1",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    400,
-    930,
-    1210
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#A23E5B",
-    "text": "#3A2330",
-    "accent": "#B48A4A"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 250,
-    "r": 105
-   },
-   "id": "T-anniversary-2",
-   "tpl": true
-  },
-  {
-   "zone": [
-    170,
-    420,
-    910,
-    1040
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#1B2A4A",
-    "text": "#3A2330",
-    "accent": "#B7892F"
-   },
-   "tone": "light",
-   "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 100
-   },
-   "id": "T-anniversary-3",
-   "tpl": true
-  },
-  {
-   "zone": [
     150,
     330,
     930,
-    990
+    1080
    ],
-   "align": "center",
    "colors": {
     "title": "gold",
     "text": "#FFF8EC",
     "accent": "#FFD36B"
    },
    "tone": "dark",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-anniversary-4",
-   "tpl": true
-  },
-  {
-   "zone": [
-    210,
-    440,
-    870,
-    1010
-   ],
+   "title": "script",
    "align": "center",
-   "colors": {
-    "title": "#5C4A32",
-    "text": "#3F3A34",
-    "accent": "#9C7A3C"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 350,
-    "r": 95
-   },
-   "id": "T-anniversary-5",
-   "tpl": true
-  },
-  {
-   "zone": [
-    120,
-    640,
-    960,
-    1250
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#A4133C",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 520,
-    "r": 120
-   },
-   "id": "T-anniversary-6",
-   "tpl": true
-  },
-  {
-   "zone": [
-    380,
-    330,
-    1010,
-    1230
-   ],
-   "align": "left",
-   "colors": {
-    "title": "#A23E5B",
-    "text": "#3A2330",
-    "accent": "#B48A4A"
-   },
-   "tone": "light",
-   "title": "classic",
+   "tpl": true,
    "photo": {
     "shape": "rounded",
-    "x": 380,
+    "x": 360,
     "y": 110,
-    "w": 200,
-    "h": 200
+    "w": 360,
+    "h": 280
    },
-   "id": "T-anniversary-7",
-   "tpl": true
-  },
-  {
-   "zone": [
-    110,
-    350,
-    900,
-    920
-   ],
-   "align": "left",
-   "colors": {
-    "title": "#1B2A4A",
-    "text": "#3A2330",
-    "accent": "#B7892F"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "rounded",
-    "x": 110,
-    "y": 80,
-    "w": 190,
-    "h": 190
-   },
-   "id": "T-anniversary-8",
-   "tpl": true
+   "id": "T-anniversary-1"
   },
   {
    "zone": [
     150,
-    400,
+    820,
     930,
-    1030
+    1220
    ],
-   "align": "center",
    "colors": {
-    "title": "gold",
-    "text": "#FFF8EC",
-    "accent": "#FFD36B"
+    "title": "#C9184A",
+    "text": "#3A2330",
+    "accent": "#B48A4A"
    },
-   "tone": "dark",
+   "tone": "light",
    "title": "script",
+   "align": "center",
+   "tpl": true,
    "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 400,
-    "r": 100
+    "shape": "heart",
+    "x": 360,
+    "y": 380,
+    "w": 360,
+    "h": 360
    },
-   "id": "T-anniversary-9",
-   "tpl": true
+   "slot": true,
+   "id": "T-anniversary-2"
   },
   {
    "zone": [
@@ -3669,179 +3116,237 @@
     940,
     1260
    ],
-   "align": "center",
    "colors": {
-    "title": "#5C4A32",
-    "text": "#3F3A34",
-    "accent": "#9C7A3C"
+    "title": "#8B1030",
+    "text": "#3A2330",
+    "accent": "#8B5A2B"
+   },
+   "tone": "light",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "rect",
+    "x": 120,
+    "y": 140,
+    "w": 400,
+    "h": 440
+   },
+   "id": "T-anniversary-3"
+  },
+  {
+   "zone": [
+    150,
+    330,
+    930,
+    1000
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 300,
+    "r": 110
+   },
+   "id": "T-anniversary-4"
+  },
+  {
+   "zone": [
+    150,
+    620,
+    930,
+    1230
+   ],
+   "colors": {
+    "title": "#800F2F",
+    "text": "#3A2330",
+    "accent": "#B7791F"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 400,
+    "r": 150
+   },
+   "slot": true,
+   "id": "T-anniversary-5"
+  },
+  {
+   "zone": [
+    170,
+    340,
+    910,
+    1090
+   ],
+   "colors": {
+    "title": "#C9184A",
+    "text": "#3A2330",
+    "accent": "#800F2F"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-anniversary-6"
+  },
+  {
+   "zone": [
+    150,
+    640,
+    930,
+    1200
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "classic",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "circle",
+    "x": 540,
+    "y": 360,
+    "r": 200
+   },
+   "slot": true,
+   "id": "T-anniversary-7"
+  },
+  {
+   "zone": [
+    370,
+    460,
+    1010,
+    1100
+   ],
+   "colors": {
+    "title": "#C9184A",
+    "text": "#3A2330",
+    "accent": "#B48A4A"
    },
    "tone": "light",
    "title": "classic",
+   "align": "left",
+   "tpl": true,
    "photo": {
-    "shape": "arch",
-    "x": 302,
-    "y": 122,
-    "w": 476,
+    "shape": "rounded",
+    "x": 370,
+    "y": 100,
+    "w": 330,
+    "h": 330
+   },
+   "id": "T-anniversary-8"
+  },
+  {
+   "zone": [
+    140,
+    650,
+    940,
+    1250
+   ],
+   "colors": {
+    "title": "#8B1030",
+    "text": "#3A2330",
+    "accent": "#8B5A2B"
+   },
+   "tone": "light",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "rect",
+    "x": 410,
+    "y": 110,
+    "w": 260,
+    "h": 300
+   },
+   "id": "T-anniversary-9"
+  },
+  {
+   "zone": [
+    140,
+    760,
+    940,
+    1260
+   ],
+   "colors": {
+    "title": "#C9184A",
+    "text": "#3A2330",
+    "accent": "#B48A4A"
+   },
+   "tone": "light",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "pill",
+    "x": 182,
+    "y": 112,
+    "w": 716,
     "h": 576
    },
    "slot": true,
-   "id": "T-anniversary-10",
-   "tpl": true
+   "id": "T-anniversary-10"
   }
  ],
  "wedding": [
   {
    "zone": [
-    230,
-    450,
-    850,
-    1160
+    200,
+    350,
+    880,
+    1000
    ],
-   "align": "center",
    "colors": {
-    "title": "#7A0F2E",
+    "title": "#0F3D2E",
     "text": "#3A2330",
-    "accent": "#B7791F"
+    "accent": "#B7892F"
    },
    "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-wedding-1",
-   "tpl": true
+   "title": "classic",
+   "align": "center",
+   "tpl": true,
+   "id": "T-wedding-1"
   },
   {
    "zone": [
-    150,
-    400,
-    930,
-    1210
+    130,
+    580,
+    950,
+    1260
    ],
-   "align": "center",
    "colors": {
     "title": "#8B1030",
     "text": "#3A2330",
     "accent": "#B7791F"
    },
    "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 250,
-    "r": 105
-   },
-   "id": "T-wedding-2",
-   "tpl": true
-  },
-  {
-   "zone": [
-    170,
-    420,
-    910,
-    1040
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#0F5132",
-    "text": "#3A2330",
-    "accent": "#A87B1C"
-   },
-   "tone": "light",
-   "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 100
-   },
-   "id": "T-wedding-3",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    330,
-    930,
-    990
-   ],
-   "align": "center",
-   "colors": {
-    "title": "gold",
-    "text": "#FFF8EC",
-    "accent": "#FFD36B"
-   },
-   "tone": "dark",
    "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-wedding-4",
-   "tpl": true
-  },
-  {
-   "zone": [
-    210,
-    440,
-    870,
-    1010
-   ],
    "align": "center",
-   "colors": {
-    "title": "#3F5E47",
-    "text": "#3A2330",
-    "accent": "#9C7A3C"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 350,
-    "r": 95
-   },
-   "id": "T-wedding-5",
-   "tpl": true
-  },
-  {
-   "zone": [
-    120,
-    640,
-    960,
-    1250
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#7A0F2E",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 520,
-    "r": 120
-   },
-   "id": "T-wedding-6",
-   "tpl": true
+   "tpl": true,
+   "id": "T-wedding-2"
   },
   {
    "zone": [
     380,
-    330,
+    380,
     1010,
-    1230
+    1240
    ],
-   "align": "left",
    "colors": {
     "title": "#8B1030",
     "text": "#3A2330",
@@ -3849,49 +3354,35 @@
    },
    "tone": "light",
    "title": "classic",
-   "photo": {
-    "shape": "rounded",
-    "x": 380,
-    "y": 110,
-    "w": 200,
-    "h": 200
-   },
-   "id": "T-wedding-7",
-   "tpl": true
+   "align": "left",
+   "tpl": true,
+   "id": "T-wedding-3"
   },
   {
    "zone": [
-    110,
-    350,
-    900,
-    920
+    170,
+    360,
+    910,
+    1060
    ],
-   "align": "left",
    "colors": {
-    "title": "#0F5132",
+    "title": "#A4133C",
     "text": "#3A2330",
-    "accent": "#A87B1C"
+    "accent": "#9C7A3C"
    },
    "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "rounded",
-    "x": 110,
-    "y": 80,
-    "w": 190,
-    "h": 190
-   },
-   "id": "T-wedding-8",
-   "tpl": true
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "id": "T-wedding-4"
   },
   {
    "zone": [
     150,
-    400,
+    300,
     930,
-    1030
+    1150
    ],
-   "align": "center",
    "colors": {
     "title": "gold",
     "text": "#FFF8EC",
@@ -3899,417 +3390,463 @@
    },
    "tone": "dark",
    "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 400,
-    "r": 100
-   },
-   "id": "T-wedding-9",
-   "tpl": true
+   "align": "center",
+   "tpl": true,
+   "id": "T-wedding-5"
   },
   {
    "zone": [
     140,
-    760,
+    720,
     940,
     1260
    ],
-   "align": "center",
    "colors": {
-    "title": "#3F5E47",
+    "title": "#8B1030",
     "text": "#3A2330",
-    "accent": "#9C7A3C"
+    "accent": "#B7791F"
    },
    "tone": "light",
    "title": "classic",
+   "align": "center",
+   "tpl": true,
    "photo": {
     "shape": "arch",
     "x": 302,
     "y": 122,
     "w": 476,
-    "h": 576
+    "h": 536
    },
    "slot": true,
-   "id": "T-wedding-10",
-   "tpl": true
+   "id": "T-wedding-6"
+  },
+  {
+   "zone": [
+    230,
+    440,
+    850,
+    1160
+   ],
+   "colors": {
+    "title": "#8B1030",
+    "text": "#3A2330",
+    "accent": "#B7791F"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-wedding-7"
+  },
+  {
+   "zone": [
+    140,
+    680,
+    940,
+    1260
+   ],
+   "colors": {
+    "title": "#8B1030",
+    "text": "#3A2330",
+    "accent": "#B7791F"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-wedding-8"
+  },
+  {
+   "zone": [
+    150,
+    380,
+    930,
+    1000
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-wedding-9"
+  },
+  {
+   "zone": [
+    200,
+    300,
+    880,
+    1000
+   ],
+   "colors": {
+    "title": "#8B1030",
+    "text": "#3A2330",
+    "accent": "#2D6A4F"
+   },
+   "tone": "light",
+   "title": "classic",
+   "align": "center",
+   "tpl": true,
+   "id": "T-wedding-10"
   }
  ],
  "engagement": [
   {
    "zone": [
-    230,
-    450,
-    850,
-    1160
+    130,
+    800,
+    950,
+    1270
    ],
-   "align": "center",
    "colors": {
     "title": "#A23E5B",
     "text": "#3A2330",
     "accent": "#B48A4A"
    },
    "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-engagement-1",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    400,
-    930,
-    1210
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#5B4A8B",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 250,
-    "r": 105
-   },
-   "id": "T-engagement-2",
-   "tpl": true
-  },
-  {
-   "zone": [
-    170,
-    420,
-    910,
-    1040
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#1B2A4A",
-    "text": "#3A2330",
-    "accent": "#B7892F"
-   },
-   "tone": "light",
    "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 100
-   },
-   "id": "T-engagement-3",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    330,
-    930,
-    990
-   ],
    "align": "center",
-   "colors": {
-    "title": "gold",
-    "text": "#FFF8EC",
-    "accent": "#FFD36B"
-   },
-   "tone": "dark",
-   "title": "deco",
+   "tpl": true,
    "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
+    "shape": "arch",
+    "x": 272,
+    "y": 102,
+    "w": 536,
+    "h": 636
    },
-   "id": "T-engagement-4",
-   "tpl": true
-  },
-  {
-   "zone": [
-    210,
-    440,
-    870,
-    1010
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#5C4A32",
-    "text": "#3F3A34",
-    "accent": "#9C7A3C"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 350,
-    "r": 95
-   },
-   "id": "T-engagement-5",
-   "tpl": true
-  },
-  {
-   "zone": [
-    120,
-    640,
-    960,
-    1250
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#A23E5B",
-    "text": "#3A2330",
-    "accent": "#B48A4A"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 520,
-    "r": 120
-   },
-   "id": "T-engagement-6",
-   "tpl": true
-  },
-  {
-   "zone": [
-    380,
-    330,
-    1010,
-    1230
-   ],
-   "align": "left",
-   "colors": {
-    "title": "#5B4A8B",
-    "text": "#3A2330",
-    "accent": "#B7791F"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "rounded",
-    "x": 380,
-    "y": 110,
-    "w": 200,
-    "h": 200
-   },
-   "id": "T-engagement-7",
-   "tpl": true
-  },
-  {
-   "zone": [
-    110,
-    350,
-    900,
-    920
-   ],
-   "align": "left",
-   "colors": {
-    "title": "#1B2A4A",
-    "text": "#3A2330",
-    "accent": "#B7892F"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "rounded",
-    "x": 110,
-    "y": 80,
-    "w": 190,
-    "h": 190
-   },
-   "id": "T-engagement-8",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    400,
-    930,
-    1030
-   ],
-   "align": "center",
-   "colors": {
-    "title": "gold",
-    "text": "#FFF8EC",
-    "accent": "#FFD36B"
-   },
-   "tone": "dark",
-   "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 400,
-    "r": 100
-   },
-   "id": "T-engagement-9",
-   "tpl": true
+   "slot": true,
+   "id": "T-engagement-1"
   },
   {
    "zone": [
     140,
-    760,
+    780,
     940,
     1260
    ],
-   "align": "center",
    "colors": {
-    "title": "#5C4A32",
-    "text": "#3F3A34",
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "heart",
+    "x": 290,
+    "y": 180,
+    "w": 500,
+    "h": 500
+   },
+   "slot": true,
+   "id": "T-engagement-2"
+  },
+  {
+   "zone": [
+    140,
+    780,
+    940,
+    1260
+   ],
+   "colors": {
+    "title": "#A23E5B",
+    "text": "#3A2330",
     "accent": "#9C7A3C"
    },
    "tone": "light",
-   "title": "classic",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
    "photo": {
-    "shape": "arch",
-    "x": 302,
-    "y": 122,
-    "w": 476,
-    "h": 576
+    "shape": "rect",
+    "x": 230,
+    "y": 130,
+    "w": 620,
+    "h": 500
    },
    "slot": true,
-   "id": "T-engagement-10",
-   "tpl": true
+   "id": "T-engagement-3"
+  },
+  {
+   "zone": [
+    150,
+    500,
+    930,
+    1220
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "rounded",
+    "x": 340,
+    "y": 110,
+    "w": 400,
+    "h": 380
+   },
+   "id": "T-engagement-4"
+  },
+  {
+   "zone": [
+    170,
+    470,
+    910,
+    1080
+   ],
+   "colors": {
+    "title": "#3F5E47",
+    "text": "#3A2330",
+    "accent": "#9C7A3C"
+   },
+   "tone": "light",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "rounded",
+    "x": 340,
+    "y": 150,
+    "w": 400,
+    "h": 340
+   },
+   "id": "T-engagement-5"
+  },
+  {
+   "zone": [
+    130,
+    730,
+    950,
+    1270
+   ],
+   "colors": {
+    "title": "#A23E5B",
+    "text": "#3A2330",
+    "accent": "#B48A4A"
+   },
+   "tone": "light",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "pill",
+    "x": 302,
+    "y": 132,
+    "w": 476,
+    "h": 536
+   },
+   "slot": true,
+   "id": "T-engagement-6"
+  },
+  {
+   "zone": [
+    150,
+    420,
+    930,
+    1030
+   ],
+   "colors": {
+    "title": "#A23E5B",
+    "text": "#3A2330",
+    "accent": "#B48A4A"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "rounded",
+    "x": 360,
+    "y": 150,
+    "w": 360,
+    "h": 250
+   },
+   "id": "T-engagement-7"
+  },
+  {
+   "zone": [
+    370,
+    460,
+    1010,
+    1180
+   ],
+   "colors": {
+    "title": "#A23E5B",
+    "text": "#3A2330",
+    "accent": "#B48A4A"
+   },
+   "tone": "light",
+   "title": "classic",
+   "align": "left",
+   "tpl": true,
+   "photo": {
+    "shape": "rounded",
+    "x": 370,
+    "y": 100,
+    "w": 330,
+    "h": 330
+   },
+   "id": "T-engagement-8"
+  },
+  {
+   "zone": [
+    150,
+    330,
+    930,
+    1000
+   ],
+   "colors": {
+    "title": "gold",
+    "text": "#FFF8EC",
+    "accent": "#FFD36B"
+   },
+   "tone": "dark",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "rounded",
+    "x": 360,
+    "y": 330,
+    "w": 360,
+    "h": 300
+   },
+   "id": "T-engagement-9"
+  },
+  {
+   "zone": [
+    140,
+    740,
+    940,
+    1260
+   ],
+   "colors": {
+    "title": "#A23E5B",
+    "text": "#3A2330",
+    "accent": "#B48A4A"
+   },
+   "tone": "light",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "photo": {
+    "shape": "rounded",
+    "x": 170,
+    "y": 150,
+    "w": 740,
+    "h": 420
+   },
+   "id": "T-engagement-10"
   }
  ],
  "good-morning": [
   {
    "zone": [
-    230,
-    450,
-    850,
-    1160
+    150,
+    150,
+    930,
+    640
    ],
-   "align": "center",
    "colors": {
     "title": "#9C4A00",
     "text": "#3A2330",
     "accent": "#219EBC"
-   },
-   "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-good-morning-1",
-   "tpl": true
-  },
-  {
-   "zone": [
-    150,
-    400,
-    930,
-    1210
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#1F4E89",
-    "text": "#3A2330",
-    "accent": "#D4A017"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 250,
-    "r": 105
-   },
-   "id": "T-good-morning-2",
-   "tpl": true
-  },
-  {
-   "zone": [
-    170,
-    420,
-    910,
-    1040
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#1B4332",
-    "text": "#3A2330",
-    "accent": "#B7791F"
    },
    "tone": "light",
    "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 100
+   "align": "center",
+   "tpl": true,
+   "id": "T-good-morning-1"
+  },
+  {
+   "zone": [
+    150,
+    200,
+    930,
+    850
+   ],
+   "colors": {
+    "title": "#6F4E37",
+    "text": "#3A2330",
+    "accent": "#C08552"
    },
-   "id": "T-good-morning-3",
-   "tpl": true
+   "tone": "light",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "id": "T-good-morning-2"
   },
   {
    "zone": [
     150,
     330,
     930,
-    990
+    980
    ],
-   "align": "center",
    "colors": {
-    "title": "gold",
-    "text": "#FFF8EC",
-    "accent": "#FFD36B"
-   },
-   "tone": "dark",
-   "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 330,
-    "r": 110
-   },
-   "id": "T-good-morning-4",
-   "tpl": true
-  },
-  {
-   "zone": [
-    210,
-    440,
-    870,
-    1010
-   ],
-   "align": "center",
-   "colors": {
-    "title": "#3F5E47",
+    "title": "#1F4E89",
     "text": "#3A2330",
-    "accent": "#9C7A3C"
+    "accent": "#FB8500"
    },
    "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 350,
-    "r": 95
-   },
-   "id": "T-good-morning-5",
-   "tpl": true
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-good-morning-3"
   },
   {
    "zone": [
-    120,
-    640,
-    960,
-    1250
+    150,
+    330,
+    930,
+    1050
    ],
+   "colors": {
+    "title": "#9C4A00",
+    "text": "#3A2330",
+    "accent": "#6A994E"
+   },
+   "tone": "light",
+   "title": "script",
    "align": "center",
+   "tpl": true,
+   "id": "T-good-morning-4"
+  },
+  {
+   "zone": [
+    150,
+    300,
+    930,
+    950
+   ],
+   "colors": {
+    "title": "#B23A48",
+    "text": "#3A2330",
+    "accent": "#6A994E"
+   },
+   "tone": "light",
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "id": "T-good-morning-5"
+  },
+  {
+   "zone": [
+    190,
+    400,
+    890,
+    960
+   ],
    "colors": {
     "title": "#9C4A00",
     "text": "#3A2330",
@@ -4317,114 +3854,81 @@
    },
    "tone": "light",
    "title": "deco",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 520,
-    "r": 120
-   },
-   "id": "T-good-morning-6",
-   "tpl": true
+   "align": "center",
+   "tpl": true,
+   "id": "T-good-morning-6"
   },
   {
    "zone": [
-    380,
+    370,
     330,
     1010,
-    1230
+    1080
    ],
-   "align": "left",
-   "colors": {
-    "title": "#1F4E89",
-    "text": "#3A2330",
-    "accent": "#D4A017"
-   },
-   "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "rounded",
-    "x": 380,
-    "y": 110,
-    "w": 200,
-    "h": 200
-   },
-   "id": "T-good-morning-7",
-   "tpl": true
-  },
-  {
-   "zone": [
-    110,
-    350,
-    900,
-    920
-   ],
-   "align": "left",
    "colors": {
     "title": "#1B4332",
     "text": "#3A2330",
-    "accent": "#B7791F"
+    "accent": "#FB8500"
    },
    "tone": "light",
-   "title": "deco",
-   "photo": {
-    "shape": "rounded",
-    "x": 110,
-    "y": 80,
-    "w": 190,
-    "h": 190
-   },
-   "id": "T-good-morning-8",
-   "tpl": true
+   "title": "classic",
+   "align": "left",
+   "tpl": true,
+   "id": "T-good-morning-7"
   },
   {
    "zone": [
     150,
-    400,
+    430,
     930,
     1030
    ],
-   "align": "center",
    "colors": {
-    "title": "gold",
-    "text": "#FFF8EC",
-    "accent": "#FFD36B"
+    "title": "#9C4A00",
+    "text": "#3A2330",
+    "accent": "#6A994E"
    },
-   "tone": "dark",
-   "title": "script",
-   "photo": {
-    "shape": "circle",
-    "x": 540,
-    "y": 400,
-    "r": 100
-   },
-   "id": "T-good-morning-9",
-   "tpl": true
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-good-morning-8"
   },
   {
    "zone": [
-    140,
-    760,
-    940,
-    1260
+    150,
+    200,
+    930,
+    780
    ],
-   "align": "center",
    "colors": {
-    "title": "#3F5E47",
+    "title": "#5E548E",
     "text": "#3A2330",
-    "accent": "#9C7A3C"
+    "accent": "#B23A48"
    },
    "tone": "light",
-   "title": "classic",
-   "photo": {
-    "shape": "arch",
-    "x": 302,
-    "y": 122,
-    "w": 476,
-    "h": 576
+   "title": "script",
+   "align": "center",
+   "tpl": true,
+   "id": "T-good-morning-9"
+  },
+  {
+   "zone": [
+    150,
+    470,
+    930,
+    1210
+   ],
+   "colors": {
+    "title": "#9C4A00",
+    "text": "#3A2330",
+    "accent": "#6A994E"
    },
-   "slot": true,
-   "id": "T-good-morning-10",
-   "tpl": true
+   "tone": "light",
+   "title": "deco",
+   "align": "center",
+   "tpl": true,
+   "id": "T-good-morning-10"
   }
  ]
 }

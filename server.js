@@ -248,6 +248,17 @@ function validateSettings(s) {
   }
   if (!Array.isArray(s.affiliate.products)) return "affiliate.products must be a list";
   if (s.affiliate.products.some((p) => !isPlainObject(p))) return "Every product must be an object";
+  // Optional "cards" section (older settings files don't have it): { hidden: {page: [id]}, extra: {page: [{id,url,tone,name}]} }
+  if (s.cards !== undefined) {
+    if (!isPlainObject(s.cards)) return "cards must be an object";
+    for (const k of ["hidden", "extra"]) {
+      const m = s.cards[k];
+      if (m === undefined) continue;
+      if (!isPlainObject(m)) return "cards." + k + " must be an object";
+      if (Object.values(m).some((v) => !Array.isArray(v))) return "cards." + k + " values must be lists";
+    }
+    if (s.cards.extra && Object.values(s.cards.extra).some((l) => l.some((c) => !isPlainObject(c)))) return "Every added card must be an object";
+  }
   return "";
 }
 
@@ -603,7 +614,7 @@ app.use(
     dotfiles: "ignore",
     setHeaders(res, filePath) {
       const rel = "/" + path.relative(PUBLIC_DIR, filePath).split(path.sep).join("/");
-      if (rel.endsWith(".html") || rel.endsWith("/site-settings.json")) {
+      if (rel.endsWith(".html") || rel.endsWith("/site-settings.json") || rel === "/static/cards/catalog.json") {
         res.set("Cache-Control", "no-cache");
       } else if (rel.startsWith("/cards/")) {
         res.set("Cache-Control", "public, max-age=2592000");

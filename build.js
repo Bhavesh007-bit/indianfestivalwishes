@@ -113,19 +113,31 @@ const DESIGNS = {
   P3: { tone: "dark", zone: [150, 1200], w: 820 }
 };
 const SETS = {
-  shraddhanjali: ["M4", "C4", "M1"],
-  navratri: ["N1", "N2", "N3", "N4", "U1", "U5", "U2", "U6", "U3", "U4"],
-  dussehra: ["S1", "S2", "N1", "N3", "U1", "U5", "U2", "U6", "D2", "U3"],
-  "karva-chauth": ["K1", "K2", "U1", "U2", "C1", "C4", "U4", "U6", "D4", "U5"],
-  diwali: ["D1", "D2", "D3", "D4", "N1", "U1", "U2", "U5", "U6", "U3"],
-  birthday: ["B1", "B2", "B3", "B4", "U3", "U6", "U2", "U4", "C3", "M3"],
-  anniversary: ["C1", "C3", "C4", "C2", "U1", "U2", "U4", "U5", "B3", "U3"],
-  wedding: ["C2", "C1", "C4", "U1", "U5", "U2", "C3", "U4", "N1", "U6"],
-  engagement: ["C4", "C3", "C1", "C2", "U4", "U2", "U3", "U1", "B4", "U6"],
-  "good-morning": ["M1", "M2", "M3", "M4", "U3", "U4", "B4", "U6", "C4", "U5"]
+  shraddhanjali: [],
+  navratri: ["N1", "N2", "N3", "N4"],
+  dussehra: ["S1", "S2"],
+  "karva-chauth": ["K1", "K2"],
+  diwali: ["D1", "D2", "D3", "D4"],
+  birthday: ["B1", "B2", "B3", "B4"],
+  anniversary: ["C1"],
+  wedding: ["C2"],
+  engagement: ["C3", "C4"],
+  "good-morning": ["M1", "M2", "M3", "M4"]
 };
 const LIGHT_DAY = ["#F7F3EE", "#F5C518"];
 const tileCls = (c) => "day-tile" + (LIGHT_DAY.indexOf(c) >= 0 ? " is-light" : "");
+const GREET = {
+  hi: { navratri: "नवरात्रि की हार्दिक शुभकामनाएँ", dussehra: "दशहरे की हार्दिक शुभकामनाएँ", "karva-chauth": "करवा चौथ की हार्दिक शुभकामनाएँ", diwali: "दीपावली की हार्दिक शुभकामनाएँ", birthday: "जन्मदिन की ढेर सारी शुभकामनाएँ", anniversary: "सालगिरह की हार्दिक बधाई", wedding: "विवाह की हार्दिक बधाई", engagement: "सगाई की हार्दिक बधाई", "good-morning": "सुप्रभात और शुभ दिन की शुभकामनाएँ" },
+  gu: { navratri: "નવરાત્રીની હાર્દિક શુભેચ્છાઓ", dussehra: "દશેરાની હાર્દિક શુભેચ્છાઓ", "karva-chauth": "કરવા ચોથની હાર્દિક શુભેચ્છાઓ", diwali: "દિવાળીની હાર્દિક શુભેચ્છાઓ", birthday: "જન્મદિવસની હાર્દિક શુભેચ્છાઓ", anniversary: "લગ્નતિથિની હાર્દિક શુભેચ્છાઓ", wedding: "લગ્નની હાર્દિક શુભેચ્છાઓ", engagement: "સગાઈની હાર્દિક શુભેચ્છાઓ", "good-morning": "સુપ્રભાત અને શુભ દિવસની શુભેચ્છાઓ" },
+  en: { navratri: "a Happy Navratri", dussehra: "a Happy Dussehra", "karva-chauth": "a Happy Karva Chauth", diwali: "a Happy Diwali", birthday: "a very Happy Birthday", anniversary: "a Happy Anniversary", wedding: "a lifetime of love and happiness", engagement: "a lifetime of togetherness", "good-morning": "a bright Good Morning" }
+};
+function fromOpts(L, occ) {
+  const g = GREET[L][occ];
+  if (!g) return null;
+  if (L === "hi") return { family: `{from} की ओर से आपको और आपके परिवार को ${g}`, you: `{from} की ओर से आपको ${g}`, sign: "— {from}" };
+  if (L === "gu") return { family: `{from} તરફથી આપને અને આપના પરિવારને ${g}`, you: `{from} તરફથી આપને ${g}`, sign: "— {from}" };
+  return { family: `{from} wishes you and your family ${g}`, you: `{from} wishes you ${g}`, sign: "With love, {from}" };
+}
 const designList = (set) => (TPL[set] || []).concat((SETS[set] || []).map((id) => Object.assign({ id }, DESIGNS[id])));
 
 /* ------------------------------------------------------------------ icons */
@@ -332,6 +344,7 @@ function cardMaker(L, K) {
     names = `<div class="field"><label for="in-to">${esc(K.toLabel || u.to_label)}</label><input id="in-to" type="text" maxlength="30" placeholder="${esc(u.to_ph)}"></div>`;
   }
   const fromReq = kind === "festival";
+  const fsSel = !invite && K.fromOpts ? `<div class="field"><label for="from-style">${esc(u.from_style)}</label><select id="from-style"><option value="">${esc(u.fs_default)}</option><option value="family">${esc(u.fs_family)}</option><option value="you">${esc(u.fs_you)}</option><option value="sign">${esc(u.fs_sign)}</option></select></div>` : "";
   if (!invite) names += `<div class="field"><label for="in-from">${esc(fromReq ? u.from_label : u.from_label_opt)}</label><input id="in-from" type="text" maxlength="30" autocomplete="name" placeholder="${esc(u.from_ph)}"></div>`;
   const thought = kind === "morning" ? `<div class="field thought-box"><span class="label" id="thought-label">${esc(u.thought_label)}</span><p class="thought" id="thought-text" aria-labelledby="thought-label"></p><button class="btn btn-soft btn-sm" id="next-thought" type="button">${I.refresh}${esc(u.next_thought)}</button></div>` : "";
   const photo = kind !== "festival" || true ? `<fieldset class="field" id="photo-box"><legend>${esc(u.photo_label)}</legend>
@@ -352,7 +365,7 @@ function cardMaker(L, K) {
     <h2 id="card-heading" class="maker-h">${esc(K.heading || u.card_heading)}</h2>
     <p class="received-note" id="received-note"></p>
     <form id="card-form" novalidate>
-      <fieldset class="field"><legend><span class="step-n">1</span>${esc(u.step_design)} <span class="muted">· ${esc(fmt(u.designs_count, { n: K.designs.length }))}</span></legend>
+      <fieldset class="field"><legend><span class="step-n">1</span>${esc(u.step_design)} <span class="muted">· <span data-design-count>${esc(fmt(u.designs_count, { n: K.designs.length }))}</span></span></legend>
         <div class="dz-row" id="design-row">${designs}</div>
       </fieldset>
       ${invite ? (K.types ? `<div class="field"><label for="card-type"><span class="step-n">2</span>${esc(u.type_label)}</label><select id="card-type">${K.types.map((t, i) => `<option value="${i}">${esc(t.label)}</option>`).join("")}</select></div>` : "")
@@ -360,7 +373,7 @@ function cardMaker(L, K) {
       <div class="field"><label for="card-wish">${invite && !K.types ? '<span class="step-n">2</span>' : ""}${esc(invite ? u.wording_label : u.wish_label)}</label><select id="card-wish"></select></div>
       <div class="field" id="custom-box" hidden><label for="card-custom">${esc(u.custom_label)}</label><textarea id="card-custom" rows="3" maxlength="180" placeholder="${esc(u.custom_ph)}"></textarea></div>
       ${thought}
-      ${invite ? names + photo : photo + names}
+      ${invite ? names + photo : photo + names + fsSel}
       <p class="form-error" id="card-error" role="alert"></p>
       <button class="btn btn-primary btn-wide shine" type="submit">${I.sparkle}${esc(u.make_card)}</button>
     </form>
@@ -456,7 +469,7 @@ function buildHome(L) {
 }
 
 function navCard(L, o) {
-  return Object.assign({ occasion: "navratri", kind: "festival", rels: REL_LABELS[L], designs: designList("navratri") }, o);
+  return Object.assign({ occasion: "navratri", kind: "festival", rels: REL_LABELS[L], designs: designList("navratri"), fromOpts: fromOpts(L, "navratri") }, o);
 }
 
 function buildNavratri(L) {
@@ -552,7 +565,7 @@ function buildInfo(L, key, active, tag) {
 function buildOccasion(L, occ) {
   const u = UI[L], O = OCC[L][occ], A = ART[L][occ], p = `wishes/${occ}.html`;
   const kind = { birthday: "person", "good-morning": "morning" }[occ] || "couple";
-  const K = { occasion: occ, kind, title: O.card_title, topLabel: "", wishes: MW[L][occ].card, rels: O.rels, fromTpl: O.from, theme: O.theme, slug: occ, thoughts: O.thoughts || null, designs: designList(occ) };
+  const K = { occasion: occ, kind, title: O.card_title, topLabel: "", wishes: MW[L][occ].card, rels: O.rels, fromTpl: O.from, theme: O.theme, slug: occ, thoughts: O.thoughts || null, designs: designList(occ), fromOpts: fromOpts(L, occ) };
   const allW = MW[L][occ].list;
   const body = `${pageHead(L, { h1: O.h1, sub: O.sub, img: SETS[occ][0], crumbs: [[u.nav.home, url(L, "")], [u.nav[occ]]] })}
 <div class="wrap">
@@ -570,7 +583,7 @@ function buildOccasion(L, occ) {
 
 function buildFestival(L, key) {
   const u = UI[L], F = FEST[L][key], p = key + "/";
-  const K = { occasion: key, kind: "festival", title: F.card_title, topLabel: F.card_top, wishes: MW[L][key].card, rels: F.rels, fromTpl: F.from, theme: F.theme, slug: key + "-2026", designs: designList(key) };
+  const K = { occasion: key, kind: "festival", title: F.card_title, topLabel: F.card_top, wishes: MW[L][key].card, rels: F.rels, fromTpl: F.from, theme: F.theme, slug: key + "-2026", designs: designList(key), fromOpts: fromOpts(L, key) };
   const allW = MW[L][key].list;
   const cal = CAL.find((c) => c.key === key);
   const body = `${pageHead(L, { kicker: F.date_label, h1: F.h1, sub: F.sub, img: cal.img, crumbs: [[u.nav.home, url(L, "")], [u.nav[key]]],
@@ -634,7 +647,7 @@ function buildInvitesHub(L) {
 
 function buildInvite(L, k) {
   const u = UI[L], V = NP[L].invites[k], H = NP[L].invitations, p = "invitations/" + k + ".html";
-  const K = inviteCard(L, k, V.card, "inv-" + k, { shareMsg: u.invite_share, heading: u.invite_heading });
+  const K = inviteCard(L, "invite-" + k, V.card, "inv-" + k, { shareMsg: u.invite_share, heading: u.invite_heading, slug: k + "-invitation" });
   const others = INVITES.filter((x) => x !== k).map((x) => `<a class="chip" href="${url(L, "invitations/" + x + ".html")}">${esc(NP[L].invites[x].nav)}</a>`).join("");
   const body = `${pageHead(L, { h1: V.h1, sub: V.sub, img: TPL["inv-" + k][0].id, crumbs: [[u.nav.home, url(L, "")], [H.nav, url(L, "invitations/")], [V.nav]] })}
 <div class="wrap">
@@ -705,6 +718,21 @@ function main() {
     buildStub(L, "navratri-vrat-food.html", "navratri/vrat-recipes.html");
   }
   build404();
+  const cat = {};
+  const labelOf = (key) => {
+    const o = {};
+    LANGS.forEach((L) => {
+      if (key.startsWith("invite-")) o[L] = NP[L].invites[key.slice(7)].nav;
+      else if (key === "shraddhanjali") o[L] = NP[L].shraddhanjali.nav;
+      else o[L] = UI[L].nav[key];
+    });
+    return o;
+  };
+  ["navratri", "dussehra", "karva-chauth", "diwali", "birthday", "anniversary", "wedding", "engagement", "good-morning", "shraddhanjali"].concat(INVITES.map((k) => "invite-" + k)).forEach((key) => {
+    const set = key.startsWith("invite-") ? "inv-" + key.slice(7) : key;
+    cat[key] = { label: labelOf(key), designs: designList(set).map((d) => ({ id: d.id, thumb: `/static/cards/thumb/${d.id}.webp` })) };
+  });
+  write("static/cards/catalog.json", JSON.stringify(cat));
   buildSitemap();
   let count = 0;
   (function walk(d) { for (const n of fs.readdirSync(d)) { const f = path.join(d, n); if (fs.statSync(f).isDirectory()) walk(f); else if (n.endsWith(".html")) count++; } })(OUT);

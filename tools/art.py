@@ -402,3 +402,229 @@ def candle(x, y, s, c="#FFFFFF"):
 def svg(parts, gold=None):
     body = "".join(parts)
     return f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">{defs(gold) if gold else defs()}{body}</svg>'
+
+
+# ================================================================ event-specific motifs (v2)
+def rangoli(cx, cy, r, colors, op=1):
+    """Filled colourful rangoli (top view)."""
+    s = f'<g opacity="{op}">'
+    rings = [(.95, 32, .16, .07), (.72, 20, .26, .11), (.46, 14, .24, .12), (.22, 8, .2, .12)]
+    for i, (rr, n, pl, pw) in enumerate(rings):
+        s += f'<circle cx="{cx}" cy="{cy}" r="{r * (rr + .02)}" fill="{colors[(i + 1) % len(colors)]}" opacity=".35"/>'
+        s += petal_ring(cx, cy, r * (rr - pl), n, r * pl, r * pw, colors[i % len(colors)], 1, 180 / n * (i % 2))
+    s += f'<circle cx="{cx}" cy="{cy}" r="{r * .12}" fill="{colors[0]}"/><circle cx="{cx}" cy="{cy}" r="{r * .05}" fill="#FFF3C4"/>'
+    for i in range(24):
+        a = math.radians(i * 15)
+        s += f'<circle cx="{cx + math.cos(a) * r:.1f}" cy="{cy + math.sin(a) * r:.1f}" r="{r * .03:.1f}" fill="{colors[-1]}"/>'
+    return s + "</g>"
+
+
+def diya_row(y, n, s=.7, x0=90, x1=W - 90):
+    return "".join(diya(x0 + (x1 - x0) * i / max(1, n - 1), y, s) for i in range(n))
+
+
+def akash_kandil(x, y, s, c1, c2):
+    """Star-shaped sky lantern with tassels."""
+    g = f'<line x1="{x}" y1="0" x2="{x}" y2="{y - 70 * s}" stroke="#C9973B" stroke-width="2.5"/><g transform="translate({x} {y}) scale({s})">'
+    g += '<circle r="70" fill="url(#glow)"/>' + star(0, 0, 70, c1) + star(0, 0, 38, c2) + f'<circle r="12" fill="#FFF3C4"/>'
+    for dx in (-30, -10, 10, 30):
+        g += f'<path d="M{dx} 40 L{dx * 1.1} 130" stroke="{c1}" stroke-width="4"/><circle cx="{dx * 1.1}" cy="134" r="5" fill="{c2}"/>'
+    return g + "</g>"
+
+
+def lotus(x, y, s, c="#F4A6C1", c2="#E56B8F", leafc="#3A7D44"):
+    g = f'<g transform="translate({x} {y}) scale({s})">'
+    g += f'<ellipse cx="0" cy="20" rx="120" ry="18" fill="{leafc}" opacity=".85"/>'
+    for a, l, col in [(-70, 80, c), (70, 80, c), (-40, 105, c2), (40, 105, c2), (-15, 120, c), (15, 120, c), (0, 128, c2)]:
+        g += f'<path d="M0 10 C -26 -{l * .45}, -10 -{l * .9}, 0 -{l} C 10 -{l * .9}, 26 -{l * .45}, 0 10Z" fill="{col}" stroke="#FFFFFF" stroke-opacity=".5" stroke-width="2" transform="rotate({a * .8})"/>'
+    return g + "</g>"
+
+
+def garland_frame(x, y, w, h, shape="rect", c1="#FFFFFF", c2="#F2C14E", r=13, leafc="#6B8F71"):
+    """Flower garland (haar) around a photo frame, with a hanging loop at the bottom."""
+    pts = []
+    if shape == "oval":
+        cx, cy, rx, ry = x + w / 2, y + h / 2, w / 2 + 18, h / 2 + 18
+        n = int(2 * math.pi * max(rx, ry) / (r * 1.6))
+        pts = [(cx + math.cos(2 * math.pi * i / n) * rx, cy + math.sin(2 * math.pi * i / n) * ry) for i in range(n)]
+    else:
+        per = 2 * (w + h) + 144
+        n = int(per / (r * 1.6))
+        for i in range(n):
+            d = per * i / n
+            X, Y = x - 18, y - 18
+            ww, hh = w + 36, h + 36
+            if d < ww: pts.append((X + d, Y))
+            elif d < ww + hh: pts.append((X + ww, Y + d - ww))
+            elif d < 2 * ww + hh: pts.append((X + ww - (d - ww - hh), Y + hh))
+            else: pts.append((X, Y + hh - (d - 2 * ww - hh)))
+    s = ""
+    for i, (px, py) in enumerate(pts):
+        s += f'<circle cx="{px:.1f}" cy="{py:.1f}" r="{r}" fill="{c1 if i % 3 else c2}" stroke="#E5DCC8" stroke-width="1"/>'
+    bx, by = x + w / 2, y + h + 18
+    for k in range(9):
+        t = k / 8
+        s += f'<circle cx="{bx - 60 + 120 * t:.0f}" cy="{by + math.sin(math.pi * t) * 70:.0f}" r="{r}" fill="{c1 if k % 2 else c2}"/>'
+    s += leaf(bx - 20, by + 76, 40, 100, leafc) + leaf(bx + 20, by + 76, 40, 80, leafc)
+    return s
+
+
+def hanging_diya(x, y, s=1, chain="#B7791F"):
+    g = f'<path d="M{x} 0 L{x} {y - 60 * s}" stroke="{chain}" stroke-width="3" stroke-dasharray="8 5"/>'
+    g += f'<path d="M{x} {y - 60 * s} L{x - 50 * s} {y - 6 * s} M{x} {y - 60 * s} L{x + 50 * s} {y - 6 * s}" stroke="{chain}" stroke-width="2"/>'
+    return g + diya(x, y, s)
+
+
+def mandap(x, y, s, c="url(#gold)", drape="#C9184A", flower="#FF9F1C"):
+    g = f'<g transform="translate({x} {y}) scale({s})">'
+    g += f'<path d="M-230 -260 C -150 -380, 150 -380, 230 -260 Z" fill="{drape}" stroke="{c}" stroke-width="6"/>'
+    g += f'<path d="M-240 -260 L240 -260" stroke="{c}" stroke-width="12"/>'
+    for px in (-220, 220):
+        g += f'<rect x="{px - 12}" y="-260" width="24" height="300" fill="{c}"/><rect x="{px - 24}" y="30" width="48" height="16" fill="{c}"/>'
+        g += f'<path d="M{px} -250 C {px + (60 if px < 0 else -60)} -150, {px + (40 if px < 0 else -40)} -60, {px + (70 if px < 0 else -70)} 20" stroke="{drape}" stroke-width="18" fill="none" opacity=".85"/>'
+    for i in range(-200, 210, 40):
+        g += f'<line x1="{i}" y1="-258" x2="{i}" y2="{-200 - (abs(i) % 80)}" stroke="{flower}" stroke-width="3"/><circle cx="{i}" cy="{-196 - (abs(i) % 80)}" r="8" fill="{flower}"/>'
+    g += '<path d="M-60 40 L0 -10 L60 40 Z" fill="#FF6A00" opacity=".8"/><rect x="-80" y="36" width="160" height="16" fill="#8B5A2B"/>'
+    return g + "</g>"
+
+
+def swastik(x, y, s, c="#C1121F"):
+    return (f'<g transform="translate({x} {y}) scale({s})" stroke="{c}" stroke-width="10" stroke-linecap="round" fill="none">'
+            '<path d="M0 -50 L0 50 M-50 0 L50 0 M0 -50 L40 -50 M50 0 L50 40 M0 50 L-40 50 M-50 0 L-50 -40"/>'
+            f'<circle cx="-25" cy="-25" r="6" fill="{c}" stroke="none"/><circle cx="25" cy="-25" r="6" fill="{c}" stroke="none"/><circle cx="-25" cy="25" r="6" fill="{c}" stroke="none"/><circle cx="25" cy="25" r="6" fill="{c}" stroke="none"/></g>')
+
+
+def thali(x, y, s, plate="url(#gold)"):
+    g = f'<g transform="translate({x} {y}) scale({s})"><ellipse cx="0" cy="0" rx="170" ry="60" fill="{plate}" stroke="#9C6B1E" stroke-width="4"/><ellipse cx="0" cy="-6" rx="140" ry="44" fill="#F6D776" opacity=".6"/>'
+    g += '<ellipse cx="-80" cy="-10" rx="26" ry="10" fill="#C1121F"/><ellipse cx="80" cy="-10" rx="26" ry="10" fill="#F4C430"/>'
+    g += marigold(-30, 16, 14) + marigold(40, 20, 12)
+    return g + diya(0, -20, .6) + "</g>"
+
+
+def karwa(x, y, s, c="#B5541C", deco="#FFD166"):
+    g = f'<g transform="translate({x} {y}) scale({s})"><path d="M-70 -60 C -120 20, -80 90, 0 96 C 80 90, 120 20, 70 -60 Z" fill="{c}"/>'
+    g += f'<path d="M60 -30 C 110 -40, 140 -70, 150 -100" stroke="{c}" stroke-width="18" fill="none" stroke-linecap="round"/>'
+    g += f'<ellipse cx="0" cy="-62" rx="72" ry="16" fill="#8B3A0F"/><path d="M-80 10 C -30 30, 30 30, 80 10" stroke="{deco}" stroke-width="6" fill="none"/>'
+    for i in range(-60, 70, 24):
+        g += f'<circle cx="{i}" cy="40" r="6" fill="{deco}"/>'
+    return g + "</g>"
+
+
+def mehendi_border(y, c, flip=False):
+    """Paisley/mehendi lace strip."""
+    s = f'<g transform="translate(0 {y}) scale(1 {-1 if flip else 1})">'
+    for i in range(12):
+        x = 45 + i * 90
+        s += paisley(x, 0, .45, 180, c, "none")
+        s += f'<circle cx="{x + 45}" cy="30" r="5" fill="{c}"/>'
+    s += f'<path d="M0 70 L{W} 70" stroke="{c}" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round"/></g>'
+    return s
+
+
+def peacock_feather(x, y, s, a):
+    g = f'<g transform="translate({x} {y}) rotate({a}) scale({s})"><path d="M0 200 C 4 100, 4 40, 0 -40" stroke="#6B8F3E" stroke-width="4" fill="none"/>'
+    for i in range(14):
+        yy = 180 - i * 14
+        g += f'<path d="M0 {yy} C -40 {yy - 30}, -60 {yy - 50}, -70 {yy - 70}" stroke="#2A9D8F" stroke-width="2" fill="none" opacity=".7"/><path d="M0 {yy} C 40 {yy - 30}, 60 {yy - 50}, 70 {yy - 70}" stroke="#2A9D8F" stroke-width="2" fill="none" opacity=".7"/>'
+    g += '<ellipse cx="0" cy="-60" rx="46" ry="62" fill="#1B998B"/><ellipse cx="0" cy="-54" rx="30" ry="40" fill="#F2C14E"/><ellipse cx="0" cy="-50" rx="18" ry="24" fill="#264653"/><ellipse cx="0" cy="-46" rx="8" ry="11" fill="#2A9D8F"/>'
+    return g + "</g>"
+
+
+def cradle(x, y, s, c="url(#gold)", cloth="#F7C6D0"):
+    g = f'<g transform="translate({x} {y}) scale({s})"><path d="M-200 -260 L200 -260" stroke="{c}" stroke-width="12"/>'
+    g += f'<path d="M-150 -260 L-120 -40 M150 -260 L120 -40" stroke="{c}" stroke-width="4"/>'
+    g += f'<path d="M-160 -40 C -140 60, 140 60, 160 -40 Z" fill="{cloth}" stroke="{c}" stroke-width="6"/>'
+    for i in range(-200, 210, 50):
+        g += marigold(i, -262, 12)
+    g += '<path d="M-120 -10 C -60 20, 60 20, 120 -10" stroke="#FFFFFF" stroke-width="5" fill="none" opacity=".7"/>'
+    return g + "</g>"
+
+
+def bangles(x, y, s, colors=("#C1121F", "#2D6A4F", "#F2C14E")):
+    g = f'<g transform="translate({x} {y}) scale({s})">'
+    for i, c in enumerate(colors * 2):
+        g += f'<ellipse cx="{i * 14 - 35}" cy="0" rx="60" ry="72" fill="none" stroke="{c}" stroke-width="9"/>'
+    return g + "</g>"
+
+
+def banana_leaf(x, y, s, a, c="#4C8C2B"):
+    g = f'<g transform="translate({x} {y}) rotate({a}) scale({s})"><path d="M0 0 C 60 -120, 70 -320, 0 -460 C -70 -320, -60 -120, 0 0Z" fill="{c}"/>'
+    g += '<path d="M0 0 L0 -450" stroke="#2F5D1B" stroke-width="5"/>'
+    for i in range(1, 16):
+        yy = -i * 28
+        g += f'<path d="M0 {yy} L{38 - abs(i - 8) * 2} {yy - 26} M0 {yy} L-{38 - abs(i - 8) * 2} {yy - 26}" stroke="#2F5D1B" stroke-width="1.5" opacity=".6"/>'
+    return g + "</g>"
+
+
+def havan(x, y, s):
+    g = f'<g transform="translate({x} {y}) scale({s})"><path d="M-120 0 L120 0 L96 60 L-96 60 Z" fill="#8B5A2B"/><path d="M-96 60 L96 60 L80 100 L-80 100 Z" fill="#6B4423"/>'
+    g += '<ellipse cx="0" cy="-60" rx="110" ry="120" fill="url(#glow)"/>'
+    for dx, h in [(-50, 90), (0, 140), (50, 100)]:
+        g += f'<path d="M{dx} 0 C {dx + 30} -{h * .4}, {dx + 10} -{h * .7}, {dx} -{h} C {dx - 10} -{h * .7}, {dx - 30} -{h * .4}, {dx} 0Z" fill="url(#flame)"/>'
+    return g + "</g>"
+
+
+def storefront(x, y, s, awning=("#C1121F", "#FFFFFF"), wall="#FFF3E0"):
+    g = f'<g transform="translate({x} {y}) scale({s})"><rect x="-230" y="-120" width="460" height="300" fill="{wall}" stroke="#8B5A2B" stroke-width="5"/>'
+    for i in range(8):
+        g += f'<path d="M{-240 + i * 60} -120 L{-180 + i * 60} -120 L{-180 + i * 60} -60 C {-195 + i * 60} -40, {-225 + i * 60} -40, {-240 + i * 60} -60Z" fill="{awning[i % 2]}"/>'
+    g += '<rect x="-240" y="-190" width="480" height="70" rx="10" fill="#1B2A4A"/><rect x="-60" y="10" width="120" height="170" fill="#8B5A2B"/><rect x="-190" y="0" width="100" height="90" fill="#BDE0FE"/><rect x="90" y="0" width="100" height="90" fill="#BDE0FE"/>'
+    return g + "</g>"
+
+
+def coins(x, y, s):
+    g = f'<g transform="translate({x} {y}) scale({s})">'
+    for i in range(6):
+        g += f'<ellipse cx="{(i % 2) * 10}" cy="{-i * 16}" rx="60" ry="18" fill="url(#gold)" stroke="#9C6B1E" stroke-width="3"/>'
+    g += '<ellipse cx="90" cy="0" rx="60" ry="18" fill="url(#gold)" stroke="#9C6B1E" stroke-width="3"/><ellipse cx="90" cy="-16" rx="60" ry="18" fill="url(#gold)" stroke="#9C6B1E" stroke-width="3"/>'
+    return g + "</g>"
+
+
+def gift(x, y, s, c, rib="#FFD166"):
+    return (f'<g transform="translate({x} {y}) scale({s})"><rect x="-60" y="-50" width="120" height="100" rx="8" fill="{c}"/><rect x="-66" y="-66" width="132" height="24" rx="6" fill="{c}"/>'
+            f'<rect x="-10" y="-66" width="20" height="116" fill="{rib}"/><path d="M0 -66 C -40 -110, -70 -80, 0 -66 C 70 -80, 40 -110, 0 -66Z" fill="{rib}"/></g>')
+
+
+def party_hat(x, y, s, a, c1, c2):
+    return (f'<g transform="translate({x} {y}) rotate({a}) scale({s})"><path d="M-50 60 L0 -90 L50 60 Z" fill="{c1}"/>'
+            f'<path d="M-34 10 L34 10 M-20 -30 L20 -30" stroke="{c2}" stroke-width="10"/><circle cx="0" cy="-96" r="14" fill="{c2}"/></g>')
+
+
+def apta_leaf(x, y, s, a, c="#4C8C2B"):
+    return f'<g transform="translate({x} {y}) rotate({a}) scale({s})"><path d="M0 60 C -70 20, -70 -50, -20 -60 C -8 -62, 0 -50, 0 -40 C 0 -50, 8 -62, 20 -60 C 70 -50, 70 20, 0 60Z" fill="{c}"/><path d="M0 60 L0 -40" stroke="#2F5D1B" stroke-width="3"/><path d="M0 60 L0 110" stroke="#6B4423" stroke-width="5"/></g>'
+
+
+def flaming_arrow(x, y, s, a):
+    return (f'<g transform="translate({x} {y}) rotate({a}) scale({s})"><path d="M-260 0 L200 0" stroke="#6B4423" stroke-width="8"/><path d="M200 -22 L260 0 L200 22 Z" fill="url(#gold)"/>'
+            '<path d="M-260 0 L-300 -24 M-260 0 L-300 24 M-240 0 L-280 -24 M-240 0 L-280 24" stroke="#C1121F" stroke-width="6"/>'
+            '<path d="M150 0 C 180 -60, 220 -70, 250 -40 C 230 -30, 240 -20, 260 0 C 240 20, 230 30, 250 40 C 220 70, 180 60, 150 0Z" fill="url(#flame)" opacity=".95"/></g>')
+
+
+def birds(x, y, s, c="#3A3A3A"):
+    return "".join(f'<path d="M{x + dx} {y + dy} q 14 -14 28 0 q 14 -14 28 0" stroke="{c}" stroke-width="{3 * s}" fill="none" stroke-linecap="round" transform="scale(1)"/>' for dx, dy in [(0, 0), (70, -30), (140, 10), (40, 50)])
+
+
+def sunflower(x, y, r):
+    return petal_ring(x, y, r * .45, 16, r * .6, r * .28, "#FFC300", 1) + f'<circle cx="{x}" cy="{y}" r="{r * .45}" fill="#6B3E26"/>' + "".join(f'<circle cx="{x + math.cos(i) * r * .25:.1f}" cy="{y + math.sin(i) * r * .25:.1f}" r="3" fill="#3E2415"/>' for i in range(0, 20))
+
+
+def hills(y, c1, c2):
+    return (f'<path d="M0 {y} C 200 {y - 120}, 400 {y - 60}, 560 {y - 20} C 720 {y - 140}, 900 {y - 80}, {W} {y - 40} L{W} {H} L0 {H} Z" fill="{c1}"/>'
+            f'<path d="M0 {y + 70} C 300 {y - 20}, 600 {y + 80}, {W} {y + 20} L{W} {H} L0 {H} Z" fill="{c2}"/>')
+
+
+def heart_frame_path(x, y, w, h):
+    cx = x + w / 2
+    return f'M{cx} {y + h} C {x - w * .2} {y + h * .55}, {x} {y - h * .05}, {cx} {y + h * .22} C {x + w} {y - h * .05}, {x + w * 1.2} {y + h * .55}, {cx} {y + h}Z'
+
+
+def dancers(y, c, n=5):
+    """Simple garba dancer silhouettes (abstract, faceless)."""
+    s = ""
+    for i in range(n):
+        x = 120 + i * (W - 240) / (n - 1)
+        s += (f'<g transform="translate({x} {y}) scale({1 if i % 2 else -1} 1)" fill="{c}"><circle cx="0" cy="-150" r="18"/>'
+              '<path d="M-10 -130 L10 -130 L20 -60 L-20 -60Z"/><path d="M-20 -60 C -70 -10, -80 20, -90 30 L90 30 C 80 20, 70 -10, 20 -60Z"/>'
+              '<path d="M-10 -120 L-60 -170 M10 -120 L50 -80" stroke="' + c + '" stroke-width="8" stroke-linecap="round"/>'
+              '<path d="M-60 -170 L-40 -200 M50 -80 L80 -110" stroke="#FFD166" stroke-width="6" stroke-linecap="round"/></g>')
+    return s

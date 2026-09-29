@@ -149,7 +149,12 @@
   "photo_reset": "फ़ोटो रीसेट करें",
   "designs_new": "नए डिज़ाइन",
   "invite_heading": "अपना निमंत्रण कार्ड बनाएँ",
-  "tribute_heading": "श्रद्धांजलि कार्ड बनाएँ"
+  "tribute_heading": "श्रद्धांजलि कार्ड बनाएँ",
+  "from_style": "नाम वाली लाइन कैसी हो",
+  "fs_default": "पेज वाली लाइन",
+  "fs_family": "आपको और आपके परिवार को",
+  "fs_you": "सिर्फ़ आपको",
+  "fs_sign": "सिर्फ़ मेरा नाम"
  },
  "gu": {
   "lang_name": "ગુજરાતી",
@@ -301,7 +306,12 @@
   "photo_reset": "ફોટો રીસેટ કરો",
   "designs_new": "નવી ડિઝાઇન",
   "invite_heading": "તમારું આમંત્રણ કાર્ડ બનાવો",
-  "tribute_heading": "શ્રદ્ધાંજલિ કાર્ડ બનાવો"
+  "tribute_heading": "શ્રદ્ધાંજલિ કાર્ડ બનાવો",
+  "from_style": "નામવાળી લાઇન કેવી રાખવી",
+  "fs_default": "પેજવાળી લાઇન",
+  "fs_family": "આપને અને આપના પરિવારને",
+  "fs_you": "ફક્ત આપને",
+  "fs_sign": "ફક્ત મારું નામ"
  },
  "en": {
   "lang_name": "English",
@@ -453,6 +463,11 @@
   "photo_reset": "Reset photo",
   "designs_new": "New designs",
   "invite_heading": "Make your invitation card",
-  "tribute_heading": "Make a tribute card"
+  "tribute_heading": "Make a tribute card",
+  "from_style": "How your name line reads",
+  "fs_default": "Page line",
+  "fs_family": "You and your family",
+  "fs_you": "Only you",
+  "fs_sign": "Just my name"
  }
 }

@@ -75,7 +75,7 @@
   // [id, icon]; titles come from "view.<id>.title/.sub/.tab"
   var VIEWS = [
     ["dashboard", "grid"], ["products", "bag"], ["telegram", "send"], ["patti", "megaphone"],
-    ["ads", "chart"], ["wishes", "message"], ["backup", "database"], ["account", "shield"]
+    ["ads", "chart"], ["wishes", "message"], ["cards", "image"], ["backup", "database"], ["account", "shield"]
   ];
   function viewTitle(id) { return t("view." + id + ".title"); }
   function viewTab(id) { return has("view." + id + ".tab") ? t("view." + id + ".tab") : viewTitle(id); }
@@ -276,7 +276,7 @@
   var view = "dashboard";
   var backups = null;
   var openProducts = typeof WeakSet === "function" ? new WeakSet() : null;
-  var ui = { lang: {}, wLang: "hi", wOcc: "navratri", wRel: "all", tLang: "hi", pFilter: "", pSearch: "" };
+  var ui = { lang: {}, wLang: "hi", wOcc: "navratri", wRel: "all", tLang: "hi", pFilter: "", pSearch: "", cPage: "diwali" };
   var pwState = { cur: "", next: "", again: "" };   // account form; kept here so a language switch keeps typed text
 
   function ensure(d) {
@@ -299,6 +299,14 @@
     a.products.forEach(function (p) {
       if (!p.title || typeof p.title !== "object") p.title = {};
       if (!Array.isArray(p.pages)) p.pages = [];
+    });
+    // cards: { hidden: {page: [designId]}, extra: {page: [{id, url, tone, name}]} } — absent in older files
+    var cd = obj(d, "cards");
+    var hd = obj(cd, "hidden"), ex = obj(cd, "extra");
+    Object.keys(hd).forEach(function (k) { if (!Array.isArray(hd[k])) delete hd[k]; });
+    Object.keys(ex).forEach(function (k) {
+      if (!Array.isArray(ex[k])) { delete ex[k]; return; }
+      ex[k] = ex[k].filter(function (c) { return c && typeof c === "object" && !Array.isArray(c); });
     });
     return d;
   }
@@ -435,6 +443,7 @@
       saved = JSON.stringify(S);
       renderAll();
       loadBackups();
+      loadCatalog();
     });
   }
 
@@ -461,7 +470,7 @@
     var nav = clear($("side-nav"));
     nav.appendChild(h("div", { class: "nav-group", text: t("nav.menu") }));
     VIEWS.forEach(function (v, i) {
-      if (i === 6) nav.appendChild(h("div", { class: "nav-group", text: t("nav.system") }));
+      if (v[0] === "backup") nav.appendChild(h("div", { class: "nav-group", text: t("nav.system") }));
       nav.appendChild(h("button", { class: "nav-item", type: "button", "data-go": v[0], on: { click: function () { go(v[0]); closeDrawer(); } } },
         icon(v[1]), h("span", { text: viewTitle(v[0]) }), h("span", { class: "badge", "data-badge": v[0], hidden: true })));
     });
@@ -768,6 +777,7 @@
     renderPatti();
     renderAds();
     renderWishes();
+    renderCards();
     renderBackup();
     renderAccount();
     refreshNavBadges();
@@ -833,7 +843,7 @@
     v.appendChild(h("h3", { class: "section-title", text: t("dash.quick") }));
     var q = h("div", { class: "quick" });
     [["products", "plus", "dash.q.product", true], ["patti", "megaphone", "dash.q.patti"],
-     ["wishes", "message", "dash.q.wishes"], ["backup", "database", "dash.q.backup"]].forEach(function (qa, i) {
+     ["wishes", "message", "dash.q.wishes"], ["cards", "image", "dash.q.cards"], ["backup", "database", "dash.q.backup"]].forEach(function (qa, i) {
       q.appendChild(h("button", { type: "button", "data-dash": "q" + i, on: { click: function () {
         go(qa[0]);
         if (qa[3]) addProduct();
@@ -1307,6 +1317,249 @@
     }));
 
     show(); showT(); paintCombos();
+  }
+
+
+  /* -------------------------------------------------------------- cards */
+
+  // Pages that have a card maker. The build's /static/cards/catalog.json decides the real list + order.
+  var CARD_PAGES = ["navratri", "dussehra", "karva-chauth", "diwali", "birthday", "anniversary", "wedding", "engagement", "good-morning",
+    "shraddhanjali", "invite-wedding", "invite-engagement", "invite-birthday-party", "invite-griha-pravesh", "invite-baby-shower",
+    "invite-naming-ceremony", "invite-puja", "invite-shop-opening"];
+  var catalog = null, catalogErr = false;
+  var CARD_MAX = 2 * 1024 * 1024;
+
+  function loadCatalog() {
+    catalogErr = false;
+    return fetch("/static/cards/catalog.json", { cache: "no-store", credentials: "same-origin" }).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    }).then(function (d) {
+      catalog = d && typeof d === "object" && !Array.isArray(d) ? d : {};
+    }).catch(function () {
+      catalogErr = true;
+    }).then(function () {
+      if (S) renderCards();
+    });
+  }
+
+  function cardPages() {
+    var keys = catalog && Object.keys(catalog).length ? Object.keys(catalog) : CARD_PAGES.slice();
+    // pages that only exist in the saved settings stay reachable
+    if (S) [S.cards.hidden, S.cards.extra].forEach(function (m) { Object.keys(m).forEach(function (k) { if (keys.indexOf(k) < 0) keys.push(k); }); });
+    return keys;
+  }
+  function cardPageLabel(k) {
+    var l = catalog && catalog[k] && catalog[k].label;
+    return (l && (l[LANG] || l.en)) || pageName(k);
+  }
+  function safeImg(u) {
+    u = String(u || "");
+    return /^https:\/\/\S+$/.test(u) || /^\/(?!\/)\S+$/.test(u) ? u : "";
+  }
+  function rand8() {
+    var a = new Uint8Array(4);
+    if (window.crypto && window.crypto.getRandomValues) window.crypto.getRandomValues(a);
+    else for (var i = 0; i < 4; i++) a[i] = Math.floor(Math.random() * 256);
+    return Array.prototype.map.call(a, function (b) { return ("0" + b.toString(16)).slice(-2); }).join("");
+  }
+  function newCardId() {
+    var used = {};
+    Object.keys(S.cards.extra).forEach(function (k) { S.cards.extra[k].forEach(function (c) { used[c.id] = 1; }); });
+    var id;
+    do { id = "X-" + rand8(); } while (used[id]);
+    return id;
+  }
+  function setHidden(k, id, hide) {
+    var l = S.cards.hidden[k] = S.cards.hidden[k] || [];
+    var i = l.indexOf(id);
+    if (hide && i < 0) l.push(id);
+    if (!hide && i >= 0) l.splice(i, 1);
+    if (!l.length) delete S.cards.hidden[k];
+  }
+
+  function canvasBlob(c, q) {
+    return new Promise(function (resolve) { c.toBlob(function (b) { resolve(b); }, "image/jpeg", q); });
+  }
+  // -> {blob, type, tone}. Tone from average brightness (< 0.55 = dark). Big or non-JPEG/PNG/WebP files are
+  // re-encoded as JPEG (0.85), max 1350 px tall.
+  function prepareCardImage(file) {
+    var url = URL.createObjectURL(file);
+    return new Promise(function (resolve, reject) {
+      var img = new Image();
+      img.onload = function () { resolve(img); };
+      img.onerror = function () { var e = new Error("bad image"); e.i18n = "cards.notImage"; reject(e); };
+      img.src = url;
+    }).then(function (img) {
+      var w = img.naturalWidth, ht = img.naturalHeight;
+      if (!w || !ht) { var e0 = new Error("bad image"); e0.i18n = "cards.notImage"; throw e0; }
+      var sc = document.createElement("canvas");
+      sc.width = 32; sc.height = 40;
+      var sx = sc.getContext("2d");
+      sx.fillStyle = "#fff"; sx.fillRect(0, 0, 32, 40);
+      sx.drawImage(img, 0, 0, 32, 40);
+      var px = sx.getImageData(0, 0, 32, 40).data, sum = 0;
+      for (var i = 0; i < px.length; i += 4) sum += (0.2126 * px[i] + 0.7152 * px[i + 1] + 0.0722 * px[i + 2]) / 255;
+      var tone = sum / (px.length / 4) < 0.55 ? "dark" : "light";
+      if (["image/jpeg", "image/png", "image/webp"].indexOf(file.type) >= 0 && file.size <= CARD_MAX) {
+        return { blob: file, type: file.type, tone: tone };
+      }
+      var s = Math.min(1, 1350 / ht);
+      var c = document.createElement("canvas");
+      c.width = Math.max(1, Math.round(w * s)); c.height = Math.max(1, Math.round(ht * s));
+      var cx = c.getContext("2d");
+      cx.fillStyle = "#fff"; cx.fillRect(0, 0, c.width, c.height);
+      cx.imageSmoothingQuality = "high";
+      cx.drawImage(img, 0, 0, c.width, c.height);
+      return canvasBlob(c, 0.85).then(function (b) {
+        return b && b.size <= CARD_MAX ? b : canvasBlob(c, 0.7);
+      }).then(function (b) {
+        if (!b || b.size > CARD_MAX) { var e = new Error("too big"); e.i18n = "cards.tooBig"; throw e; }
+        return { blob: b, type: "image/jpeg", tone: tone };
+      });
+    }).then(function (r) { URL.revokeObjectURL(url); return r; }, function (e) { URL.revokeObjectURL(url); throw e; });
+  }
+
+  function cardImg(src, alt) {
+    var box = h("div", { class: "c-img" });
+    src = safeImg(src);
+    if (src) {
+      var im = h("img", { src: src, alt: alt || "", loading: "lazy", decoding: "async" });
+      im.addEventListener("error", function () { clear(box).appendChild(icon("image")); });
+      box.appendChild(im);
+    } else box.appendChild(icon("image"));
+    return box;
+  }
+
+  function renderCards(focusSel) {
+    var v = viewEl("cards");
+    if (!v || !S) return;
+    clear(v);
+    var pages = cardPages();
+    if (pages.indexOf(ui.cPage) < 0) ui.cPage = pages.indexOf("diwali") >= 0 ? "diwali" : pages[0];
+    var k = ui.cPage;
+    var entry = catalog && catalog[k];
+    var designs = entry && Array.isArray(entry.designs) ? entry.designs.filter(function (d) { return d && d.id; }) : [];
+    var hid = S.cards.hidden[k] || [];
+    var ext = S.cards.extra[k] || [];
+    var shownBuilt = designs.filter(function (d) { return hid.indexOf(d.id) < 0; }).length;
+    var hiddenN = designs.length - shownBuilt;
+    function again(sel) { renderCards(sel); }
+
+    // --- page picker + upload
+    var sel = select(t("cards.page"), pages.map(function (p) { return [p, cardPageLabel(p)]; }), k, function (val) {
+      ui.cPage = val;
+      again(".cards-page select");
+    });
+    sel.classList.add("cards-page");
+    var fileInp = h("input", { type: "file", accept: "image/jpeg,image/png,image/webp,image/*", "aria-label": t("cards.add") });
+    var addBtn = h("span", { class: "btn btn-primary file-btn cards-add" }, icon("plus"), h("span", { class: "btn-label", text: t("cards.add") }),
+      h("span", { class: "spinner", "aria-hidden": "true" }), fileInp);
+    fileInp.addEventListener("change", function () {
+      var f = fileInp.files && fileInp.files[0];
+      fileInp.value = "";
+      if (!f) return;
+      var page = k;
+      addBtn.classList.add("is-busy");
+      prepareCardImage(f).then(function (pr) {
+        return api("POST", "/api/upload", pr.blob, { raw: true, type: pr.type }).then(function (r) {
+          var list = S.cards.extra[page] = S.cards.extra[page] || [];
+          list.push({ id: newCardId(), url: r.url, tone: pr.tone, name: "" });
+          ui.cPage = page;
+          changed();
+          again(".cx:last-child input[type=text]");
+          toast(t("cards.added", { tone: t(pr.tone === "dark" ? "cards.dark" : "cards.light") }), "ok");
+        });
+      }).catch(function (e) {
+        if (e && e.status === 401) return;
+        toast(e && e.i18n ? t(e.i18n) : t("prod.upload.fail", { msg: (e && e.message) || "" }), "err");
+      }).then(function () { addBtn.classList.remove("is-busy"); });
+    });
+
+    var head = [
+      h("div", { class: "toolbar cards-bar" }, sel, addBtn),
+      h("p", { class: "count-line", "aria-live": "polite", text: t("cards.counts", { shown: shownBuilt + ext.length, hidden: hiddenN, added: ext.length }) }),
+      (catalog || catalogErr) && !(shownBuilt + ext.length) ? h("div", { class: "note warn" }, icon("alert"), h("span", { text: t("cards.none") })) : null,
+      h("div", { class: "note info" }, icon("info"), h("span", { text: t("cards.hint") }))
+    ];
+    v.appendChild(card({ icon: "image", title: t("cards.card"), desc: t("cards.card.desc"), body: h("div", { class: "stack" }, head) }));
+
+    // --- built-in designs
+    var siteBody;
+    if (!catalog && !catalogErr) siteBody = h("p", { class: "hint", text: t("cards.catLoading") });
+    else if (catalogErr && !catalog) {
+      siteBody = h("div", { class: "note warn" }, icon("alert"), h("span", null, t("cards.catError") + " "),
+        h("button", { class: "btn btn-ghost btn-sm", type: "button", on: { click: function () { catalog = null; again(); loadCatalog(); } } }, t("cards.retry")));
+    } else if (!designs.length) siteBody = h("p", { class: "hint", text: t("cards.catEmpty") });
+    else {
+      siteBody = h("div", { class: "cgrid" });
+      designs.forEach(function (d, i) {
+        var name = t("cards.design", { n: i + 1 });
+        var isHidden = hid.indexOf(d.id) >= 0;
+        var cb = h("input", { type: "checkbox", role: "switch", "data-cid": d.id, "aria-label": t("cards.showOf", { name: name }) });
+        cb.checked = !isHidden;
+        cb.addEventListener("change", function () {
+          setHidden(k, d.id, !cb.checked);
+          changed();
+          again('[data-cid="' + d.id + '"]');
+        });
+        var img = cardImg(d.thumb || d.url, t("cards.preview", { name: name }));
+        if (isHidden) img.appendChild(h("span", { class: "c-badge", text: t("cards.hidden") }));
+        siteBody.appendChild(h("figure", { class: "ctile" + (isHidden ? " is-hidden" : ""), "data-id": d.id }, img,
+          h("label", { class: "c-toggle" }, h("span", { text: name }),
+            h("span", { class: "switch" }, cb, h("span", { class: "track", "aria-hidden": "true" })))));
+      });
+    }
+    v.appendChild(card({
+      icon: "grid", tone: "gold", title: t("cards.site"), desc: t("cards.site.desc"),
+      side: hiddenN ? h("button", { class: "btn btn-ghost btn-sm", type: "button", on: { click: function () {
+        delete S.cards.hidden[k]; changed(); again();
+      } } }, icon("eye"), t("cards.unhideAll")) : null,
+      body: siteBody
+    }));
+
+    // --- the owner's own cards
+    var mine;
+    if (!ext.length) {
+      mine = h("div", { class: "empty" }, icon("image"), h("strong", { text: t("cards.mine.empty") }), h("p", { text: t("cards.mine.empty.hint") }));
+    } else {
+      mine = h("div", { class: "cx-list" });
+      ext.forEach(function (c, i) {
+        function label() { return (c.name || "").trim() || t("cards.mineN", { n: i + 1 }); }
+        function move(dlt) {
+          var j = i + dlt;
+          if (j < 0 || j >= ext.length) return;
+          ext.splice(j, 0, ext.splice(i, 1)[0]);
+          changed();
+          again('.cx[data-i="' + j + '"] ' + (dlt < 0 ? ".mv-up" : ".mv-down"));
+        }
+        var nameF = textField(t("cards.name"), c, "name", { placeholder: t("cards.mineN", { n: i + 1 }), spell: true });
+        var tone = segmented(nextId("tone"), t("cards.tone"), [["dark", t("cards.dark")], ["light", t("cards.light")]], c.tone === "light" ? "light" : "dark",
+          function (val) { c.tone = val; });
+        tone.appendChild(h("p", { class: "hint", text: t("cards.tone.hint") }));
+        var up = h("button", { class: "btn btn-ghost btn-sm mv-up", type: "button", disabled: i === 0, "aria-label": t("cards.upOf", { name: label() }), on: { click: function () { move(-1); } } }, icon("arrowUp"), t("prod.up"));
+        var down = h("button", { class: "btn btn-ghost btn-sm mv-down", type: "button", disabled: i === ext.length - 1, "aria-label": t("cards.downOf", { name: label() }), on: { click: function () { move(1); } } }, icon("arrowDown"), t("prod.down"));
+        var del = h("button", { class: "btn btn-danger btn-sm", type: "button", "aria-label": t("cards.delOf", { name: label() }), on: { click: function () {
+          ask({ title: t("cards.del.title"), text: t("cards.del.text", { name: label() }), ok: t("prod.del.ok"), danger: true, icon: "trash" }).then(function (yes) {
+            if (!yes) return;
+            ext.splice(i, 1);
+            if (!ext.length) delete S.cards.extra[k];
+            changed();
+            again(ext.length ? '.cx[data-i="' + Math.min(i, ext.length - 1) + '"] input[type=text]' : ".cards-add input");
+            toast(t("cards.del.done"), "info");
+          });
+        } } }, icon("trash"), t("prod.del"));
+        mine.appendChild(h("div", { class: "cx", "data-i": i },
+          cardImg(c.url, t("cards.preview", { name: label() })),
+          h("div", { class: "cx-body" }, nameF, tone, h("div", { class: "p-foot" }, h("div", { class: "grp" }, up, down), h("div", { class: "grp" }, del)))));
+      });
+    }
+    v.appendChild(card({ icon: "upload", tone: "violet", title: t("cards.mine"), desc: t("cards.mine.desc"), body: mine }));
+
+    if (focusSel) {
+      var f = v.querySelector(focusSel);
+      if (f && !f.disabled) f.focus({ preventScroll: true });
+    }
   }
 
   /* ------------------------------------------------------------- backup */

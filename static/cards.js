@@ -44,7 +44,7 @@
       return Math.floor((d - start) / 86400000) % K.thoughts.length;
     })(),
     photoMode: !!K.photoDefault,
-    pz: 1, px: 0, py: 0,
+    pz: 1, px: 0, py: 0, fs: (P.get("fs") || ""),
     bgImg: null, bgTone: 0.5,
     photo: null,
     made: false
@@ -59,6 +59,11 @@
   var cache = {};
   var frame = canvas.parentNode;
   function loadImg(id) {
+    var dd = DES.filter(function (d) { return d.id === id; })[0];
+    if (dd && dd.url) {
+      if (!cache[id]) cache[id] = new Promise(function (res) { var im = new Image(); im.onload = function () { res(im); }; im.onerror = function () { res(null); }; im.src = dd.url; });
+      return cache[id];
+    }
     if (cache[id]) return cache[id];
     cache[id] = new Promise(function (res) {
       var im = new Image();
@@ -123,6 +128,11 @@
     var list = wishList();
     return list[state.wish] || list[0] || "";
   }
+  function fromText() {
+    var tpl = K.fromTpl;
+    if (state.fs && K.fromOpts && K.fromOpts[state.fs]) tpl = K.fromOpts[state.fs];
+    return fmt(tpl, { from: state.from, name: state.from });
+  }
   function currentType() { return K.types ? K.types[state.type] : null; }
 
   /* Text blocks, top to bottom */
@@ -153,7 +163,7 @@
     list.push({ k: "divider", h: 24, gap: 20 });
     list.push({ k: "wish", t: currentWish(), fam: FB, w: 600, s: 46, min: 26, max: 5, gap: 20 });
     if (K.kind === "morning" && K.thoughts) list.push({ k: "thought", t: "“" + K.thoughts[state.thought] + "”", fam: FB, w: 500, s: 34, min: 22, max: 4, gap: 20 });
-    if (state.from) list.push({ k: "from", t: fmt(K.fromTpl, { from: state.from, name: state.from }), fam: FB, w: 700, s: 36, min: 22, max: 2, gap: 0 });
+    if (state.from) list.push({ k: "from", t: fromText(), fam: FB, w: 700, s: 36, min: 22, max: 2, gap: 0 });
     return list;
   }
 
@@ -201,9 +211,21 @@
     ctx.bezierCurveTo(x + w - w * 0.18, y + h * 0.1, x + w, sh - h * 0.12, x + w, sh);
     ctx.lineTo(x + w, y + h); ctx.closePath();
   }
+  function heartPath(x, y, w, h) {
+    var cx = x + w / 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, y + h);
+    ctx.bezierCurveTo(x - w * 0.2, y + h * 0.55, x, y - h * 0.05, cx, y + h * 0.22);
+    ctx.bezierCurveTo(x + w, y - h * 0.05, x + w * 1.2, y + h * 0.55, cx, y + h);
+    ctx.closePath();
+  }
   function shapePath(ph) {
     if (ph.shape === "arch") archPath(ph.x, ph.y, ph.w, ph.h);
     else if (ph.shape === "rounded") roundRect(ph.x, ph.y, ph.w, ph.h, 28);
+    else if (ph.shape === "pill") roundRect(ph.x, ph.y, ph.w, ph.h, Math.min(ph.w, ph.h) / 2);
+    else if (ph.shape === "rect") { ctx.beginPath(); ctx.rect(ph.x, ph.y, ph.w, ph.h); }
+    else if (ph.shape === "oval") { ctx.beginPath(); ctx.ellipse(ph.x + ph.w / 2, ph.y + ph.h / 2, ph.w / 2, ph.h / 2, 0, 0, Math.PI * 2); }
+    else if (ph.shape === "heart") heartPath(ph.x, ph.y, ph.w, ph.h);
     else { ctx.beginPath(); ctx.arc(ph.cx, ph.cy, ph.r, 0, Math.PI * 2); }
   }
   function box(ph) {
@@ -234,7 +256,7 @@
     ctx.shadowColor = "rgba(0,0,0,.3)"; ctx.shadowBlur = 24; ctx.shadowOffsetY = 8;
     if (ph.shape === "circle") { ctx.beginPath(); ctx.arc(ph.cx, ph.cy, ph.r + 12, 0, Math.PI * 2); }
     else if (ph.shape === "rounded") roundRect(ph.x - 10, ph.y - 10, ph.w + 20, ph.h + 20, 34);
-    else archPath(ph.x - 10, ph.y - 10, ph.w + 20, ph.h + 20);
+    else shapePath({ shape: ph.shape, x: ph.x - 10, y: ph.y - 10, w: ph.w + 20, h: ph.h + 20 });
     ctx.fillStyle = pal.dark ? gold(ph.cy || ph.y, (ph.cy || ph.y) + 200) : "#FFFFFF"; ctx.fill();
     ctx.restore();
     drawPhotoImage(ph);
@@ -309,10 +331,12 @@
   function footerMark(pal) {
     ctx.save();
     ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    ctx.font = font(FB, 600, 24);
-    ctx.fillStyle = pal.dark ? "rgba(255,248,236,.75)" : "rgba(42,22,51,.6)";
-    ctx.shadowColor = pal.dark ? "rgba(0,0,0,.7)" : "rgba(255,255,255,.9)"; ctx.shadowBlur = 8;
-    ctx.fillText("indianfestivalwishes.com", W / 2, H - 30);
+    ctx.font = font(FB, 700, 24);
+    var t = "indianfestivalwishes.com", tw = ctx.measureText(t).width + 44;
+    roundRect(W / 2 - tw / 2, H - 58, tw, 40, 20);
+    ctx.fillStyle = "rgba(20,10,30,.62)"; ctx.fill();
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillText(t, W / 2, H - 37);
     ctx.restore();
   }
 
@@ -437,6 +461,7 @@
     if (state.n2) q.set("n2", state.n2);
     FIELD_KEYS.forEach(function (k) { if (state.f[k]) q.set("f_" + k, state.f[k]); });
     if (K.types) q.set("ty", String(state.type));
+    if (state.fs) q.set("fs", state.fs);
     if (!INVITE) q.set("r", state.rel);
     q.set("w", String(state.wish));
     if (state.wish === "c" && state.custom) q.set("c", state.custom);
@@ -478,6 +503,45 @@
     if (customBox) customBox.hidden = state.wish !== "c";
   }
 
+  // Card designs hidden or added from the admin panel
+  function rebuildPicker() {
+    var row = $("design-row");
+    if (!row) return;
+    row.innerHTML = "";
+    DES.forEach(function (d, i) {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "dz"; b.setAttribute("aria-pressed", i === state.design ? "true" : "false");
+      b.setAttribute("aria-label", (U.step_design || "") + " " + (i + 1));
+      var im = document.createElement("img");
+      im.src = d.url || ("/static/cards/thumb/" + d.id + ".webp"); im.alt = ""; im.loading = "lazy"; im.width = 108; im.height = 135;
+      b.appendChild(im);
+      b.addEventListener("click", function () { selectDesign(i); });
+      row.appendChild(b);
+    });
+    dzBtns = Array.prototype.slice.call(row.querySelectorAll(".dz"));
+    var cnt = document.querySelector("[data-design-count]");
+    if (cnt) cnt.textContent = fmt(U.designs_count, { n: DES.length });
+  }
+  if (window.IFW_SETTINGS) {
+    window.IFW_SETTINGS.then(function (S) {
+      var c = (S && S.cards) || {}, key = K.occasion;
+      var hidden = ((c.hidden || {})[key]) || [], extra = ((c.extra || {})[key]) || [];
+      if (!hidden.length && !extra.length) return;
+      var cur = DES[state.design] && DES[state.design].id;
+      var list = DES.filter(function (d) { return hidden.indexOf(d.id) < 0; });
+      extra.forEach(function (x) {
+        if (!x || typeof x.url !== "string" || !/^(\/uploads\/[\w.-]+|https:\/\/)/.test(x.url)) return;
+        list.push({ id: x.id, url: x.url, tone: x.tone === "dark" ? "dark" : "light", ink: "#7A1238", zone: [180, 1170], w: 820, extra: true });
+      });
+      if (!list.length) return;
+      DES = list;
+      var ni = DES.map(function (d) { return d.id; }).indexOf(cur);
+      state.design = ni >= 0 ? ni : 0;
+      rebuildPicker();
+      redraw();
+    });
+  }
+
   // Extra wishes and thoughts added from the admin panel
   if (window.IFW_SETTINGS && !INVITE) {
     window.IFW_SETTINGS.then(function (S) {
@@ -516,6 +580,11 @@
   if (relSel) {
     relSel.value = state.rel;
     relSel.addEventListener("change", function () { state.rel = relSel.value; if (state.wish !== "c") state.wish = 0; fillWishes(); changed(); });
+  }
+  var fsSel = $("from-style");
+  if (fsSel) {
+    if (state.fs) fsSel.value = state.fs;
+    fsSel.addEventListener("change", function () { state.fs = fsSel.value; changed(); });
   }
   if (typeSel) {
     typeSel.value = String(state.type);
