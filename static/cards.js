@@ -16,6 +16,7 @@
   var FDW = D.lang === "gu" ? 700 : 400; // Rozha One ships a single weight
   var DES = K.designs;
   var INVITE = K.kind === "invite";
+  var IV = (function () { var sc = document.querySelector('script[src*="cards.js"]'); var m = sc && /[?&]v=([\w-]+)/.exec(sc.src); return m ? "?v=" + m[1] : ""; })();
   var FIELD_KEYS = ["name1", "name2", "dates", "date", "time", "venue", "host", "note"];
 
   function $(id) { return document.getElementById(id); }
@@ -73,9 +74,9 @@
         var t = new Image();
         t.onload = function () { res(t); };
         t.onerror = function () { res(null); };
-        t.src = "/static/cards/thumb/" + id + ".webp";
+        t.src = "/static/cards/thumb/" + id + ".webp" + IV;
       };
-      im.src = "/static/cards/" + id + ".webp";
+      im.src = "/static/cards/" + id + ".webp" + IV;
     });
     return cache[id];
   }
@@ -513,7 +514,7 @@
       b.type = "button"; b.className = "dz"; b.setAttribute("aria-pressed", i === state.design ? "true" : "false");
       b.setAttribute("aria-label", (U.step_design || "") + " " + (i + 1));
       var im = document.createElement("img");
-      im.src = d.url || ("/static/cards/thumb/" + d.id + ".webp"); im.alt = ""; im.loading = "lazy"; im.width = 108; im.height = 135;
+      im.src = d.url || ("/static/cards/thumb/" + d.id + ".webp" + IV); im.alt = ""; im.loading = "lazy"; im.width = 108; im.height = 135;
       b.appendChild(im);
       b.addEventListener("click", function () { selectDesign(i); });
       row.appendChild(b);

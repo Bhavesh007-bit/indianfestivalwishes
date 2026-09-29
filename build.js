@@ -316,7 +316,7 @@ function pageHead(L, o) {
   // o: {kicker, h1, sub, crumbs:[[t,href]], img, color}
   const crumbs = o.crumbs ? `<ol class="crumbs">${o.crumbs.map(([t, h]) => h ? `<li><a href="${h}">${esc(t)}</a></li>` : `<li aria-current="page">${esc(t)}</li>`).join("")}</ol>` : "";
   return `<section class="phead${o.img ? " has-img" : ""}"${o.color ? ` style="--accent:${o.color}"` : ""}>
-  ${o.img ? `<div class="phead-bg" aria-hidden="true" style="background-image:url(/static/cards/thumb/${o.img}.webp)"></div>` : ""}
+  ${o.img ? `<div class="phead-bg" aria-hidden="true" style="background-image:url(/static/cards/thumb/${o.img}.webp?v=${ASSET_V})"></div>` : ""}
   <div class="phead-blobs" aria-hidden="true"><span></span><span></span><span></span></div>
   <div class="wrap phead-in">
     ${crumbs}
@@ -356,7 +356,7 @@ function cardMaker(L, K) {
       <fieldset class="field" id="bg-box"><legend>${esc(u.bg_label)}</legend>
         <div class="bg-row"><label class="btn btn-soft file-btn">${I.image}${esc(u.bg_choose)}<input id="card-bg" type="file" accept="image/*"></label><button class="btn btn-ghost btn-sm" id="bg-remove" type="button" hidden>${esc(u.bg_remove)}</button></div>
       </fieldset>` : "";
-  const designs = K.designs.map((d, i) => `<button type="button" class="dz" data-i="${i}" aria-pressed="${i === 0}" aria-label="${esc(u.step_design)} ${i + 1}"><img src="/static/cards/thumb/${d.id}.webp" alt="" width="108" height="135" loading="lazy" decoding="async"></button>`).join("");
+  const designs = K.designs.map((d, i) => `<button type="button" class="dz" data-i="${i}" aria-pressed="${i === 0}" aria-label="${esc(u.step_design)} ${i + 1}"><img src="/static/cards/thumb/${d.id}.webp?v=${ASSET_V}" alt="" width="108" height="135" loading="lazy" decoding="async"></button>`).join("");
   return `<section class="maker reveal" id="card-maker" aria-labelledby="card-heading">
   <div class="maker-preview">
     <div class="canvas-frame"><canvas id="card" width="1080" height="1350" role="img" aria-label="${esc(u.card_heading)}"></canvas><div class="canvas-loading" id="canvas-loading">${esc(u.loading_design)}</div></div>
@@ -428,7 +428,7 @@ function buildHome(L) {
   const festCards = CAL.map((c, i) => {
     const t = u.nav[c.key];
     return `<li class="reveal" style="--d:${i * 70}ms"><a class="fest" href="${url(L, c.path)}" data-start="${c.start}" data-end="${c.end}">
-      <img src="/static/cards/thumb/${c.img}.webp" alt="" loading="lazy" width="432" height="540">
+      <img src="/static/cards/thumb/${c.img}.webp?v=${ASSET_V}" alt="" loading="lazy" width="432" height="540">
       <span class="fest-shade"></span>
       <span class="fest-date">${I.calendar}${esc(c.when[L])}</span>
       <span class="fest-body"><span class="fest-name">${esc(t)}</span><span class="fest-count" data-count></span></span>
@@ -437,7 +437,7 @@ function buildHome(L) {
   }).join("") + LATER.map((c) => `<li class="reveal"><div class="fest fest-soon"><span class="fest-date">${I.calendar}${esc(c.when[L])}</span><span class="fest-body"><span class="fest-name">${esc(c.name[L])}</span><span class="fest-count">${esc(u.soon)}</span></span></div></li>`).join("");
   const occ = navItems(L).occasions.map((it, i) => `<li class="reveal" style="--d:${i * 60}ms"><a class="occ occ-${it.k}" href="${url(L, it.p)}"><span class="occ-ico">${I[OCC_ICON[it.k]]}</span><span class="occ-name">${esc(it.t)}</span><span class="occ-go">${I.arrow}</span></a></li>`).join("");
   const days = NAV[L].days.map((d, i) => `<li class="reveal" style="--d:${i * 40}ms"><a class="${tileCls(d.theme.primary)}" href="${url(L, "navratri/day-" + (i + 1) + ".html")}" data-day="${i + 1}" style="--c:${d.theme.primary}"><span class="day-n">${i + 1}</span><span class="day-devi">${esc(d.devi)}</span><span class="day-col">${esc(d.color)}</span></a></li>`).join("");
-  const stack = ["N1", "D3", "B1"].map((id, i) => `<div class="stack-card s${i + 1}"><img src="/static/cards/thumb/${id}.webp" alt="" width="432" height="540"></div>`).join("");
+  const stack = ["N1", "D3", "B1"].map((id, i) => `<div class="stack-card s${i + 1}"><img src="/static/cards/thumb/${id}.webp?v=${ASSET_V}" alt="" width="432" height="540"></div>`).join("");
   const body = `
 <section class="hero">
   <div class="hero-bg" aria-hidden="true"><span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span><span class="grain"></span></div>
@@ -628,7 +628,7 @@ function buildTribute(L) {
 function inviteTiles(L) {
   return INVITES.map((k, i) => {
     const V = NP[L].invites[k];
-    return `<li class="reveal" style="--d:${i * 50}ms"><a class="inv-tile" href="${url(L, "invitations/" + k + ".html")}"><img src="/static/cards/preview/${k}-${L}.webp" alt="" loading="lazy" width="432" height="540"><span class="inv-shade"></span><span class="inv-name">${esc(V.nav)}</span><span class="fest-go">${I.arrow}</span></a></li>`;
+    return `<li class="reveal" style="--d:${i * 50}ms"><a class="inv-tile" href="${url(L, "invitations/" + k + ".html")}"><img src="/static/cards/preview/${k}-${L}.webp?v=${ASSET_V}" alt="" loading="lazy" width="432" height="540"><span class="inv-shade"></span><span class="inv-name">${esc(V.nav)}</span><span class="fest-go">${I.arrow}</span></a></li>`;
   }).join("");
 }
 
@@ -730,7 +730,7 @@ function main() {
   };
   ["navratri", "dussehra", "karva-chauth", "diwali", "birthday", "anniversary", "wedding", "engagement", "good-morning", "shraddhanjali"].concat(INVITES.map((k) => "invite-" + k)).forEach((key) => {
     const set = key.startsWith("invite-") ? "inv-" + key.slice(7) : key;
-    cat[key] = { label: labelOf(key), designs: designList(set).map((d) => ({ id: d.id, thumb: `/static/cards/thumb/${d.id}.webp` })) };
+    cat[key] = { label: labelOf(key), designs: designList(set).map((d) => ({ id: d.id, thumb: `/static/cards/thumb/${d.id}.webp?v=${ASSET_V}` })) };
   });
   write("static/cards/catalog.json", JSON.stringify(cat));
   buildSitemap();
