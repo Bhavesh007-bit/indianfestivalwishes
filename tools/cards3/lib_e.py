@@ -1432,6 +1432,17 @@ def sleeping_baby(a, cx, cy, s, cap="#F7C6D9", blanket="#BFD9F5"):
         o += P("M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" % (cx + s * (dx - 0.14), cy + s * 0.12, cx + s * dx, cy + s * 0.24, cx + s * (dx + 0.14), cy + s * 0.12), stroke="#8A5A44", stroke_width=s * 0.05, stroke_linecap="round")
     o += E(cx - s * 0.52, cy + s * 0.38, s * 0.16, s * 0.1, "#FF9DB0", opacity=0.6) + E(cx + s * 0.4, cy + s * 0.38, s * 0.16, s * 0.1, "#FF9DB0", opacity=0.6)
     o += P("M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" % (cx - s * 0.12, cy + s * 0.52, cx - s * 0.04, cy + s * 0.58, cx + s * 0.04, cy + s * 0.52), stroke="#C0706A", stroke_width=s * 0.04, stroke_linecap="round")
+    # details: hair curl, lashes, tiny hand, swaddle bow + fold highlight
+    o += P("M%.1f,%.1f q%.1f,%.1f %.1f,%.1f q%.1f,%.1f %.1f,%.1f" % (cx + s * 0.5, cy - s * 0.55, s * 0.18, -s * 0.05, s * 0.2, s * 0.12, -s * 0.02, s * 0.1, -s * 0.12, s * 0.06), stroke="#A0704E", stroke_width=s * 0.05, stroke_linecap="round")
+    for dx in (-0.35, 0.2):
+        for k in (-1, 0, 1):
+            o += P("M%.1f,%.1f l%.1f,%.1f" % (cx + s * (dx + k * 0.08), cy + s * 0.21, k * s * 0.03, s * 0.07), stroke="#8A5A44", stroke_width=s * 0.025, stroke_linecap="round")
+    o += E(cx + s * 0.78, cy + s * 0.55, s * 0.2, s * 0.16, a.rg([(0, "#FFE3CF"), (1, "#EDB595")]))
+    for k in range(3):
+        o += C(cx + s * (0.68 + k * 0.1), cy + s * 0.43, s * 0.055, "#F7C9A8")
+    o += P("M%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f" % (cx + s * 1.1, cy - s * 0.4, cx + s * 1.8, cy - s * 0.2, cx + s * 2.4, cy - s * 0.1, cx + s * 3.1, cy + s * 0.1), stroke="#FFFFFF", stroke_width=s * 0.1, stroke_linecap="round", opacity=0.55)
+    bx, by_ = cx + s * 1.9, cy + s * 0.35
+    o += bow_shape(a, bx, by_, s * 0.45, cap)
     return o
 
 
@@ -1469,7 +1480,7 @@ def palna_hanging(a, cx, ytop, ybot, w, wood="#C98B4E", cloth="#F9D5E0", flowers
     # back rim (inside)
     o += E(cx, by, w / 2, bh * 0.22, dk(wood, 0.35))
     if baby:
-        o += g(sleeping_baby(a, cx - w * 0.2, by - bh * 0.05, bh * 0.3), "")
+        o += sleeping_baby(a, cx - w * 0.2, by - bh * 0.2, bh * 0.36)
     o += P(body, a.lg([(0, lt(wood, 0.25)), (0.5, wood), (1, dk(wood, 0.35))]))
     cp = a.clip(P(body, "#000"))
     # cloth drape panel with scallop
@@ -1539,7 +1550,7 @@ def palna_stand(a, cx, ybot, w, h, wood="#B9793F", cloth="#FBE3EA", baby=True, g
         c0 - 20, cy_, c1 + 20, cy_, c1 + 10, cy_ + ch * 0.5, c1 - 20, cb, c1 - 50, cb, c0 + 50, cb, c0 + 20, cb, c0 - 10, cy_ + ch * 0.5, c0 - 20, cy_)
     o += E(cx, cy_, cw / 2 + 20, ch * 0.16, dk(wood, 0.4))
     if baby and not photo:
-        o += sleeping_baby(a, cx - cw * 0.2, cy_ - ch * 0.28, ch * 0.34)
+        o += sleeping_baby(a, cx - cw * 0.26, cy_ - ch * 0.36, ch * 0.44)
     o += P(body, wf)
     cp = a.clip(P(body, "#000"))
     inner = R(c0 - 30, cy_ + ch * 0.18, cw + 60, ch * 0.5, a.lg([(0, lt(cloth, 0.3)), (1, dk(cloth, 0.08))]))

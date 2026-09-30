@@ -52,21 +52,21 @@ def lace_panel(a, x, y, w, h, fill="#FFFDF9", edge="#FFFFFF", r=14, shadow=0.2):
 def card1():
     a = Art(111)
     b = R(0, 0, W, H, a.lg([(0, "#E9E1F7"), (0.55, "#CDBDEB"), (1, "#A995D6")]))
-    b += twinkles(a, 70, (10, 820, W - 10, H - 10), "#FFFFFF", (4, 12), seed=2)
-    b += pastel_sky_clouds(a, ["#FFFFFF", "#F4EEFF"], seed=3, box=(40, 1150, 1040, 1330), n=6, avoid=[(330, 1240, 750, 1350)])
-    b += lullaby_moon(a, 190, 1010, 115, "#FFE7A3", rot=-10)
+    b += C(540, 300, 480, a.rg([(0, "#FFFFFF", 0.55), (1, "#FFFFFF", 0)]))
+    b += twinkles(a, 60, (10, 10, W - 10, 520), "#FFFFFF", (4, 12), seed=2, avoid=[(220, 0, 860, 520)])
+    b += pastel_sky_clouds(a, ["#FFFFFF", "#F4EEFF"], seed=3, box=(40, 380, 1040, 470), n=4, avoid=[(260, 300, 820, 520)])
+    b += lullaby_moon(a, 140, 170, 95, "#FFE7A3", rot=-10)
+    for (x, ln, r, c) in [(880, 60, 22, "#FFE08A"), (960, 140, 16, "#FFFFFF"), (1030, 70, 18, "#FFD6E7")]:
+        b += hanging_star(a, x, 0, ln, r, c, string="#FFFFFF")
+    b += palna_hanging(a, 540, 30, 450, 560, wood="#E9B97A", cloth="#F9D5E0", rope="#F2D49A")
     # panel
-    b += R(90, 50, 900, 800, "#FFFCF6", 40, filter=a.shadow(22, 12, 0.22))
-    b += R(110, 70, 860, 760, "none", 30, stroke="#B79CE0", stroke_width=2.5)
-    b += R(122, 82, 836, 736, "none", 24, stroke="#E7C98A", stroke_width=1.2)
+    b += R(90, 505, 900, 755, "#FFFCF6", 40, filter=a.shadow(22, 12, 0.22))
+    b += R(110, 525, 860, 715, "none", 30, stroke="#B79CE0", stroke_width=2.5)
+    b += R(122, 537, 836, 691, "none", 24, stroke="#E7C98A", stroke_width=1.2)
     for x in (110, 970):
-        for y in (70, 830):
+        for y in (525, 1240):
             b += flower5(a, x, y, 22, "#F6C1D6", center="#F6C343")
-    # hanging stars from the panel
-    for (x, ln, r, c) in [(300, 60, 20, "#FFE08A"), (390, 110, 16, "#FFFFFF"), (760, 90, 18, "#FFD6E7"), (870, 150, 22, "#FFE08A"), (950, 60, 14, "#FFFFFF")]:
-        b += hanging_star(a, x, 850, ln, r, c)
-    b += palna_hanging(a, 560, 845, 1215, 500, wood="#E9B97A", cloth="#F9D5E0", rope="#F2D49A")
-    zone = [150, 105, 930, 805]
+    zone = [150, 540, 930, 1240]
     return a.svg(b), spec(1, zone, "#6A3FA0", "#2E2340", "#B0567E", tfont="script")
 
 
@@ -145,8 +145,8 @@ def card4():
     b += lace_panel(a, 110, 60, 860, 700, "#FFFDFB", "#FFFFFF", 16)
     b += R(140, 90, 800, 640, "none", 18, stroke="#E7A3B8", stroke_width=2, stroke_dasharray="10 7")
     b += E(540, 1255, 420, 22, "#B96A80", opacity=0.25, filter=a.blur(8))
-    b += palna_stand(a, 540, 1255, 640, 440, wood="#C48A52", cloth="#FBE3EA", garl=("#FFFFFF", "#F7A8C0", "#FFE08A"))
-    b += zzz(a, 470, 990, 16, "#B08BD9")
+    b += palna_stand(a, 540, 1250, 720, 450, wood="#C48A52", cloth="#FBE3EA", garl=("#FFFFFF", "#F7A8C0", "#FFE08A"))
+    b += zzz(a, 560, 950, 18, "#B08BD9")
     # footprints either side
     b += footprint(a, 70, 1180, 60, "#E79AB2", -12, left=True) + footprint(a, 120, 1110, 60, "#E79AB2", 8)
     b += footprint(a, 960, 1110, 60, "#9CC7E8", -8, left=True) + footprint(a, 1010, 1180, 60, "#9CC7E8", 12)
@@ -225,12 +225,12 @@ def card6():
     for i, x in enumerate(range(780, 1060, 64)):
         b += footprint(a, x, 1300 - (i % 2) * 26, 30, "#E3A99A", 80, left=i % 2 == 0)
     # panel with ornamental corners
-    b += R(90, 490, 900, 750, "#FFFFFF", 30, filter=a.shadow(22, 12, 0.18))
-    b += R(110, 510, 860, 710, "none", 20, stroke=rg_, stroke_width=3)
-    for (x, y, rot) in [(110, 510, 0), (970, 510, 90), (970, 1220, 180), (110, 1220, 270)]:
+    b += R(90, 478, 900, 770, "#FFFFFF", 30, filter=a.shadow(22, 12, 0.18))
+    b += R(110, 498, 860, 730, "none", 20, stroke=rg_, stroke_width=3)
+    for (x, y, rot) in [(110, 498, 0), (970, 498, 90), (970, 1228, 180), (110, 1228, 270)]:
         orn = P("M0,0 Q60,0 70,40 Q30,16 0,70 Q0,30 0,0Z", rg_) + C(22, 22, 7, rg_)
         b += g(orn, "translate(%d %d) rotate(%d)" % (x, y, rot))
-    zone = [150, 520, 930, 1215]
+    zone = [150, 515, 930, 1218]
     return a.svg(b), spec(6, zone, "#9C4A3A", "#3B2A27", "#9C4A3A", tfont="script")
 
 

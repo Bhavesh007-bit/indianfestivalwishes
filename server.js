@@ -564,9 +564,188 @@ api.post("/password", requireAuth, jsonSmall, (req, res, next) => {
   }
 });
 
+/* ------------------------------------------- public share links + stats */
+
+const SHARE_DIR = path.join(DATA_DIR, "shares");
+const STATS_FILE = path.join(DATA_DIR, "card-stats.json");
+const SHARE_MAX_BYTES = 700 * 1024;
+const SHARE_TTL_MS = 60 * 24 * 60 * 60 * 1000;
+const SHARE_MAX_FILES = 60000;
+const SHARE_ID_RE = /^[A-Za-z0-9_-]{8,16}$/;
+fs.mkdirSync(SHARE_DIR, { recursive: true });
+
+const hitLog = new Map(); // "bucket|ip" -> [timestamps]
+function allowHit(bucket, ip, max, windowMs) {
+  const k = bucket + "|" + ip, now = Date.now();
+  const list = (hitLog.get(k) || []).filter((t) => now - t < windowMs);
+  if (list.length >= max) { hitLog.set(k, list); return false; }
+  list.push(now);
+  hitLog.set(k, list);
+  return true;
+}
+setInterval(() => {
+  const now = Date.now();
+  for (const [k, list] of hitLog) if (!list.length || now - list[list.length - 1] > 3600e3) hitLog.delete(k);
+}, 10 * 60e3).unref();
+
+// JPEG width/height from the SOF marker (rejects anything that is not a real JPEG).
+function jpegSize(b) {
+  if (!(b.length > 4 && b[0] === 0xff && b[1] === 0xd8)) return null;
+  let i = 2;
+  while (i + 9 < b.length) {
+    if (b[i] !== 0xff) return null;
+    const m = b[i + 1], len = b.readUInt16BE(i + 2);
+    if (m >= 0xc0 && m <= 0xcf && m !== 0xc4 && m !== 0xc8 && m !== 0xcc) return { h: b.readUInt16BE(i + 5), w: b.readUInt16BE(i + 7) };
+    i += 2 + len;
+  }
+  return null;
+}
+function cleanText(v, max) {
+  return String(v || "").replace(/[\u0000-\u001F\u007F<>"`]/g, " ").replace(/\s+/g, " ").trim().slice(0, max);
+}
+function safeLink(v) {
+  const s = String(v || "");
+  if (s.length > 2500 || !s.startsWith("/") || s.startsWith("//") || /[\s<>"'`\\]/.test(s)) return null;
+  const p = s.split("?")[0];
+  if (!/^\/[A-Za-z0-9\-\/._]*$/.test(p) || p.includes("..") || p.startsWith("/api") || p.startsWith("/admin") || p.startsWith("/s/")) return null;
+  return s;
+}
+let shareCount = 0;
+function sweepShares() {
+  let n = 0;
+  try {
+    const now = Date.now();
+    for (const f of fs.readdirSync(SHARE_DIR)) {
+      if (!f.endsWith(".json")) continue;
+      const fp = path.join(SHARE_DIR, f);
+      try {
+        if (now - fs.statSync(fp).mtimeMs > SHARE_TTL_MS) {
+          fs.rmSync(fp, { force: true });
+          fs.rmSync(fp.replace(/\.json$/, ".jpg"), { force: true });
+        } else n++;
+      } catch (e) { /* ignore one bad file */ }
+    }
+  } catch (e) {
+    console.error("[share] sweep failed", e.message);
+  }
+  shareCount = n;
+}
+sweepShares();
+setInterval(sweepShares, 12 * 3600e3).unref();
+
+// Upload the rendered card (JPEG) so a share link can show it as its preview.
+// Query: link (site path + query), t (title), d (description), l (lang), id + key to replace an earlier upload.
+api.post("/share", express.raw({ type: "image/jpeg", limit: SHARE_MAX_BYTES }), (req, res, next) => {
+  const ip = clientIp(req);
+  if (!allowHit("share", ip, 60, 3600e3)) return res.status(429).json({ error: "Too many requests" });
+  const buf = req.body;
+  if (!Buffer.isBuffer(buf) || !buf.length) return res.status(400).json({ error: "Empty upload" });
+  const size = jpegSize(buf);
+  if (!size || size.w < 300 || size.w > 1200 || size.h < 300 || size.h > 1600) return res.status(415).json({ error: "Not a card image" });
+  const link = safeLink(req.query.link);
+  if (!link) return res.status(400).json({ error: "Bad link" });
+  let id = String(req.query.id || ""), key = String(req.query.key || ""), meta = null;
+  if (SHARE_ID_RE.test(id) && /^[a-f0-9]{32}$/.test(key)) {
+    try {
+      const m = JSON.parse(fs.readFileSync(path.join(SHARE_DIR, id + ".json"), "utf8"));
+      if (safeEqual(m.kh, crypto.createHash("sha256").update(key).digest("hex"))) meta = m;
+    } catch (e) { meta = null; }
+  }
+  if (!meta) {
+    if (shareCount >= SHARE_MAX_FILES) return res.status(503).json({ error: "Share storage full" });
+    id = crypto.randomBytes(7).toString("base64url");
+    key = crypto.randomBytes(16).toString("hex");
+    meta = { kh: crypto.createHash("sha256").update(key).digest("hex"), created: new Date().toISOString() };
+    shareCount++;
+  }
+  meta.link = link;
+  meta.t = cleanText(req.query.t, 140);
+  meta.d = cleanText(req.query.d, 220);
+  meta.l = ["hi", "gu", "en"].includes(req.query.l) ? req.query.l : "hi";
+  meta.w = size.w; meta.h = size.h;
+  meta.updated = new Date().toISOString();
+  try {
+    atomicWrite(path.join(SHARE_DIR, id + ".jpg"), buf);
+    atomicWrite(path.join(SHARE_DIR, id + ".json"), JSON.stringify(meta));
+    res.status(201).json({ id, key, url: "/s/" + id });
+  } catch (e) {
+    next(e);
+  }
+});
+
+// Anonymous usage counts: page + design + action, per day. No personal data.
+const STAT_ACTIONS = new Set(["make", "download", "share", "wa", "link", "pdf"]);
+let stats = { days: {} };
+try { stats = JSON.parse(fs.readFileSync(STATS_FILE, "utf8")); if (!isPlainObject(stats.days)) stats = { days: {} }; } catch (e) { stats = { days: {} }; }
+let statsDirty = false;
+function flushStats() {
+  if (!statsDirty) return;
+  const keys = Object.keys(stats.days).sort();
+  while (keys.length > 120) delete stats.days[keys.shift()];
+  try { atomicWrite(STATS_FILE, JSON.stringify(stats)); statsDirty = false; } catch (e) { console.error("[stats] write failed", e.message); }
+}
+setInterval(flushStats, 60e3).unref();
+process.on("exit", flushStats);
+
+api.post("/stat", jsonSmall, (req, res) => {
+  const ip = clientIp(req);
+  if (!allowHit("stat", ip, 400, 3600e3)) return res.status(204).end();
+  const b = isPlainObject(req.body) ? req.body : {};
+  const p = String(b.p || ""), d = String(b.d || ""), a = String(b.a || ""), l = String(b.l || "");
+  if (!/^[a-z0-9-]{1,40}$/.test(p) || !/^[A-Za-z0-9_-]{1,40}$/.test(d) || !STAT_ACTIONS.has(a) || !["hi", "gu", "en"].includes(l)) return res.status(204).end();
+  const day = new Date(Date.now() + 5.5 * 3600e3).toISOString().slice(0, 10); // India date
+  const bucket = stats.days[day] || (stats.days[day] = {});
+  const k = [l, p, d, a].join("|");
+  if (!(k in bucket) && Object.keys(bucket).length > 20000) return res.status(204).end();
+  bucket[k] = (bucket[k] || 0) + 1;
+  statsDirty = true;
+  res.status(204).end();
+});
+
+api.get("/stats", requireAuth, (req, res) => {
+  res.json({ days: stats.days, shares: shareCount });
+});
+
 api.use((req, res) => res.status(404).json({ error: "Not found" }));
 
 app.use("/api", api);
+
+/* Share link pages: crawlers (WhatsApp, Facebook…) get the card as preview, people go to the card. */
+const BOT_RE = /facebookexternalhit|facebot|whatsapp|twitterbot|telegrambot|linkedinbot|slackbot|discordbot|pinterest|skypeuripreview|googlebot|bingbot|applebot|embedly|vkshare|redditbot|snapchat|viber|line\//i;
+function escAttr(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+function readShare(id) {
+  if (!SHARE_ID_RE.test(id)) return null;
+  try { return JSON.parse(fs.readFileSync(path.join(SHARE_DIR, id + ".json"), "utf8")); } catch (e) { return null; }
+}
+app.get(/^\/s\/([A-Za-z0-9_-]{8,16})\.jpg$/, (req, res) => {
+  const id = req.params[0];
+  if (!readShare(id)) return res.status(404).type("text/plain").send("Not found");
+  res.set({ "Cache-Control": "public, max-age=86400", "X-Robots-Tag": "noindex" });
+  res.type("image/jpeg").sendFile(path.join(SHARE_DIR, id + ".jpg"));
+});
+app.get(/^\/s\/([A-Za-z0-9_-]{8,16})$/, (req, res) => {
+  const m = readShare(req.params[0]);
+  if (!m || !safeLink(m.link)) return res.redirect(302, "/");
+  res.set({ "Cache-Control": "no-cache", "X-Robots-Tag": "noindex" });
+  if (!BOT_RE.test(String(req.get("User-Agent") || ""))) return res.redirect(302, m.link);
+  const origin = "https://" + (hostOf(req) || CANON_HOST);
+  const img = origin + "/s/" + req.params[0] + ".jpg";
+  const title = m.t || "Indian Festival Wishes";
+  res.type("html").send(
+    '<!doctype html><html lang="' + m.l + '"><head><meta charset="utf-8"><title>' + escAttr(title) + "</title>" +
+      '<meta name="robots" content="noindex">' +
+      '<meta property="og:type" content="website"><meta property="og:site_name" content="Indian Festival Wishes">' +
+      '<meta property="og:title" content="' + escAttr(title) + '">' +
+      '<meta property="og:description" content="' + escAttr(m.d || "") + '">' +
+      '<meta property="og:url" content="' + escAttr(origin + "/s/" + req.params[0]) + '">' +
+      '<meta property="og:image" content="' + escAttr(img) + '"><meta property="og:image:type" content="image/jpeg">' +
+      '<meta property="og:image:width" content="' + (m.w || 720) + '"><meta property="og:image:height" content="' + (m.h || 900) + '">' +
+      '<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="' + escAttr(img) + '">' +
+      '</head><body><a href="' + escAttr(m.link) + '">' + escAttr(title) + "</a></body></html>"
+  );
+});
 
 /* ----------------------------------------------------------------- admin */
 

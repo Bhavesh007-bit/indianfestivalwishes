@@ -75,7 +75,7 @@
   // [id, icon]; titles come from "view.<id>.title/.sub/.tab"
   var VIEWS = [
     ["dashboard", "grid"], ["products", "bag"], ["telegram", "send"], ["patti", "megaphone"],
-    ["ads", "chart"], ["wishes", "message"], ["cards", "image"], ["backup", "database"], ["account", "shield"]
+    ["ads", "chart"], ["wishes", "message"], ["cards", "image"], ["stats", "chart"], ["backup", "database"], ["account", "shield"]
   ];
   function viewTitle(id) { return t("view." + id + ".title"); }
   function viewTab(id) { return has("view." + id + ".tab") ? t("view." + id + ".tab") : viewTitle(id); }
@@ -505,6 +505,7 @@
     if (name === "dashboard") renderDashboard();
     if (name === "patti" && S && prev !== name) renderPatti();
     if (name === "backup" && !initial) loadBackups();
+    if (name === "stats") loadStats();
     if (location.hash.replace("#", "") !== name) history.replaceState(null, "", "#" + name);
     if (!initial && prev !== name) {
       window.scrollTo(0, 0);
@@ -778,6 +779,7 @@
     renderAds();
     renderWishes();
     renderCards();
+    renderStats();
     renderBackup();
     renderAccount();
     refreshNavBadges();
@@ -1319,6 +1321,98 @@
     show(); showT(); paintCombos();
   }
 
+
+  /* -------------------------------------------------------------- stats */
+
+  var statsData = null, statsErr = false, statsLoading = false;
+  var STAT_KEYS = ["make", "wa", "download", "share", "link", "pdf"];
+  function loadStats() {
+    if (statsLoading) return;
+    statsLoading = true; statsErr = false;
+    if (!catalog) loadCatalog();
+    fetch("/api/stats", { cache: "no-store", credentials: "same-origin" }).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    }).then(function (d) { statsData = d && d.days ? d : { days: {}, shares: 0 }; })
+      .catch(function () { statsErr = true; })
+      .then(function () { statsLoading = false; renderStats(); });
+  }
+  function istDay(offset) { return new Date(Date.now() + 5.5 * 3600e3 - offset * 864e5).toISOString().slice(0, 10); }
+  function renderStats() {
+    var v = viewEl("stats");
+    if (!v) return;
+    clear(v);
+    if (!statsData) {
+      v.appendChild(statsErr ? h("div", { class: "note warn" }, icon("alert"), h("span", null, t("stats.error") + " "),
+        h("button", { class: "btn btn-ghost btn-sm", type: "button", on: { click: loadStats } }, t("cards.retry")))
+        : h("p", { class: "hint", text: t("stats.loading") }));
+      return;
+    }
+    var range = ui.sRange || 30, days = [];
+    for (var i = range - 1; i >= 0; i--) days.push(istDay(i));
+    var tot = {}, byPage = {}, byDesign = {}, byLang = { hi: 0, gu: 0, en: 0 }, perDay = [];
+    STAT_KEYS.forEach(function (k) { tot[k] = 0; });
+    days.forEach(function (d) {
+      var b = statsData.days[d] || {}, made = 0;
+      Object.keys(b).forEach(function (key) {
+        var p = key.split("|"), n = b[key] || 0, l = p[0], pg = p[1], ds = p[2], a = p[3];
+        if (!(a in tot)) return;
+        tot[a] += n;
+        var P = byPage[pg] || (byPage[pg] = { make: 0, wa: 0, download: 0, share: 0, link: 0, pdf: 0 });
+        P[a] += n;
+        if (a === "make") {
+          made += n;
+          if (l in byLang) byLang[l] += n;
+          var dk = pg + "|" + ds;
+          byDesign[dk] = (byDesign[dk] || 0) + n;
+        }
+      });
+      perDay.push([d, made]);
+    });
+    var rangeSel = select(t("stats.range"), [[7, t("stats.d7")], [30, t("stats.d30")], [90, t("stats.d90")]], range, function (val) { ui.sRange = +val; renderStats(); });
+    v.appendChild(h("div", { class: "toolbar" }, rangeSel,
+      h("button", { class: "btn btn-ghost btn-sm", type: "button", on: { click: loadStats } }, icon("restore"), t("stats.reload"))));
+    var grid = h("div", { class: "stats" });
+    [["make", "sparkle"], ["wa", "send"], ["download", "download"], ["share", "external"], ["link", "link"], ["pdf", "file"]].forEach(function (r) {
+      grid.appendChild(h("div", { class: "stat" }, h("span", { class: "s-icon" }, icon(r[1])),
+        h("span", { class: "s-label", text: t("stats." + r[0]) }), h("span", { class: "s-value", text: String(tot[r[0]]) })));
+    });
+    v.appendChild(grid);
+    // daily bars
+    var max = Math.max.apply(null, perDay.map(function (x) { return x[1]; }).concat([1]));
+    var bars = h("div", { class: "sbars", role: "img", "aria-label": t("stats.daily") });
+    perDay.forEach(function (x) {
+      var b = h("span", { class: "sbar", title: x[0] + ": " + x[1] });
+      b.style.height = Math.max(2, Math.round(x[1] / max * 100)) + "%";
+      bars.appendChild(b);
+    });
+    v.appendChild(card({ icon: "chart", title: t("stats.daily"), desc: t("stats.daily.desc", { max: max }),
+      body: h("div", { class: "stack" }, bars, h("div", { class: "sbar-axis" }, h("span", { text: perDay[0][0] }), h("span", { text: perDay[perDay.length - 1][0] }))) }));
+    // pages table
+    var rows = Object.keys(byPage).sort(function (a, b) { return byPage[b].make - byPage[a].make; });
+    var table = h("table", { class: "stable" }, h("thead", null, h("tr", null, h("th", { text: t("stats.page") }),
+      STAT_KEYS.map(function (k) { return h("th", { text: t("stats." + k) }); }))),
+      h("tbody", null, rows.map(function (pg) { return h("tr", null, h("td", { text: cardPageLabel(pg) }), STAT_KEYS.map(function (k) { return h("td", { text: String(byPage[pg][k]) }); })); })));
+    v.appendChild(card({ icon: "grid", title: t("stats.pages"), desc: t("stats.pages.desc"),
+      body: rows.length ? h("div", { class: "stable-wrap" }, table) : h("p", { class: "hint", text: t("stats.empty") }) }));
+    // top designs
+    var top = Object.keys(byDesign).sort(function (a, b) { return byDesign[b] - byDesign[a]; }).slice(0, 12);
+    var tg = h("div", { class: "stop" });
+    top.forEach(function (k) {
+      var pg = k.split("|")[0], id = k.split("|")[1], thumb = "";
+      var e = catalog && catalog[pg];
+      if (e && e.designs) e.designs.forEach(function (d, i) { if (d.id === id) thumb = d.thumb; });
+      if (!thumb && /^[A-Za-z0-9_-]+$/.test(id)) thumb = "/static/cards/thumb/" + id + ".webp";
+      tg.appendChild(h("div", { class: "stop-item" }, cardImg(thumb, id), h("strong", { text: String(byDesign[k]) }), h("small", { text: cardPageLabel(pg) })));
+    });
+    v.appendChild(card({ icon: "image", tone: "gold", title: t("stats.top"), desc: t("stats.top.desc"),
+      body: top.length ? tg : h("p", { class: "hint", text: t("stats.empty") }) }));
+    v.appendChild(card({ icon: "message", title: t("stats.langs"), desc: t("stats.shares", { n: statsData.shares || 0 }),
+      body: h("div", { class: "stack" }, [["hi", "हिन्दी"], ["gu", "ગુજરાતી"], ["en", "English"]].map(function (l) {
+        return h("p", null, h("strong", { text: l[1] + ": " }), h("span", { text: String(byLang[l[0]]) }));
+      })) }));
+    v.appendChild(h("div", { class: "note info" }, icon("info"), h("span", { text: t("stats.privacy") })));
+  }
 
   /* -------------------------------------------------------------- cards */
 

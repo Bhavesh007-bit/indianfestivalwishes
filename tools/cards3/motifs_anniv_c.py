@@ -97,9 +97,15 @@ def candle_table(d, cx, by, s=1, cloth=("#FFF8F0", "#E8D6C8"), drink="#E8456A", 
     o.append('<ellipse cx="0" cy="%d" rx="300" ry="40" fill="%s"/>' % (top, cloth[0]))
     # lace hem
     o.append('<path d="%s" fill="none" stroke="%s" stroke-width="3"/>' % (" ".join("M%s,-6 q%s,16 %s,0" % (n(-338 + i * 26), 13, 26) for i in range(26)), d.gold()))
-    # runner
-    o.append('<path d="M-60,%d L60,%d L70,-160 L-70,-160Z" fill="%s" opacity=".9"/>' % (top - 30, top - 30, d.lg([(0, "#B3123E"), (1, "#6E0A28")])))
-    o.append('<path d="M-70,-160 L70,-160" stroke="%s" stroke-width="4"/>' % d.gold())
+    # runner: lies across the table top and hangs over the front edge
+    gr_ = d.lg([(0, "#B3123E"), (1, "#6E0A28")], key="runner")
+    o.append('<path d="M-38,%d L38,%d L58,%d L-58,%dZ" fill="%s" opacity=".9"/>' % (top - 36, top - 36, top + 38, top + 38, gr_))
+    o.append('<path d="M-58,%d L58,%d L62,%d L-62,%dZ" fill="%s"/>' % (top + 38, top + 38, top + 170, top + 170, gr_))
+    o.append('<path d="M-62,%d L62,%d" stroke="%s" stroke-width="5"/>' % (top + 170, top + 170, d.gold()))
+    o.append('<path d="M-58,%d L58,%d" stroke="%s" stroke-width="2" opacity=".8"/>' % (top + 40, top + 40, d.gold()))
+    for k in range(-2, 3):
+        o.append(dots_ring(1, 0, 0, "none") + '<path d="M%s,%d l7,9 l-7,9 l-7,-9Z" fill="%s"/>' % (n(k * 22), top + 90, d.gold()))
+    o.append(tassel(d, -62, top + 170, 0.5, "#6E0A28") + tassel(d, 62, top + 170, 0.5, "#6E0A28"))
     # candelabra candles
     gold = d.gold()
     o.append(candle(d, -170, top - 6, 30, 150))
@@ -248,17 +254,23 @@ def coffee_cup(d, x, by, s=1, flip=False, cup=("#FFFFFF", "#D9D2C8"), band="#B31
     return '<g transform="translate(%s %s) %s">%s</g>' % (n(x), n(by), sc, "".join(o))
 
 
-def steam_heart(d, x1, y1, x2, y2, top, col="#FFFFFF", op=0.8):
-    """two steam wisps rising from x1,y1 and x2,y2 that curl into a heart at top"""
+def steam_heart(d, x1, y1, x2, y2, top, col="#FFFFFF", op=0.8, hw=None):
+    """two steam wisps rising from x1,y1 and x2,y2 that meet in a soft heart whose top is at `top`"""
     cx = (x1 + x2) / 2
-    w = (x2 - x1)
+    hw = hw or (x2 - x1) * 0.62
+    hh = hw * 0.9
+    hy = top
     o = []
+    # heart outline as a tapered stroke (thick at the lobes, thin at the point)
+    pts = heart_pts(cx - hw / 2, hy, hw, hh, 240)
+    for half in (pts[:121], pts[120:]):
+        fn = lambda t, h=half: h[min(len(h) - 1, int(t * (len(h) - 1)))]
+        o.append('<path d="%s" fill="%s" opacity="%s"/>' % (tube_d(fn, 8, 8, 120, lambda t: 5 + 15 * math.sin(math.pi * t) ** 0.7), col, op))
+    by = hy + hh
     for sg, xs, ys in ((-1, x1, y1), (1, x2, y2)):
-        fn = cub((xs, ys), (xs - sg * 30, ys - 90), (xs + sg * 40, ys - 160), (cx + sg * w * 0.05, top + (ys - top) * 0.45))
-        o.append('<path d="%s" fill="%s" opacity="%s"/>' % (tube_d(fn, 6, 22, 50), col, op))
-        fn2 = cub((cx + sg * w * 0.05, top + (ys - top) * 0.45), (cx + sg * w * 0.6, top + 40), (cx + sg * w * 0.5, top - 40), (cx, top + 26))
-        o.append('<path d="%s" fill="%s" opacity="%s"/>' % (tube_d(fn2, 22, 7, 50), col, op))
-    return '<g filter="%s">%s</g>' % (d.blur(1.6), "".join(o))
+        fn = cub((xs, ys), (xs - sg * 40, ys - (ys - by) * 0.35), (cx + sg * 70, by + (ys - by) * 0.5), (cx, by))
+        o.append('<path d="%s" fill="%s" opacity="%s"/>' % (tube_d(fn, 6, 14, 60, lambda t: 5 + 12 * math.sin(math.pi * t)), col, op * 0.85))
+    return '<g filter="%s">%s</g>' % (d.blur(1.8), "".join(o))
 
 
 # ------------------------------------------------------------------ bouquet

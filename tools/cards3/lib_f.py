@@ -906,7 +906,7 @@ def smoke(x, y, h, s=1, op=.35, seed=1, color="#FFFFFF", width=7):
     return "".join(out)
 
 
-def havan_kund(cx, by, w, metal="copper", seed=2, fire=True, fire_h=330, spark_n=26):
+def havan_kund(cx, by, w, metal="copper", seed=2, fire=True, fire_h=330, spark_n=26, rich=False):
     """Stepped havan kund with logs and fire. Width w, base at by."""
     m = METAL[metal]
     s = w / 400.0
@@ -925,7 +925,7 @@ def havan_kund(cx, by, w, metal="copper", seed=2, fire=True, fire_h=330, spark_n
     for a, dx in ((-14, -40), (12, 30), (-4, 0), (20, -70), (-22, 80)):
         out.append('<rect x="-70" y="-10" width="140" height="20" rx="10" transform="translate(%d %d) rotate(%d)" fill="%s" stroke="#2b1204" stroke-width="2"/>' % (dx, top - 14, a, lin(["#3b1b08", "#7a4a22", "#3b1b08"], 0, 0, 0, 1)))
     if fire:
-        out.append(flames(0, top - 10, 230, fire_h, seed))
+        out.append(flames_rich(0, top - 6, 300, fire_h, seed) if rich else flames(0, top - 10, 230, fire_h, seed))
         out.append(sparks(random.Random(seed), 0, top - 60, 240, fire_h * .8, spark_n))
     # samagri bowls and ladle
     out.append('<g transform="translate(-270 0)"><ellipse cx="0" cy="-10" rx="46" ry="16" fill="%s"/><ellipse cx="0" cy="-24" rx="46" ry="12" fill="%s"/><ellipse cx="0" cy="-26" rx="38" ry="9" fill="#6D3B1A"/>' % (lin(m, 0, 0, 1, 0), lin(m[::-1], 0, 0, 1, 0)))
@@ -1500,4 +1500,37 @@ def stars(rng, box, n, color="#FFF6D0", avoid=None, op=(.4, 1)):
             out.append(sparkle(x, y, rng.uniform(.3, .6), color, rng.uniform(*op)))
         else:
             out.append('<circle cx="%.1f" cy="%.1f" r="%.1f" fill="%s" opacity="%.2f"/>' % (x, y, rng.uniform(1, 2.6), color, rng.uniform(*op)))
+    return "".join(out)
+
+
+def flames_rich(cx, by, w, h, seed=3):
+    """Layered fire: blurred glow, 4 colour layers of curling tongues, white-hot core, embers."""
+    rng = random.Random(seed)
+    out = ['<ellipse cx="%.1f" cy="%.1f" rx="%.1f" ry="%.1f" fill="#FF5A00" opacity=".55" filter="url(#b30)"/>' % (cx, by - h * .45, w * .85, h * .7),
+           '<ellipse cx="%.1f" cy="%.1f" rx="%.1f" ry="%.1f" fill="#FFC040" opacity=".5" filter="url(#b14)"/>' % (cx, by - h * .3, w * .5, h * .45)]
+    layers = [(["#7A0A00", "#C62800", "#FF5A00"], 1.0, 9, "url(#b3)"), (["#C62800", "#FF6D00", "#FFA000"], .85, 8, ""),
+              (["#FF6D00", "#FFA726", "#FFD54F"], .66, 6, ""), (["#FFB300", "#FFE082", "#FFF8E1"], .44, 4, ""), (["#FFF3C4", "#FFFFFF", "#FFFFFF"], .22, 3, "")]
+    for cols, k, n, flt in layers:
+        f = lin(cols, 0, 1, 0, 0)
+        g = []
+        for i in range(n):
+            t = (i - (n - 1) / 2) / max(1, (n - 1) / 2)
+            fx = cx + t * w * .42 * k + rng.uniform(-5, 5)
+            fh = h * k * (1 - .45 * t * t) * rng.uniform(.8, 1.05)
+            fw = w * .16 * k + 5
+            curl = rng.uniform(-.5, .5) * fw * 1.6 + t * fw * .8
+            g.append('<path d="M%.1f %.1f C%.1f %.1f %.1f %.1f %.1f %.1f C%.1f %.1f %.1f %.1f %.1f %.1f C%.1f %.1f %.1f %.1f %.1f %.1f C%.1f %.1f %.1f %.1f %.1f %.1fZ"/>'
+                     % (fx - fw, by,
+                        fx - fw * 1.3, by - fh * .35, fx - fw * .2 + curl * .3, by - fh * .55, fx + curl * .6 - fw * .3, by - fh * .75,
+                        fx + curl * .8 - fw * .4, by - fh * .88, fx + curl * 1.2, by - fh * .95, fx + curl, by - fh,
+                        fx + curl * .7 + fw * .5, by - fh * .8, fx + fw * .6 + curl * .3, by - fh * .6, fx + fw * .9, by - fh * .35,
+                        fx + fw * 1.2, by - fh * .2, fx + fw * 1.1, by - fh * .05, fx + fw, by))
+        out.append('<g fill="%s"%s>%s</g>' % (f, (' filter="%s"' % flt) if flt else "", "".join(g)))
+    # detached flame licks
+    for _ in range(6):
+        x = cx + rng.uniform(-w * .35, w * .35); y = by - h * rng.uniform(.7, .98); s = rng.uniform(6, 14)
+        out.append('<path d="M%.1f %.1f c%.1f %.1f %.1f %.1f 0 %.1f c%.1f %.1f %.1f %.1f 0 %.1fZ" fill="#FFB300" opacity=".85"/>' % (x, y, s * .6, -s * .4, s * .3, -s * 1.4, -s * 2, -s * .3, s * .6, -s * .6, s * 1.4, s * 2))
+    for _ in range(40):
+        x = cx + rng.gauss(0, w * .4); y = by - rng.uniform(h * .4, h * 1.12); r = rng.uniform(1.2, 4)
+        out.append('<circle cx="%.1f" cy="%.1f" r="%.1f" fill="%s" opacity="%.2f" filter="url(#glow)"/>' % (x, y, r, rng.choice(["#FFD54F", "#FFAB40", "#FFF3C4"]), rng.uniform(.5, 1)))
     return "".join(out)

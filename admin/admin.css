@@ -777,3 +777,17 @@ button.stat:hover { transform: translateY(-2px); box-shadow: var(--shadow-2); bo
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
   .login-mandala { animation: none; }
 }
+/* stats */
+.sbars{display:flex;align-items:flex-end;gap:3px;height:160px;padding:8px 0;border-bottom:1px solid var(--line)}
+.sbar{flex:1;min-width:2px;background:linear-gradient(180deg,#E0115F,#B7791F);border-radius:3px 3px 0 0}
+.sbar-axis{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+.stable-wrap{overflow-x:auto}
+.stable{width:100%;border-collapse:collapse;font-size:14px}
+.stable th,.stable td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+.stable th:first-child,.stable td:first-child{text-align:left;white-space:normal}
+.stable th{font-size:12.5px;color:var(--muted);font-weight:700}
+.stop{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:12px}
+.stop-item{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.stop-item strong{font-size:18px}
+.stop-item small{color:var(--muted);font-size:12px}
+.view[data-view="stats"] .stats{margin-bottom:18px}

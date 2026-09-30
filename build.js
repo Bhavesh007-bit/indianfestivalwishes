@@ -292,6 +292,7 @@ ${F.preload.map((f) => `<link rel="preload" href="/static/fonts/${f}.woff2" as="
 <style>${FONT_CSS}:root{--f-display:${F.display};--f-body:${F.body}}</style>
 <link rel="stylesheet" href="/static/style.css?v=${ASSET_V}">
 <script src="/static/app.js?v=${ASSET_V}" defer></script>
+${o.cards && o.data && o.data.card && o.data.card.kind === "invite" ? `<script src="/static/vendor/qrcode.js?v=${ASSET_V}" defer></script>` : ""}
 ${o.cards ? `<script src="/static/cards.js?v=${ASSET_V}" defer></script>` : ""}
 <script type="application/ld+json">${jsonScript(ld.length === 1 ? ld[0] : ld)}</script>
 </head>
@@ -338,6 +339,14 @@ function cardMaker(L, K) {
   if (invite) {
     const long = { venue: 90, host: 90, note: 90 };
     names = Object.keys(K.fieldDefs).map((k) => `<div class="field"><label for="f-${k}">${esc(K.fieldDefs[k].label)}</label><input id="f-${k}" type="text" maxlength="${long[k] || 50}" placeholder="${esc(K.fieldDefs[k].ph)}"></div>`).join("");
+    const prog = K.program ? `<div class="field prog-box"><span class="label">${esc(u.program_label)}</span><p class="hint">${esc(u.program_hint)}</p>
+        <datalist id="prog-list">${u.prog_suggest.map((x) => `<option value="${esc(x)}">`).join("")}</datalist>
+        ${[1, 2, 3, 4, 5, 6].map((i) => `<div class="prog-row" id="prog-row-${i}"${i > 1 ? " hidden" : ""}><input id="p${i}-n" type="text" maxlength="40" list="prog-list" placeholder="${esc(u.prog_name_ph)}" aria-label="${esc(u.prog_name_ph)} ${i}"><input id="p${i}-w" type="text" maxlength="50" placeholder="${esc(u.prog_when_ph)}" aria-label="${esc(u.prog_when_ph)} ${i}"><input id="p${i}-v" type="text" maxlength="60" placeholder="${esc(u.prog_where_ph)}" aria-label="${esc(u.prog_where_ph)} ${i}"></div>`).join("")}
+        <button class="btn btn-soft btn-sm" id="prog-add" type="button">${I.sparkle}${esc(u.add_row)}</button></div>` : "";
+    names += `<details class="field more-box"${K.program ? " open" : ""}><summary>${esc(u.more_details)}</summary>
+        <div class="field"><label for="f-phone">${esc(u.phone_label)}</label><input id="f-phone" type="tel" maxlength="40" placeholder="${esc(u.phone_ph)}"></div>
+        <div class="field"><label for="f-map">${esc(u.map_label)}</label><input id="f-map" type="url" maxlength="300" inputmode="url" placeholder="${esc(u.map_ph)}"><p class="hint" id="map-hint">${esc(u.map_hint)}</p></div>
+        ${prog}</details>`;
   } else if (kind === "couple") {
     names = `<div class="row2"><div class="field"><label for="in-n1">${esc(u.n1_label)}</label><input id="in-n1" type="text" maxlength="30" placeholder="${esc(u.n1_ph)}"></div><div class="field"><label for="in-n2">${esc(u.n2_label)}</label><input id="in-n2" type="text" maxlength="30" placeholder="${esc(u.n2_ph)}"></div></div>`;
   } else if (kind === "person") {
@@ -359,6 +368,7 @@ function cardMaker(L, K) {
   const designs = K.designs.map((d, i) => `<button type="button" class="dz" data-i="${i}" aria-pressed="${i === 0}" aria-label="${esc(u.step_design)} ${i + 1}"><img src="/static/cards/thumb/${d.id}.webp?v=${ASSET_V}" alt="" width="108" height="135" loading="lazy" decoding="async"></button>`).join("");
   return `<section class="maker reveal" id="card-maker" aria-labelledby="card-heading">
   <div class="maker-preview">
+    ${invite ? `<div class="segs page-tabs" id="page-tabs" hidden><button type="button" class="seg" data-page="1" aria-pressed="true">${esc(u.page_1)}</button><button type="button" class="seg" data-page="2" aria-pressed="false">${esc(u.page_2)}</button></div>` : ""}
     <div class="canvas-frame"><canvas id="card" width="1080" height="1350" role="img" aria-label="${esc(u.card_heading)}"></canvas><div class="canvas-loading" id="canvas-loading">${esc(u.loading_design)}</div></div>
   </div>
   <div class="maker-form">
@@ -386,8 +396,10 @@ function cardMaker(L, K) {
         <a class="icon-chip fb" id="btn-fb" href="#" target="_blank" rel="noopener" aria-label="Facebook">${I.fb}</a>
         <button class="icon-chip ig" id="btn-ig" type="button" aria-label="Instagram">${I.ig}</button>
         <button class="btn btn-soft" id="btn-download" type="button">${I.download}${esc(u.download)}</button>
+        ${invite ? `<button class="btn btn-soft" id="btn-pdf" type="button">${I.download}${esc(u.pdf)}</button>` : ""}
         <button class="btn btn-soft" id="btn-copy-link" type="button">${I.link}${esc(u.copy_link)}</button>
       </div>
+      <p class="share-note">${esc(u.share_note)}</p>
     </div>
     <p class="status" id="card-status" role="status"></p>
   </div>
@@ -606,7 +618,7 @@ function buildFestival(L, key) {
 function inviteCard(L, key, C, set, extra) {
   return Object.assign({
     occasion: key, kind: "invite", title: C.title, topLabel: C.top || "", wordings: C.wordings, fieldDefs: C.fields, join: C.join || "",
-    prefix: { host: C.host_prefix || "", date: C.date_prefix || "", time: C.time_prefix || "", venue: C.venue_prefix || "" },
+    prefix: { host: C.host_prefix || "", date: C.date_prefix || "", time: C.time_prefix || "", venue: C.venue_prefix || "", phone: UI[L].phone_prefix },
     theme: { primary: "#7A0F35", secondary: "#B7791F" }, slug: key, designs: designList(set)
   }, extra || {});
 }
@@ -647,7 +659,7 @@ function buildInvitesHub(L) {
 
 function buildInvite(L, k) {
   const u = UI[L], V = NP[L].invites[k], H = NP[L].invitations, p = "invitations/" + k + ".html";
-  const K = inviteCard(L, "invite-" + k, V.card, "inv-" + k, { shareMsg: u.invite_share, heading: u.invite_heading, slug: k + "-invitation" });
+  const K = inviteCard(L, "invite-" + k, V.card, "inv-" + k, { shareMsg: u.invite_share, heading: u.invite_heading, slug: k + "-invitation", program: k === "wedding" || k === "engagement" });
   const others = INVITES.filter((x) => x !== k).map((x) => `<a class="chip" href="${url(L, "invitations/" + x + ".html")}">${esc(NP[L].invites[x].nav)}</a>`).join("");
   const body = `${pageHead(L, { h1: V.h1, sub: V.sub, img: TPL["inv-" + k][0].id, crumbs: [[u.nav.home, url(L, "")], [H.nav, url(L, "invitations/")], [V.nav]] })}
 <div class="wrap">

@@ -38,7 +38,7 @@ b += rooftops(632, random.Random(5), "#1A0C26", "#FFB347")
 b += '<rect x="0" y="632" width="1080" height="720" fill="#2A0A1E"/>' + zari_pattern(0, 632, 1080, 720, "#FFD86B", .07)
 b += '<rect x="0" y="624" width="1080" height="14" fill="url(#gGoldH)"/>'
 b += gota_band(0, 638, 1080, 26, ("#9E0F2E", "#6E0A20"), scallop="b")
-w, _ = woman_moon(235, 630, .86)
+w, _ = woman_moon(240, 630, .78)
 b += w
 b += diya_row(600, 1040, 618, 4, .4, r)
 b += silk_panel(96, 700, 888, 562, "#5E0C26", "#3C0618")
@@ -90,10 +90,11 @@ b += mehendi_vine(1040, 60, 700, flip=True, s=.9)
 cards["E-%s-5" % CAT] = doc(b)
 specs.append(spec(5, [150, 270, 930, 800]))
 
-# 6 ─ PHOTO heart: couple photo in a bead-strung heart under the moon; red chunri drape holds the text
-b = sky([(0, "#0B1034"), (.5, "#1C1446"), (1, "#2A0E36")], 6, 700, haze=[(900, 160, 400, 300, "#8E7BD8", .2)])
-b += moon(930, 150, 105, seed=9)
-hx, hy, hw, hh = 330, 70, 420, 400
+# 6 ─ PHOTO heart: woman raises the channi toward a moon-lit heart holding the couple photo; thali + karwa on a red chunri drape
+b = sky([(0, "#0B1034"), (.5, "#1C1446"), (1, "#2E1040")], 6, 660, haze=[(345, 260, 460, 340, "#8E7BD8", .22)])
+b += moon(345, 250, 235, seed=9, halo=1.2)
+b += soft_clouds(random.Random(6), 5, 0, 480, 1080, 590, "#C9B8E8", .2)
+hx, hy, hw, hh = 145, 70, 400, 380
 b += '<path d="%s" fill="#000" opacity=".45" filter="url(#fB16)" transform="translate(0 14)"/>' % heart_d(hx - 26, hy - 26, hw + 52, hh + 52)
 b += '<path d="%s" fill="url(#gGold)"/>' % heart_d(hx - 30, hy - 30, hw + 60, hh + 60)
 b += '<path d="%s" fill="none" stroke="#FFF3C4" stroke-width="2" opacity=".8"/>' % heart_d(hx - 27, hy - 27, hw + 54, hh + 54)
@@ -102,19 +103,22 @@ b += placeholder_fill(heart_d(hx, hy, hw, hh), hx - 60, hy - 20, hw + 120, hh + 
 b += bead_string(resample(heart_pts(hx - 18, hy - 18, hw + 36, hh + 36), 17), 6.5)
 b += bead_string(resample(heart_pts(hx - 46, hy - 46, hw + 92, hh + 92), 20), 5, ("#FFF3C4",))
 # chunri drape
-b += '<path d="M0,640 C260,600 820,600 1080,640 L1080,1350 L0,1350Z" fill="#8E0A24"/>'
-b += gota_band(0, 640, 1080, 1, ("#8E0A24", "#8E0A24"), scallop="a") if False else ""
 gid, gd = lg([(0, "#A0102C"), (1, "#5A0616")], 0, 0, 0, 1)
-b += '<defs>%s</defs><path d="M0,640 C260,600 820,600 1080,640 L1080,1350 L0,1350Z" fill="url(#%s)"/>' % (gd, gid)
-b += zari_pattern(0, 610, 1080, 740, "#FFD86B", .1, 60)
-b += '<path d="M0,640 C260,600 820,600 1080,640" fill="none" stroke="url(#gGoldH)" stroke-width="14"/>'
-b += '<path d="M0,660 C260,620 820,620 1080,660" fill="none" stroke="#FFD86B" stroke-width="2" stroke-dasharray="2 9" stroke-linecap="round"/>'
-b += thali(540, 640, .78, random.Random(6), with_karwa=False)
-b += channi(150, 520, 88, .5, -18, "url(#gGoldH)")
-b += karwa(930, 650, .6, "clay")
-b += silk_panel(120, 740, 840, 515, "#4A0414", "#2E020C")
+b += '<defs>%s</defs><path d="M0,628 C260,598 820,598 1080,628 L1080,1350 L0,1350Z" fill="url(#%s)"/>' % (gd, gid)
+b += zari_pattern(0, 600, 1080, 750, "#FFD86B", .1, 60)
+b += '<path d="M0,628 C260,598 820,598 1080,628" fill="none" stroke="url(#gGoldH)" stroke-width="14"/>'
+b += '<path d="M0,648 C260,618 820,618 1080,648" fill="none" stroke="#FFD86B" stroke-width="2" stroke-dasharray="2 9" stroke-linecap="round"/>'
+w, _ = woman_moon(900, 622, .76, facing=-1)
+b += w
+b += thali(345, 588, .5, random.Random(6), with_karwa=False)
+b += karwa(95, 626, .5, "clay")
+b += diya(610, 612, .36, "clay")
+for k, (tx, ln) in enumerate(((640, 60), (700, 120), (760, 40), (1040, 90))):
+    b += '<line x1="%d" y1="0" x2="%d" y2="%d" stroke="#FFD86B" stroke-width="1.6"/>' % (tx, tx, ln) + tassel(tx, ln, .9, "#C8102E" if k % 2 else "#0F7B3F")
+b += silk_panel(110, 665, 860, 595, "#4A0414", "#2E020C")
+b += mehendi_corner(126, 681, .36, 0, "#E9B95B", .5) + mehendi_corner(954, 681, .36, 90, "#E9B95B", .5)
 cards["E-%s-6" % CAT] = doc(b)
-specs.append(spec(6, [165, 780, 915, 1225], photo={"shape": "heart", "x": hx, "y": hy, "w": hw, "h": hh}))
+specs.append(spec(6, [150, 710, 930, 1225], photo={"shape": "heart", "x": hx, "y": hy, "w": hw, "h": hh}))
 
 # 7 ─ red-gold chunri wall with a round night window (moon + silhouette); cream panel below (light)
 b = gota_band(0, 0, 1080, 1350, ("#A0001A", "#5E0012"), scallop="none")
@@ -176,35 +180,41 @@ b += bangle_stack(90, 1238, .58) + bangle_stack(990, 1238, .58, ("#FFB000", "#C8
 cards["E-%s-9" % CAT] = doc(b)
 specs.append(spec(9, [160, 700, 920, 1232], photo={"shape": "arch", "x": ax, "y": ay, "w": aw, "h": ah}))
 
-# 10 ─ PHOTO oval: couple seen through the channi held up to a huge moon; midnight-blue glass panel
-b = sky([(0, "#081030"), (.5, "#141A4A"), (1, "#0A0C26")], 10, haze=[(860, 200, 520, 420, "#7A8AE0", .18)])
-b += moon(880, 190, 250, seed=6, halo=1.0)
-b += soft_clouds(random.Random(10), 4, 560, 330, 1080, 460, "#B8B4E8", .2)
-b += mehendi_mandala(400, 335, 380, "#E9B95B", .12, 2)
-b += karwa(860, 704, .6, "brass") + diya(700, 700, .38, "clay") + diya(1010, 700, .34, "clay")
-ox, oy, ow, oh = 195, 70, 410, 470
+# 10 ─ PHOTO oval: couple seen through a lace channi; brass karwa on a puja thali silhouetted against a huge moon
+b = sky([(0, "#081030"), (.5, "#141A4A"), (1, "#0A0C26")], 10, haze=[(860, 220, 520, 420, "#7A8AE0", .2)])
+b += moon(855, 215, 215, seed=6, halo=1.1)
+b += soft_clouds(random.Random(10), 4, 580, 380, 1080, 470, "#B8B4E8", .2)
+ox, oy, ow, oh = 140, 62, 390, 440
 cx_, cy_ = ox + ow / 2, oy + oh / 2
+b += mehendi_mandala(cx_, cy_, 330, "#E9B95B", .12, 2)
+b += eglow(840, 560, 260, 120, "#FFB347", .35)
+b += '<rect x="690" y="690" width="290" height="14" rx="4" fill="#000" opacity=".4" filter="url(#fB4)"/>'
+b += '<path d="M712,662 L718,702 L732,702 L738,662Z M942,662 L948,702 L962,702 L968,662Z" fill="url(#gBrass)"/>'
+b += '<rect x="690" y="646" width="290" height="22" rx="5" fill="url(#gGoldH)"/><rect x="700" y="666" width="270" height="6" fill="#8A5A16"/>'
+b += thali(835, 614, .6, random.Random(12), with_karwa=False)
+b += karwa(865, 600, .72, "brass")
+b += diya(645, 690, .38, "clay") + diya(1035, 690, .32, "clay")
 b += '<ellipse cx="%s" cy="%s" rx="%s" ry="%s" fill="#000" opacity=".5" filter="url(#fB16)"/>' % (cx_ + 10, cy_ + 16, ow / 2 + 40, oh / 2 + 40)
-for i in range(48):  # red lace beads
-    a = 2 * math.pi * i / 48
-    b += '<circle cx="%s" cy="%s" r="15" fill="#C8102E"/><circle cx="%s" cy="%s" r="6" fill="#FFD86B"/>' % (
-        n(cx_ + (ow / 2 + 50) * math.cos(a)), n(cy_ + (oh / 2 + 50) * math.sin(a)), n(cx_ + (ow / 2 + 50) * math.cos(a)), n(cy_ + (oh / 2 + 50) * math.sin(a)))
-b += '<ellipse cx="%s" cy="%s" rx="%s" ry="%s" fill="none" stroke="url(#gGold)" stroke-width="40"/>' % (cx_, cy_, ow / 2 + 22, oh / 2 + 22)
-b += '<ellipse cx="%s" cy="%s" rx="%s" ry="%s" fill="none" stroke="#FFF3C4" stroke-width="2" opacity=".8"/>' % (cx_, cy_, ow / 2 + 38, oh / 2 + 38)
+for i in range(46):  # red lace beads
+    a = 2 * math.pi * i / 46
+    px, py = cx_ + (ow / 2 + 48) * math.cos(a), cy_ + (oh / 2 + 48) * math.sin(a)
+    b += '<circle cx="%s" cy="%s" r="14" fill="#C8102E"/><circle cx="%s" cy="%s" r="5.5" fill="#FFD86B"/>' % (n(px), n(py), n(px), n(py))
+b += '<ellipse cx="%s" cy="%s" rx="%s" ry="%s" fill="none" stroke="url(#gGold)" stroke-width="38"/>' % (cx_, cy_, ow / 2 + 21, oh / 2 + 21)
+b += '<ellipse cx="%s" cy="%s" rx="%s" ry="%s" fill="none" stroke="#FFF3C4" stroke-width="2" opacity=".8"/>' % (cx_, cy_, ow / 2 + 36, oh / 2 + 36)
 for i in range(36):
     a = 2 * math.pi * (i + .5) / 36
-    b += '<circle cx="%s" cy="%s" r="5" fill="#8E0F2A"/>' % (n(cx_ + (ow / 2 + 22) * math.cos(a)), n(cy_ + (oh / 2 + 22) * math.sin(a)))
+    b += '<circle cx="%s" cy="%s" r="5" fill="#8E0F2A"/>' % (n(cx_ + (ow / 2 + 21) * math.cos(a)), n(cy_ + (oh / 2 + 21) * math.sin(a)))
 b += '<ellipse cx="%s" cy="%s" rx="%s" ry="%s" fill="none" stroke="#5A3A0E" stroke-width="3"/>' % (cx_, cy_, ow / 2 + 3, oh / 2 + 3)
 b += placeholder_fill("M%s,%s a%s,%s 0 1 0 %s,0 a%s,%s 0 1 0 %s,0 Z" % (ox, cy_, ow / 2, oh / 2, ow, ow / 2, oh / 2, -ow), ox, oy, ow, oh, ("#E9E4F6", "#C9C0E4"), "#B3A8D6")
 for i in range(5):
     t = (i + 1) / 6.0
     a = math.pi * (.3 + .4 * t)
-    b += tassel(cx_ + (ow / 2 + 60) * math.cos(a), cy_ + (oh / 2 + 60) * math.sin(a) - 6, .8)
-b += panel(100, 700, 880, 560, "#FFFFFF", 34, "url(#gGoldH)", 3, True, "fShadow", op=1).replace('fill="#FFFFFF"', 'fill="#1A2058" fill-opacity=".78"', 1)
-b += mehendi_corner(114, 714, .36, 0, "#E9B95B", .5) + mehendi_corner(966, 714, .36, 90, "#E9B95B", .5)
+    b += tassel(cx_ + (ow / 2 + 58) * math.cos(a), cy_ + (oh / 2 + 58) * math.sin(a) - 6, .8)
+b += panel(100, 702, 880, 558, "#FFFFFF", 34, "url(#gGoldH)", 3, True, "fShadow", op=1).replace('fill="#FFFFFF"', 'fill="#1A2058" fill-opacity=".8"', 1)
+b += mehendi_corner(114, 716, .36, 0, "#E9B95B", .5) + mehendi_corner(966, 716, .36, 90, "#E9B95B", .5)
 b += mehendi_corner(966, 1246, .36, 180, "#E9B95B", .5) + mehendi_corner(114, 1246, .36, 270, "#E9B95B", .5)
 cards["E-%s-10" % CAT] = doc(b)
-specs.append(spec(10, [150, 745, 930, 1215], photo={"shape": "oval", "x": ox, "y": oy, "w": ow, "h": oh}))
+specs.append(spec(10, [150, 745, 930, 1222], photo={"shape": "oval", "x": ox, "y": oy, "w": ow, "h": oh}))
 
 if __name__ == "__main__":
     only = sys.argv[1:]

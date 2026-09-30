@@ -404,7 +404,7 @@ a.fest:hover .fest-go { transform: rotate(-35deg) scale(1.08); }
 .field { display: grid; gap: 8px; margin: 0; padding: 0; border: 0; min-width: 0; }
 .field > label, .field > legend, .thought-box .label { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1rem; padding: 0; }
 .step-n { flex: none; width: 26px; height: 26px; display: inline-grid; place-items: center; border-radius: 8px; background: var(--ink); color: #fff; font-size: .82rem; font-weight: 800; }
-input[type="text"], input[type="number"], select {
+input[type="text"], input[type="number"], input[type="tel"], input[type="url"], select {
   width: 100%; min-height: 50px; padding: .6rem 1rem; border-radius: 14px; border: 1.5px solid var(--line-2); background: var(--bg);
   font-size: 1rem; transition: border-color .2s, box-shadow .2s, background-color .2s; appearance: none; -webkit-appearance: none;
 }
@@ -630,3 +630,22 @@ textarea:focus { outline: none; border-color: var(--rani); box-shadow: 0 0 0 4px
 .photo-tools input[type="range"] { flex: 1; min-width: 140px; accent-color: var(--rani); height: 44px; }
 .bg-row { display: flex; flex-wrap: wrap; gap: 10px; }
 .canvas-frame canvas { cursor: grab; }
+
+.share-note{margin:10px 0 0;font-size:.8rem;line-height:1.45;color:var(--ink-3);text-align:center}
+/* v11: invitation extras */
+.page-tabs{display:flex;margin:0 auto 12px;justify-content:center}
+.page-tabs[hidden]{display:none!important}
+.more-box{border:1px solid var(--line);border-radius:var(--r);padding:0 14px;background:var(--surface)}
+.more-box>summary{cursor:pointer;font-weight:700;padding:12px 0;list-style:none;display:flex;align-items:center;justify-content:space-between}
+.more-box>summary::-webkit-details-marker{display:none}
+.more-box>summary::after{content:"+";font-size:1.3rem;line-height:1;color:var(--ink-3)}
+.more-box[open]>summary::after{content:"–"}
+.more-box[open]{padding-bottom:12px}
+.more-box .field{margin-top:10px}
+.prog-box .label{font-weight:700;display:block}
+.prog-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.prog-row[hidden]{display:none!important}
+.prog-row input:first-child{grid-column:1/-1;font-weight:700}
+.prog-box #prog-add{margin-top:10px}
+.hint.bad{color:#B3261E;font-weight:600}
+.map-open{margin:0 0 12px;display:inline-flex}

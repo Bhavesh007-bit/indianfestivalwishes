@@ -154,33 +154,38 @@ def card5():
 
 # ------------------------------------------------------------------ 6
 def card6():
-    """Terracotta brick wall; a big blank shop board hangs on chains; plants, coins and confetti below."""
+    """Terracotta brick wall; blank shop board on chains; below, a ribbon-cutting scene with money pot, kalash and big plants."""
     rng = random.Random(6)
     b = ['<rect width="1080" height="1350" fill="#A8472A"/>']
     b.append('<rect width="1080" height="1350" fill="%s"/>' % brick_pattern("br6"))
     b.append('<rect width="1080" height="1350" fill="%s"/>' % rad([(0, "#FFE0B0", .35), (.6, "#000", 0), (1, "#000", .35)], .5, .4, .8))
-    # rod with brackets
-    b.append('<rect x="60" y="56" width="960" height="18" rx="9" fill="%s" filter="url(#shs)"/>' % gold(0, 0, 0, 1))
+    b.append('<rect x="60" y="26" width="960" height="18" rx="9" fill="%s" filter="url(#shs)"/>' % gold(0, 0, 0, 1))
     for x in (60, 1020):
-        b.append('<circle cx="%d" cy="65" r="22" fill="%s" stroke="#6E440A" stroke-width="3"/>' % (x, gold()))
+        b.append('<circle cx="%d" cy="35" r="22" fill="%s" stroke="#6E440A" stroke-width="3"/>' % (x, gold()))
     for x in (200, 880):
-        for k in range(8):
-            y = 76 + k * 15
-            b.append('<ellipse cx="%d" cy="%d" rx="%.1f" ry="9" fill="none" stroke="%s" stroke-width="4"/>' % (x, y, 6 if k % 2 else 2.5, gold()))
-    # board
-    b.append('<rect x="80" y="190" width="920" height="850" rx="26" fill="%s" filter="url(#shp)"/>' % lin(["#5D3A1A", "#8B5A2B", "#5D3A1A"], 0, 0, 1, 1))
-    b.append('<rect x="104" y="214" width="872" height="802" rx="16" fill="#FFF8EA"/><rect x="104" y="214" width="872" height="802" rx="16" fill="#FFF8EA" filter="url(#paper)"/>')
-    b.append('<rect x="120" y="230" width="840" height="770" rx="10" fill="none" stroke="%s" stroke-width="4"/>' % gold())
+        for k in range(6):
+            b.append('<ellipse cx="%d" cy="%d" rx="%.1f" ry="9" fill="none" stroke="%s" stroke-width="4"/>' % (x, 50 + k * 15, 6 if k % 2 else 2.5, gold()))
+    b.append('<rect x="60" y="130" width="960" height="790" rx="26" fill="%s" filter="url(#shp)"/>' % lin(["#5D3A1A", "#8B5A2B", "#5D3A1A"], 0, 0, 1, 1))
+    b.append('<rect x="84" y="154" width="912" height="742" rx="16" fill="#FFF8EA"/><rect x="84" y="154" width="912" height="742" rx="16" fill="#FFF8EA" filter="url(#paper)"/>')
+    b.append('<rect x="100" y="170" width="880" height="710" rx="10" fill="none" stroke="%s" stroke-width="4"/>' % gold())
     for x in (200, 880):
-        b.append('<circle cx="%d" cy="202" r="10" fill="%s"/>' % (x, gold()))
-    b.append(garland_swag(110, 200, 540, 200, 30, 11) + garland_swag(540, 200, 970, 200, 30, 11, ("yellow", "orange")))
-    # pavement and props
-    b.append('<rect y="1110" width="1080" height="240" fill="%s"/>' % lin(["#7A6A60", "#5A4C44"], 0, 0, 0, 1))
-    b.append('<path d="M0 1110 H1080" stroke="#C9B8A8" stroke-width="6"/>')
-    b.append(plant_pot(110, 1262, 1.5, "#6D4C41", kind="leafy") + plant_pot(970, 1262, 1.5, "#6D4C41", kind="leafy"))
-    b.append(money_pot(290, 1262, 200) + coin_stack(800, 1250, 40, 6))
-    b.append(confetti(rng, (0, 0, 1080, 1340), 70, GOLDC, avoid=[(80, 180, 1000, 1050), (330, 1260, 750, 1350)]))
-    S(6, [150, 260, 930, 980], "#8B3A1A", "#3A2A20", "#B7791F", tfont="deco")
+        b.append('<circle cx="%d" cy="142" r="10" fill="%s"/>' % (x, gold()))
+    b.append(garland_swag(90, 140, 540, 140, 30, 11) + garland_swag(540, 140, 990, 140, 30, 11, ("yellow", "orange")))
+    # pavement and a ribbon-cutting scene
+    b.append('<rect y="1150" width="1080" height="200" fill="%s"/>' % lin(["#7A6A60", "#5A4C44"], 0, 0, 0, 1))
+    b.append('<path d="M0 1150 H1080" stroke="#C9B8A8" stroke-width="6"/>')
+    for x in (60, 1020):
+        b.append('<rect x="%d" y="990" width="16" height="170" rx="6" fill="%s"/><circle cx="%d" cy="990" r="16" fill="%s"/>' % (x - 8, gold(0, 0, 0, 1), x, gold()))
+    b.append(ribbon_across(60, 1020, 1010, 40, wave=14))
+    b.append(ribbon_bow(540, 1010, .85))
+    b.append(plant_pot(90, 1300, 2.1, "#6D4C41", kind="leafy") + plant_pot(990, 1300, 2.1, "#6D4C41", kind="leafy"))
+    b.append(money_pot(300, 1300, 300))
+    b.append('<ellipse cx="790" cy="1300" rx="110" ry="18" fill="%s"/>' % lin(METAL["brass"], 0, 0, 1, 0))
+    b.append(kalash(790, 1296, 270, "brass"))
+    b.append(coin_stack(640, 1300, 34, 5))
+    b.append(scissors(880, 975, .7, 205))
+    b.append(confetti(rng, (0, 0, 1080, 1340), 70, GOLDC, avoid=[(60, 120, 1020, 930), (330, 1260, 750, 1350)]))
+    S(6, [130, 190, 950, 890], "#8B3A1A", "#3A2A20", "#B7791F", tfont="deco")
     return card("".join(b))
 
 
@@ -202,20 +207,21 @@ def card7():
 
 # ------------------------------------------------------------------ 8
 def card8():
-    """Blue-sky market street: three shopfronts, the middle one ribboned and garlanded; panel in the sky."""
+    """Blue-sky market street: three big shopfronts, the middle one ribboned and garlanded; panel in the sky."""
     rng = random.Random(8)
     b = ['<rect width="1080" height="1350" fill="%s"/>' % lin(["#6EC6F0", "#BDE8F7", "#FFF4DE"], 0, 0, 0, 1)]
-    for x, y, s in ((140, 880, 1), (900, 860, 1.2)):
-        b.append('<g opacity=".9"><ellipse cx="%d" cy="%d" rx="%d" ry="%d" fill="#fff"/><ellipse cx="%d" cy="%d" rx="%d" ry="%d" fill="#fff"/></g>' % (x, y, 70 * s, 26 * s, x + 50 * s, y - 16 * s, 50 * s, 30 * s))
-    b.append('<rect y="1240" width="1080" height="110" fill="%s"/>' % lin(["#B0A090", "#8A7A6A"], 0, 0, 0, 1))
-    b.append(storefront(0, 960, 350, 290, ("#1565C0", "#FFFFFF"), seed=8, ribbon=False, sign=False, wall=("#E3F2FD", "#BBDEFB")))
-    b.append(storefront(730, 960, 350, 290, ("#2E7D32", "#FFFFFF"), seed=9, ribbon=False, sign=False, wall=("#F1F8E9", "#DCEDC8")))
-    b.append(storefront(330, 880, 420, 370, ("#C62828", "#FFF6E5"), seed=10))
-    b.append(toran(350, 730, 884, 28))
-    b.append(confetti(rng, (0, 840, 1080, 1250), 40, GOLDC + ("#D7263D",), avoid=[(0, 950, 1080, 1260)]))
-    b.append(panel_rect(50, 40, 1030, 830, 30, "#FFFFFF", gold(), "#90CAF9", op=.96))
-    b.append(starburst(1010, 60, 48, 18, .8) + starburst(70, 60, 40, 18, .8))
-    S(8, [90, 80, 990, 790], "#0D47A1", "#1E2A36", "#C62828", tfont="deco")
+    b.append(rays(540, 800, 30, 700, "#FFFFFF", .5, .4))
+    b.append('<rect y="1255" width="1080" height="95" fill="%s"/>' % lin(["#B0A090", "#8A7A6A"], 0, 0, 0, 1))
+    b.append(storefront(-60, 900, 400, 355, ("#1565C0", "#FFFFFF"), seed=8, ribbon=False, sign=False, wall=("#E3F2FD", "#BBDEFB")))
+    b.append(storefront(740, 900, 400, 355, ("#2E7D32", "#FFFFFF"), seed=9, ribbon=False, sign=False, wall=("#F1F8E9", "#DCEDC8")))
+    b.append(storefront(280, 815, 520, 440, ("#C62828", "#FFF6E5"), seed=10))
+    b.append(toran(295, 785, 820, 30))
+    b.append(marigold_strand(308, 824, 140, 11) + marigold_strand(772, 824, 140, 11, ("yellow", "orange")))
+    b.append(kalash(250, 1262, 150, "brass") + kalash(830, 1262, 150, "brass"))
+    b.append(confetti(rng, (0, 740, 1080, 1250), 50, GOLDC + ("#D7263D",), avoid=[(270, 800, 810, 1260), (0, 900, 1080, 1260)]))
+    b.append(panel_rect(40, 26, 1040, 802, 30, "#FFFFFF", gold(), "#90CAF9", op=.96))
+    b.append(starburst(1020, 50, 44, 18, .8) + starburst(60, 50, 38, 18, .8))
+    S(8, [80, 62, 1000, 766], "#0D47A1", "#1E2A36", "#C62828", tfont="deco")
     return card("".join(b))
 
 

@@ -275,7 +275,6 @@ def card8():
     o.append('<rect width="1080" height="880" fill="%s"/>' % d.pattern(60, 60, '<rect width="30" height="60" fill="#EFE0C8" opacity=".6"/>', key="strp"))
     o.append(fairy_lights(d, -20, 40, 1100, 40, 70, 20, "#FFE0A0", "#6E4A2A"))
     # shelf with small plants
-    o.append('<rect x="0" y="880" width="1080" height="16" fill="#C9A77E"/>')
     # table
     wood = d.lg([(0, "#9A6A3E"), (0.5, "#7A4E2A"), (1, "#5A361C")], 0, 0, 0, 1, key="wood")
     o.append('<path d="M-40,1030 L1120,1030 L1120,1350 L-40,1350Z" fill="%s"/>' % wood)
@@ -283,13 +282,13 @@ def card8():
         o.append('<path d="M0,%d C300,%d 700,%d 1080,%d" stroke="#3E2410" stroke-opacity=".25" stroke-width="2" fill="none"/>' % (1060 + k * 36, 1052 + k * 36, 1070 + k * 36, 1058 + k * 36))
     o.append('<rect x="0" y="1024" width="1080" height="10" fill="#B8864E"/>')
     # steam heart + cups
-    o.append(steam_heart(d, 380, 900, 700, 900, 640, "#FFFFFF", 0.95))
-    o.append(g(steam_heart(d, 380, 900, 700, 900, 640, "#A8805A", 0.25), 3, 4))
-    o.append(coffee_cup(d, 350, 1190, 1.15, band="#B3123E"))
-    o.append(coffee_cup(d, 730, 1190, 1.15, flip=True, band="#1E6A56"))
+    o.append(g(steam_heart(d, 330, 950, 750, 950, 690, "#A8805A", 0.25, 330), 4, 5))
+    o.append(steam_heart(d, 330, 950, 750, 950, 690, "#FFFFFF", 0.95, 330))
+    o.append(coffee_cup(d, 310, 1212, 1.42, band="#B3123E"))
+    o.append(coffee_cup(d, 770, 1212, 1.42, flip=True, band="#1E6A56"))
     # biscuits & roses on table
-    o.append(rose(d, 130, 1180, 26, "red") + rose(d, 170, 1210, 18, "pink") + leaf(d, 110, 1216, 46, 13, 220, "#6E9E5A", "#2F5E2A"))
-    for (x_, y_) in ((930, 1190), (970, 1220)):
+    o.append(rose(d, 70, 1240, 26, "red") + rose(d, 110, 1262, 18, "pink") + leaf(d, 50, 1270, 46, 13, 220, "#6E9E5A", "#2F5E2A"))
+    for (x_, y_) in ((1010, 1250), (1046, 1280)):
         o.append('<circle cx="%d" cy="%d" r="30" fill="#D9A060" stroke="#A8702E" stroke-width="3"/>' % (x_, y_) + dots_ring(6, 16, 2.5, "#8A5A2A", x_, y_))
     o.append(glass(d, 90, 120, 900, 540, 36, "#FFFCF6", 0.88, "#C9A77E", 0.14))
     return d.svg("".join(o)), spec("E-anniversary-8", (150, 160, 930, 620), "#6E3A1A", "#33241A", "#8A4A1A", "light", "script", bg="#FDF7EE")

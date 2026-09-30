@@ -3,6 +3,7 @@ import sys, os, math
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from lib_a import *
 from navratri_motifs_a import *
+from navratri_dancers_a import dancer_f, dancer_m
 
 CAT = "navratri"
 
@@ -107,7 +108,7 @@ def card1():
         c.add((dancer_m(c, x, 1150, sc, fl, sil=sil) if m else dancer_f(c, x, 1150, sc, fl, "c", sil=sil)))
     c.add(garbo(c, 540, 1070, 110))
     c.add(dancer_f(c, 250, 1268, 1.02, False, "a", PAL["pink"]))
-    c.add(dancer_m(c, 830, 1268, 1.0, True, MPAL["a"]))
+    c.add(dancer_m(c, 830, 1268, 0.98, True, MPAL["a"], pose="cross"))
     c.add('<rect x="0" y="1262" width="1080" height="88" fill="%s"/>' % c.lg([(0, "#14051C", 0), (0.4, "#14051C", 1)], 0, 0, 0, 1))
     c.add(mirror_band(c, 0, 0, 1080, 58, "#14051C"))
     c.add(tassel_fringe(c, 20, 1060, 58, 22, ["#E53935", "#FFC53D", "#1E9E6A", "#EC407A"], 34))
@@ -118,22 +119,43 @@ def card1():
 
 # ---------------------------------------------------------------- 2 Maa Amba chunri + trishul + garbos
 def card2():
+    """Maa Amba's chunri flowing diagonally across the card: trishul top-right, garbos bottom-left."""
     c = Card(22)
-    c.add('<rect width="1080" height="1350" fill="%s"/>' % bandhani(c, "#A5121E", "#FFE9B0", 38, 0.75))
-    c.add('<rect width="1080" height="1350" fill="%s"/>' % c.rg([(0, "#FF8A00", 0.35), (0.6, "#7A0010", 0.1), (1, "#3A0008", 0.55)], 0.5, 0.3, 0.8))
-    c.add(rays(540, 420, 40, 800, "#FFE9A8", 0.08, 0.45))
-    c.add('<circle cx="540" cy="360" r="300" fill="%s"/>' % c.rg([(0, "#FFE082", 0.55), (1, "#FFB300", 0)]))
-    c.add(trishul(c, 540, 760, 620, "#D50000"))
-    for x in (250, 830):
-        c.add(garbo(c, x, 590, 105))
-    c.add(chunri_swag(c, -20, 1100, 70, 5, 110))
-    c.add(tassel_fringe(c, 0, 1080, 1, 0, [], 0))
-    # cream panel with mirror-work header
-    x, y, w, h = 104, 704, 872, 560
-    c.add(panel(c, x, y, w, h, 18, ("#FFF9EC", "#F6E6C4"), "#C9A25A", inner=False, sw=3))
-    c.add(mirror_band(c, x, y, w, 46, "#6D0A16", ("#FFC53D", "#FFE9B0", "#1E9E6A", "#FFC53D")))
-    c.add('<path d="%s" fill="none" stroke="#C9A25A" stroke-width="1.5"/>' % rr(x + 16, y + 60, w - 32, h - 76, 10))
-    s = spec("E-navratri-2", (150, 772, 930, 1234), "#9C0D1C", "#3A1A14", "#B7791F", "light", "deco")
+    c.add('<rect width="1080" height="1350" fill="%s"/>' % bandhani(c, "#8E0E1A", "#FFE9B0", 38, 0.55))
+    c.add('<rect width="1080" height="1350" fill="%s"/>' % c.rg([(0, "#FF8A00", 0.4), (0.6, "#7A0010", 0.1), (1, "#2A0006", 0.6)], 0.75, 0.15, 0.9))
+    c.add(rays(880, 250, 40, 900, "#FFE9A8", 0.08, 0.45))
+    c.add('<circle cx="880" cy="230" r="260" fill="%s"/>' % c.rg([(0, "#FFE082", 0.6), (1, "#FFB300", 0)]))
+    # the chunri: a wide flowing cloth from top-left to bottom-right
+    top = "M-140,40 C220,90 380,420 560,640 C740,860 880,1060 1220,1130"
+    bot = "L1220,1400 C880,1330 700,1100 520,880 C340,660 180,330 -140,300 Z"
+    cl = top + " " + bot
+    c.add('<path d="%s" fill="#000" opacity="0.35" filter="%s" transform="translate(10,22)"/>' % (cl, c.blur(14)))
+    c.add('<path d="%s" fill="%s"/>' % (cl, c.lg([(0, "#E53935"), (0.5, "#C62828"), (1, "#8E0E1A")], 0, 0, 1, 1)))
+    dots = c.pattern(22, 22, '<circle cx="5" cy="5" r="2.1" fill="#FFF3C4"/><circle cx="16" cy="16" r="2.1" fill="#FFF3C4"/><circle cx="16" cy="5" r="1.1" fill="#FFF3C4"/><circle cx="5" cy="16" r="1.1" fill="#FFD54F"/>')
+    c.add('<path d="%s" fill="%s" opacity="0.85"/>' % (cl, dots))
+    # soft folds
+    for k, op in ((0.3, 0.22), (0.62, 0.18)):
+        c.add('<path d="M-140,%s C220,%s 360,%s 540,%s C720,%s 880,%s 1220,%s" stroke="#4A0008" stroke-opacity="%s" stroke-width="34" fill="none" filter="%s"/>' % (
+            f(40 + 260 * k), f(90 + 240 * k), f(420 + 240 * k), f(640 + 240 * k), f(860 + 240 * k), f(1060 + 270 * k), f(1130 + 270 * k), f(op), c.blur(10)))
+    for edge in ("M-140,40 C220,90 380,420 560,640 C740,860 880,1060 1220,1130", "M-140,300 C180,330 340,660 520,880 C700,1100 880,1330 1220,1400"):
+        c.add('<path d="%s" stroke="#FFC53D" stroke-width="16" fill="none"/>' % edge)
+        c.add('<path d="%s" stroke="#8B1A1A" stroke-width="2.5" stroke-dasharray="7 7" fill="none"/>' % edge)
+    # trishul with its own chunri knot
+    c.add(trishul(c, 880, 600, 520, "#D50000"))
+    # garbos bottom-left
+    c.add(garbo(c, 190, 1130, 108))
+    c.add(garbo(c, 380, 1196, 62, ("#E91E63", "#6A0F33"), spill=False))
+    # panel framed with a bandhani border
+    x, y, w, h = 96, 470, 888, 580
+    c.add('<rect x="%d" y="%d" width="%d" height="%d" rx="18" fill="%s" filter="%s"/>' % (x, y, w, h, bandhani(c, "#B71C1C", "#FFE9B0", 18, 0.95), c.shadow(16, 24, 0.5)))
+    c.add('<rect x="%d" y="%d" width="%d" height="%d" rx="10" fill="%s"/>' % (x + 24, y + 24, w - 48, h - 48, c.lg(["#FFF9EC", "#F6E6C4"])))
+    c.add('<rect x="%d" y="%d" width="%d" height="%d" rx="18" fill="none" stroke="#FFC53D" stroke-width="4"/>' % (x, y, w, h))
+    c.add('<rect x="%d" y="%d" width="%d" height="%d" rx="10" fill="none" stroke="#FFC53D" stroke-width="3"/>' % (x + 24, y + 24, w - 48, h - 48))
+    c.add('<rect x="%d" y="%d" width="%d" height="%d" rx="6" fill="none" stroke="#C9A25A" stroke-width="1.5"/>' % (x + 38, y + 38, w - 76, h - 76))
+    for (mx, my) in ((x + 12, y + 12), (x + w - 12, y + 12), (x + 12, y + h - 12), (x + w - 12, y + h - 12)):
+        c.add(mirror(c, mx, my, 15, "#1E9E6A", "#FFC53D"))
+    c.add(watermark_calm(c, "#2A0006", 0.7))
+    s = spec("E-navratri-2", (150, 524, 930, 996), "#9C0D1C", "#3A1A14", "#B7791F", "light", "deco")
     return c.svg(), s
 
 
@@ -146,8 +168,8 @@ def card3():
     c.add(swirl(540, 1180, 470, 90, "#FFE082", 0.5, 4, 180, 360))
     c.add(swirl(540, 1200, 520, 110, "#FFFFFF", 0.3, 2, 180, 360))
     c.add(garbo(c, 540, 1090, 100))
-    c.add(dancer_f(c, 250, 1262, 1.28, False, "b", PAL["blue"]))
-    c.add(dancer_m(c, 830, 1262, 1.2, True, MPAL["b"]))
+    c.add(dancer_f(c, 270, 1262, 1.2, False, "c", PAL["blue"]))
+    c.add(dancer_m(c, 820, 1262, 1.08, True, MPAL["b"], pose="cross"))
     c.add(spark_burst(c, 540, 770, 60))
     c.add('<rect x="0" y="1270" width="1080" height="80" fill="%s"/>' % c.lg([(0, "#064034", 0), (0.5, "#064034", 1)]))
     # panel with mirror-work frame
@@ -214,20 +236,43 @@ def card5():
 
 # ---------------------------------------------------------------- 6 single twirling dancer, saffron
 def card6():
+    """Garba stage: chunri curtains frame a twirling dancer who stands on the mirror-work stage (text panel)."""
     c = Card(66)
-    c.add('<rect width="1080" height="1350" fill="%s"/>' % bandhani(c, "#F57C00", "#FFF3C4", 34, 0.7, "#B71C1C"))
-    c.add('<rect width="1080" height="1350" fill="%s"/>' % c.rg([(0, "#FFE082", 0.6), (0.6, "#FF9800", 0), (1, "#BF360C", 0.5)], 0.5, 0.28, 0.8))
+    c.add('<rect width="1080" height="1350" fill="%s"/>' % bandhani(c, "#F57C00", "#FFF3C4", 34, 0.6, "#B71C1C"))
+    c.add('<rect width="1080" height="1350" fill="%s"/>' % c.rg([(0, "#FFF3C4", 0.75), (0.45, "#FFB300", 0.1), (1, "#8A2A00", 0.55)], 0.5, 0.33, 0.75))
+    c.add(rays(540, 60, 30, 900, "#FFFFFF", 0.1, 0.4, 70))
+    # spotlight
+    c.add('<path d="M430,0 L650,0 L860,720 L220,720 Z" fill="%s" filter="%s"/>' % (c.lg([(0, "#FFFFFF", 0.35), (1, "#FFFFFF", 0.05)]), c.blur(14)))
     for k in range(5):
-        c.add(swirl(540, 560 + k * 10, 330 + k * 40, 70 + k * 12, "#FFFFFF" if k % 2 else "#B71C1C", 0.55, 3, 150, 390))
-    c.add(dancer_f(c, 540, 690, 1.45, False, "d", PAL["red"]))
-    for i in range(18):
+        c.add(swirl(540, 640 + k * 8, 300 + k * 36, 56 + k * 10, "#FFFFFF" if k % 2 else "#B71C1C", 0.5, 3, 150, 390))
+    for i in range(16):
         a = c.rnd.uniform(0, 2 * math.pi)
-        r = c.rnd.uniform(280, 440)
-        c.add(mirror(c, 540 + r * math.cos(a), 460 + r * 0.55 * math.sin(a), c.rnd.uniform(6, 11), "#B71C1C", "#FFF3C4"))
-    x, y, w, h = 96, 700, 888, 562
-    c.add(glass_panel(c, x, y, w, h, 40, "#3A0A2A", 0.9, "#FFD54F", 3))
-    c.add(mirror_band(c, x + 60, y - 22, w - 120, 44, "#3A0A2A", ("#FFC53D", "#FFE9B0", "#26A69A", "#EC407A")))
-    s = spec("E-navratri-6", (142, 760, 938, 1222), "gold", "#FFF4E6", "#FFC53D", "dark", "deco")
+        r = c.rnd.uniform(270, 380)
+        c.add(mirror(c, 540 + r * math.cos(a), 420 + r * 0.6 * math.sin(a), c.rnd.uniform(6, 10), "#B71C1C", "#FFF3C4"))
+    # curtains (Amba's chunri) at both sides, tied back
+    for side in (-1, 1):
+        def X(v):
+            return v if side < 0 else 1080 - v
+        d = "M%s,0 L%s,0 C%s,220 %s,420 %s,560 C%s,640 %s,760 %s,900 L%s,900 Z" % (
+            f(X(-10)), f(X(230)), f(X(200)), f(X(150)), f(X(118)), f(X(150)), f(X(190)), f(X(210)), f(X(-10)))
+        c.add('<path d="%s" fill="%s" filter="%s"/>' % (d, c.lg([(0, "#8E0E1A"), (0.5, "#D32F2F"), (1, "#8E0E1A")], 0, 0, 1, 0), c.shadow(6, 16, 0.45)))
+        c.add('<path d="%s" fill="%s" opacity="0.7"/>' % (d, c.pattern(22, 22, '<circle cx="5" cy="5" r="2" fill="#FFF3C4"/><circle cx="16" cy="16" r="2" fill="#FFF3C4"/>')))
+        for k in range(3):
+            c.add('<path d="M%s,0 C%s,240 %s,440 %s,560" stroke="#4A0008" stroke-opacity="0.3" stroke-width="10" fill="none"/>' % (f(X(50 + k * 55)), f(X(45 + k * 48)), f(X(40 + k * 30)), f(X(110 + k * 3))))
+        c.add('<path d="M%s,0 C%s,220 %s,420 %s,560 C%s,640 %s,760 %s,900" stroke="#FFC53D" stroke-width="12" fill="none"/>' % (f(X(230)), f(X(200)), f(X(150)), f(X(118)), f(X(150)), f(X(190)), f(X(210))))
+        # tie-back rope with tassel
+        c.add('<path d="M%s,560 Q%s,590 %s,560" stroke="#FFC53D" stroke-width="8" fill="none"/>' % (f(X(-10)), f(X(60)), f(X(126))))
+        c.add('<path d="M%s,570 v40" stroke="#FFC53D" stroke-width="4"/><path d="M%s,600 l-12,44 h24 z" fill="#FFC53D"/><circle cx="%s" cy="600" r="9" fill="#B71C1C"/>' % (f(X(120)), f(X(120)), f(X(120))))
+    c.add(chunri_swag(c, -20, 1100, 60, 5, 90))
+    # the dancer, centre stage, with dandiyas
+    c.add('<ellipse cx="540" cy="700" rx="260" ry="34" fill="#5A1A00" opacity="0.35" filter="%s"/>' % c.blur(8))
+    c.add(dancer_f(c, 540, 700, 1.13, False, "a", PAL["red"]))
+    # stage front = text panel
+    x, y, w, h = 90, 690, 900, 580
+    c.add('<path d="%s" fill="%s" filter="%s"/>' % (rr(x, y, w, h, 20), c.lg(["#4A0A2A", "#2A0418"]), c.shadow(14, 22, 0.45)))
+    c.add(mirror_band(c, x, y, w, 44, "#2A0418", ("#FFC53D", "#FFE9B0", "#26A69A", "#EC407A")))
+    c.add('<path d="%s" fill="none" stroke="#FFC53D" stroke-width="2"/>' % rr(x + 18, y + 60, w - 36, h - 78, 12))
+    s = spec("E-navratri-6", (140, 770, 940, 1236), "gold", "#FFF4E6", "#FFC53D", "dark", "deco")
     return c.svg(), s
 
 
@@ -256,35 +301,46 @@ def card7():
 
 # ---------------------------------------------------------------- 8 kutchi embroidered textile
 def card8():
+    """Kutchi textile: four embroidered medallions (garbo, dandiya, dancers) at the corners of a central plaque."""
     c = Card(88)
     c.add('<rect width="1080" height="1350" fill="#140C0C"/>')
     th = ("#E53935", "#FFC53D", "#43A047", "#EC407A")
-    # embroidered diamond lattice
     lat = c.pattern(90, 90, '<path d="M45,4 L86,45 L45,86 L4,45 Z" fill="none" stroke="#C62828" stroke-width="2"/>'
                            '<path d="M45,18 L72,45 L45,72 L18,45 Z" fill="none" stroke="#FFC53D" stroke-width="1.5" stroke-dasharray="4 3"/>'
                            '<circle cx="45" cy="45" r="6" fill="#DDE6F2"/><circle cx="45" cy="45" r="8" fill="none" stroke="#43A047" stroke-width="2"/>'
                            '<circle cx="0" cy="0" r="4" fill="#EC407A"/><circle cx="90" cy="0" r="4" fill="#EC407A"/><circle cx="0" cy="90" r="4" fill="#EC407A"/><circle cx="90" cy="90" r="4" fill="#EC407A"/>')
-    c.add('<rect width="1080" height="1350" fill="%s" opacity="0.55"/>' % lat)
+    c.add('<rect width="1080" height="1350" fill="%s" opacity="0.5"/>' % lat)
     c.add(mirror_frame(c, 0, 0, 1080, 1350, 54, "#140C0C", th))
-    # medallion
-    cx, cy = 540, 360
-    c.add('<circle cx="%d" cy="%d" r="265" fill="#1E1212"/>' % (cx, cy))
-    for k in range(24):
-        a = math.radians(k * 15)
-        c.add('<ellipse cx="%s" cy="%s" rx="26" ry="11" fill="%s" transform="rotate(%s %s %s)"/>' % (
-            f(cx + 250 * math.cos(a)), f(cy + 250 * math.sin(a)), th[k % 4], f(k * 15), f(cx + 250 * math.cos(a)), f(cy + 250 * math.sin(a))))
-    for k in range(12):
-        a = math.radians(k * 30 + 15)
-        c.add(mirror(c, cx + 214 * math.cos(a), cy + 214 * math.sin(a), 12, th[k % 4], "#FFC53D"))
-    c.add('<circle cx="%d" cy="%d" r="190" fill="%s"/>' % (cx, cy, c.rg([(0, "#FFB74D", 0.5), (1, "#3A1010", 0.9)])))
-    c.add('<circle cx="%d" cy="%d" r="190" fill="none" stroke="#FFC53D" stroke-width="4" stroke-dasharray="10 6"/>' % (cx, cy))
-    for (x1, y1, x2, y2, col) in ((cx - 170, cy + 150, cx + 150, cy - 170, ("#E53935", "#FFD740")), (cx + 170, cy + 150, cx - 150, cy - 170, ("#43A047", "#FFD740"))):
-        c.add(dandiya(c, x1, y1, x2, y2, 18, col))
-    c.add(garbo(c, cx, cy + 40, 105))
-    x, y, w, h = 104, 700, 872, 560
+
+    def medallion(cx, cy, R, inner):
+        out = ['<circle cx="%s" cy="%s" r="%s" fill="#1E1212" filter="%s"/>' % (f(cx), f(cy), f(R + 18), c.shadow(8, 12, 0.6))]
+        for k in range(20):
+            a = math.radians(k * 18)
+            px, py = cx + (R + 4) * math.cos(a), cy + (R + 4) * math.sin(a)
+            out.append('<ellipse cx="%s" cy="%s" rx="%s" ry="%s" fill="%s" transform="rotate(%s %s %s)"/>' % (f(px), f(py), f(R * 0.14), f(R * 0.06), th[k % 4], f(k * 18 + 90), f(px), f(py)))
+        out.append('<circle cx="%s" cy="%s" r="%s" fill="%s"/>' % (f(cx), f(cy), f(R - 8), c.rg([(0, "#FFB74D", 0.55), (1, "#3A1010", 1)])))
+        cp = c.clip('<circle cx="%s" cy="%s" r="%s"/>' % (f(cx), f(cy), f(R - 8)))
+        out.append('<g clip-path="%s">%s</g>' % (cp, inner))
+        out.append('<circle cx="%s" cy="%s" r="%s" fill="none" stroke="#FFC53D" stroke-width="4" stroke-dasharray="10 6"/>' % (f(cx), f(cy), f(R - 8)))
+        for k in range(8):
+            a = math.radians(k * 45 + 22.5)
+            out.append(mirror(c, cx + (R + 4) * math.cos(a), cy + (R + 4) * math.sin(a), R * 0.07, th[k % 4], "#FFC53D"))
+        return "".join(out)
+
+    R = 150
+    c.add(medallion(215, 225, R, garbo(c, 215, 250, 72)))
+    c.add(medallion(865, 225, R, dandiya(c, 780, 320, 950, 130, 16, ("#E53935", "#FFD740")) + dandiya(c, 950, 320, 780, 130, 16, ("#43A047", "#FFD740")) + spark_burst(c, 865, 225, 44)))
+    c.add(medallion(215, 1105, R, dancer_f(c, 225, 1214, 0.5, False, "b", PAL["pink"])))
+    c.add(medallion(865, 1105, R, dancer_m(c, 855, 1226, 0.5, True, MPAL["b"])))
+    # trishul between the top medallions
+    c.add('<circle cx="540" cy="190" r="120" fill="%s"/>' % c.rg([(0, "#FFB74D", 0.45), (1, "#FFB74D", 0)]))
+    c.add(trishul(c, 540, 380, 300, "#D50000"))
+    # central plaque
+    x, y, w, h = 96, 390, 888, 570
     c.add(panel(c, x, y, w, h, 14, ("#FFF8EC", "#F4E4C8"), "#C62828", sw=4))
-    c.add(tassel_fringe(c, 330, 750, 0, 0, [], 0))
-    s = spec("E-navratri-8", (150, 746, 930, 1214), "#B71C1C", "#2A1A14", "#2E7D32", "light", "deco")
+    for k in range(12):
+        c.add(mirror(c, x + 60 + k * (w - 120) / 11, y + h, 9, th[k % 4], "#FFC53D"))
+    s = spec("E-navratri-8", (150, 440, 930, 910), "#B71C1C", "#2A1A14", "#2E7D32", "light", "deco")
     return c.svg(), s
 
 
@@ -351,7 +407,7 @@ def card10():
     c.add(swirl(540, 1225, 470, 70, "#D81B60", 0.55, 4, 180, 360))
     c.add(swirl(540, 1235, 510, 80, "#1E88E5", 0.35, 3, 180, 360))
     c.add(dancer_f(c, 360, 1250, 1.12, False, "c", PAL["pink"]))
-    c.add(dancer_m(c, 740, 1250, 1.08, True, MPAL["a"]))
+    c.add(dancer_m(c, 740, 1250, 1.0, True, MPAL["a"], pose="cross"))
     c.add(spark_burst(c, 552, 862, 46))
     x, y, w, h = 96, 136, 888, 548
     # (panel sits over the patchwork top)

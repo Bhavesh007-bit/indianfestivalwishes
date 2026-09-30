@@ -137,7 +137,8 @@ def card3():
     b = ['<rect width="1080" height="1350" fill="%s"/>' % lin(["#12060A", "#2A0A0A", "#4A1408"], 0, 0, 0, 1)]
     b.append('<ellipse cx="540" cy="1150" rx="620" ry="380" fill="#FF6A00" opacity=".35" filter="url(#b30)"/>')
     b.append('<g filter="url(#b6)">%s</g>' % (smoke(60, 1150, 1000, 1.6, .1, 3, "#FFE0C0", 6) + smoke(1020, 1150, 1000, 1.6, .1, 5, "#FFE0C0", 6)))
-    b.append(havan_kund(540, 1250, 460, "copper", seed=4, fire_h=240, spark_n=18))
+    b.append('<ellipse cx="540" cy="1060" rx="380" ry="200" fill="#FF7A00" opacity=".3" filter="url(#b30)"/>')
+    b.append(havan_kund(540, 1255, 520, "copper", seed=4, fire_h=250, spark_n=0, rich=True))
     b.append(kalash(150, 1262, 260, "brass"))
     b.append('<rect x="850" y="1180" width="160" height="80" rx="10" fill="%s"/>' % lin(["#6B420A", "#B98320", "#6B420A"], 0, 0, 1, 0))
     b.append(shankh(930, 1150, .42, -8))

@@ -192,16 +192,18 @@ def card6():
     b.append(rangoli(90, 70, 330, n=20, cols=("#AD1457", "#FF8F00", "#FFEB3B", "#2E7D32", "#6A1B9A", "#FFFFFF")))
     b.append(rangoli(1010, 1290, 300, n=18, cols=("#1565C0", "#FF8F00", "#FFEB3B", "#AD1457", "#2E7D32", "#FFFFFF"), rot=10))
     # marigold petal border lines
-    b.append(petals(rng, (0, 0, 1080, 1350), 70, avoid=[(60, 250, 1020, 1160), (330, 1260, 750, 1350)]))
+    b.append(petals(rng, (0, 0, 1080, 1350), 70, avoid=[(40, 380, 1040, 1200), (330, 1200, 750, 1350), (640, 20, 1080, 400)]))
     # kalash on a small brass plate, top-right
-    b.append('<ellipse cx="860" cy="262" rx="120" ry="30" fill="%s"/>' % lin(METAL["brass"], 0, 0, 1, 0))
-    b.append(kalash(860, 262, 250, "brass"))
+    b.append('<ellipse cx="930" cy="372" rx="200" ry="34" fill="%s" filter="url(#shs)"/>' % lin(METAL["brass"], 0, 0, 1, 0))
+    b.append(milk_pot(1000, 366, 250, "brass", stove=False))
+    b.append(kalash(820, 368, 350, "copper"))
+    b.append(marigold(700, 360, 18) + marigold(1060, 372, 16, "yellow"))
     # footprints entering from bottom-left
-    b.append(footsteps(120, 1300, 200, 1160, 3, .85))
+    b.append(footsteps(140, 1330, 300, 1210, 3, .9))
     # panel
-    b.append(panel_rect(70, 290, 1010, 1150, 40, "#FFFFFF", lin(["#AD1457", "#FF8F00"], 0, 0, 1, 0), "#F2B8C6"))
-    b.append(scallop_border(110, 290, 970, 290, 10, "#FF8F00"))
-    S(6, [110, 330, 970, 1110], "#A01347", "#35232C", "#E65100", tfont="deco")
+    b.append(panel_rect(60, 395, 1020, 1190, 40, "#FFFFFF", lin(["#AD1457", "#FF8F00"], 0, 0, 1, 0), "#F2B8C6"))
+    b.append(scallop_border(100, 395, 980, 395, 10, "#FF8F00"))
+    S(6, [100, 440, 980, 1145], "#A01347", "#35232C", "#E65100", tfont="deco")
     return card("".join(b))
 
 

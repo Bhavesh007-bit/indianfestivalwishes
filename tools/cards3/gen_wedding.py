@@ -37,8 +37,8 @@ def card1():
     o.append(bokeh(d, d.rnd, 30, 0, 600, 1080, 1250, 5, 18, ["#FFF3C8", "#FFD08A"], 0.2, 0.5))
     o.append(petals(d, random.Random(2), 36, 0, 640, 1080, 1200, 8, 14, ("red", "pink", "coral"), op=(0.6, 0.95)))
     body = "#3A0A22"
-    o.append(groom(d, 392, 1262, 1.12, pose="varmala", body=body))
-    o.append(bride(d, 700, 1262, 1.12, flip=True, pose="varmala", body=body))
+    o.append(groom(d, 392, 1262, 1.12, pose="varmala", shade=("#5A1030", 0.28), rim="#FFE3A8"))
+    o.append(bride(d, 700, 1262, 1.12, flip=True, pose="varmala", shade=("#5A1030", 0.28), rim="#FFE3A8"))
     o.append(varmala(d, 392 + 108 * 1.12, 1262 - 358 * 1.12, 230, 66, 1, ("red", "wine")))
     o.append(varmala(d, 700 - 98 * 1.12, 1262 - 338 * 1.12, 220, 64, 1, ("pink", "coral"), tilt=-4))
     o.append(bush(d, 90, 1270, 1.1, False, ("#4A1030", "#2A0618"), ("red", "coral"), 3))
@@ -59,11 +59,11 @@ def card2():
         for j in range(int(L / 22)):
             o.append(jasmine(d, x_, 20 + j * 22, 8, j * 30) if j % 2 else rose(d, x_, 20 + j * 22, 10, "red" if j % 4 else "wine"))
     # gathbandhan arc behind the fire
-    o.append(fabric_band(d, cub((282, 1046), (400, 1150), (660, 1150), (800 - 36 * 0.86 + 40, 1256 - 330 * 0.86)), 22, d.lg([(0, "#FFF3DC"), (1, "#F2C45A")]), d.gold(), None))
+    o.append(fabric_band(d, cub((284, 1022), (400, 1160), (660, 1160), (768, 1040)), 22, d.lg([(0, "#FFF3DC"), (1, "#F2C45A")]), d.gold(), None))
     o.append(agni_kund(d, 540, 1256, 1.05))
     body = "#12030A"
-    o.append(bride(d, 262, 1256, 0.86, pose="stand", body=body, rim="#FFB347"))
-    o.append(groom(d, 800, 1256, 0.86, pose="walk", body=body, rim="#FFB347"))
+    o.append(bride(d, 262, 1256, 0.86, pose="stand", shade=("#1A0308", 0.42), rim="#FFB347"))
+    o.append(groom(d, 800, 1256, 0.86, pose="walk", flip=True, shade=("#1A0308", 0.42), rim="#FFB347"))
     o.append('<rect x="0" y="1256" width="1080" height="94" fill="%s"/>' % d.lg([(0, "#2A0510"), (1, "#12020A")]))
     o.append(petals(d, random.Random(3), 26, 60, 1262, 1020, 1300, 8, 12, ("red", "coral"), avoid=(300, 1262, 780, 1350)))
     return d.svg("".join(o)), spec("E-wedding-2", (150, 150, 930, 700), "gold", "#FFF3E6", "#FFC56B", "dark", "script")
@@ -235,7 +235,7 @@ def card9():
         sc = 0.35 + t * 0.55
         for sg in (-1, 1):
             o.append(bush(d, 540 + sg * (half + 50 * sc), y_, sc, sg > 0, ("#7A9A5A", "#3E6A32"), ("pink", "red", "white"), k * 3 + (sg > 0)))
-    o.append(couple_back(d, 530, 1170, 1.0, "#3A1024", cloth=("#B3122E",)))
+    o.append(couple_back(d, 530, 1170, 1.0, cloth=("#B3122E",)))
     o.append(petals(d, random.Random(22), 30, 0, 700, 1080, 1100, 8, 13, ("red", "pink"), avoid=(200, 700, 880, 1100)))
     return d.svg("".join(o)), spec("E-wedding-9", (150, 100, 930, 600), "#7A2E14", "#3A2A1E", "#8E3A1A", "light", "script", bg="#FDF3E2")
 
@@ -245,19 +245,19 @@ def card10():
     d = Doc(40)
     o = ['<rect width="1080" height="1350" fill="%s"/>' % d.rg([(0, "#16707A"), (0.6, "#0C4650"), (1, "#062A31")], 0.5, 0.3, 0.9)]
     o.append('<rect width="1080" height="1350" fill="%s"/>' % buti_pattern(d, "#F2C45A", None, 60, 0.10))
-    ph = {"shape": "oval", "x": 380, "y": 80, "w": 320, "h": 400}
-    o.append('<ellipse cx="540" cy="280" rx="230" ry="270" fill="%s"/>' % d.rg([(0, "#9FE3DA", .35), (1, "#9FE3DA", 0)]))
-    o.append('<ellipse cx="540" cy="280" rx="190" ry="232" fill="none" stroke="%s" stroke-width="5"/>' % d.gold())
-    ring = ellipse_pts(540, 280, 190, 232, 52)
-    # asymmetric rose hoop: dense on lower-left and upper-right
-    sel = [p for i, p in enumerate(ring) if (i < 12 or 22 < i < 40)]
-    o.append(flower_ring(d, sel, 16, "rose", ("blush", "pink", "white", "blush"), 2, cx=540, cy=280, leafcol=("#7FB08A", "#2F5E3A")))
+    ph = {"shape": "oval", "x": 368, "y": 66, "w": 344, "h": 436}
+    o.append('<ellipse cx="540" cy="300" rx="330" ry="330" fill="%s"/>' % d.rg([(0, "#9FE3DA", .35), (1, "#9FE3DA", 0)]))
+    o.append(rays(540, 290, 40, 700, "#BFF3EA", 0.05, 4))
+    o.append('<ellipse cx="540" cy="284" rx="204" ry="250" fill="none" stroke="%s" stroke-width="6"/>' % d.gold())
+    ring = ellipse_pts(540, 284, 204, 250, 60)
+    o.append(flower_ring(d, ring, 15, "rose", ("blush", "pink", "white", "blush", "red"), 2, cx=540, cy=284, leafcol=("#7FB08A", "#2F5E3A")))
     o.append(photo_slot(d, ph, "#FDF6F2", "#F0DDD8", "#D9B8B0", ring_w=10, inner="#6E4A12"))
-    # gathbandhan-style tassels hanging from hoop bottom
-    for dx, L in ((-40, 90), (40, 120)):
-        o.append('<path d="M%d,508 C%d,540 %d,560 %d,%d" stroke="#E23A5E" stroke-width="5" fill="none"/>' % (540 + dx, 540 + dx - 10, 540 + dx + 10, 540 + dx, 508 + L))
-        o.append(tassel(d, 540 + dx, 508 + L, 0.8, "#C8102E"))
-    o.append(petals(d, random.Random(23), 40, 0, 0, 1080, 640, 8, 14, ("blush", "pink"), avoid=(330, 40, 750, 540)))
+    # stage + couple flanking the portrait
+    o.append('<ellipse cx="540" cy="652" rx="520" ry="26" fill="%s"/>' % d.rg([(0, "#F2C45A", .45), (1, "#F2C45A", 0)]))
+    o.append('<path d="M60,650 Q540,628 1020,650" stroke="%s" stroke-width="5" fill="none"/>' % d.gold())
+    o.append(groom(d, 196, 648, 1.06, pose="stand", rim="#FFE3A8"))
+    o.append(bride(d, 884, 648, 1.06, flip=True, pose="stand", rim="#FFE3A8"))
+    o.append(petals(d, random.Random(23), 50, 0, 0, 1080, 660, 8, 14, ("blush", "pink", "red"), avoid=(320, 20, 760, 560)))
     # lace bottom border
     o.append('<path d="%s" fill="%s"/>' % ("M0,1350 L0,1290 " + " ".join("Q%s,%s %s,1290" % (n(i * 60 + 30), 1262, n(i * 60 + 60)) for i in range(18)) + " L1080,1350Z", d.gold()))
     o.append('<path d="%s" fill="#062A31"/>' % ("M0,1350 L0,1300 " + " ".join("Q%s,%s %s,1300" % (n(i * 60 + 30), 1276, n(i * 60 + 60)) for i in range(18)) + " L1080,1350Z"))
