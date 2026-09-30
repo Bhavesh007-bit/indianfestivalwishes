@@ -1348,8 +1348,14 @@
         : h("p", { class: "hint", text: t("stats.loading") }));
       return;
     }
-    var range = ui.sRange || 30, days = [];
-    for (var i = range - 1; i >= 0; i--) days.push(istDay(i));
+    var range = ui.sRange || "30", days = [];
+    if (range === "today") days = [istDay(0)];
+    else if (range === "yesterday") days = [istDay(1)];
+    else if (range === "all") {
+      var keys = Object.keys(statsData.days).sort(), first = keys[0] || istDay(0), n = 0;
+      while (n < 800 && istDay(n) >= first) n++;
+      for (var j = Math.max(n, 1) - 1; j >= 0; j--) days.push(istDay(j));
+    } else for (var i = (+range || 30) - 1; i >= 0; i--) days.push(istDay(i));
     var tot = {}, byPage = {}, byDesign = {}, byLang = { hi: 0, gu: 0, en: 0 }, perDay = [];
     STAT_KEYS.forEach(function (k) { tot[k] = 0; });
     days.forEach(function (d) {
@@ -1369,7 +1375,7 @@
       });
       perDay.push([d, made]);
     });
-    var rangeSel = select(t("stats.range"), [[7, t("stats.d7")], [30, t("stats.d30")], [90, t("stats.d90")]], range, function (val) { ui.sRange = +val; renderStats(); });
+    var rangeSel = select(t("stats.range"), [["today", t("stats.today")], ["yesterday", t("stats.yesterday")], ["7", t("stats.d7")], ["15", t("stats.d15")], ["30", t("stats.d30")], ["90", t("stats.d90")], ["all", t("stats.all")]], range, function (val) { ui.sRange = String(val); renderStats(); });
     v.appendChild(h("div", { class: "toolbar" }, rangeSel,
       h("button", { class: "btn btn-ghost btn-sm", type: "button", on: { click: loadStats } }, icon("restore"), t("stats.reload"))));
     var grid = h("div", { class: "stats" });

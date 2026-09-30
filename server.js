@@ -681,7 +681,7 @@ let statsDirty = false;
 function flushStats() {
   if (!statsDirty) return;
   const keys = Object.keys(stats.days).sort();
-  while (keys.length > 120) delete stats.days[keys.shift()];
+  while (keys.length > 800) delete stats.days[keys.shift()];
   try { atomicWrite(STATS_FILE, JSON.stringify(stats)); statsDirty = false; } catch (e) { console.error("[stats] write failed", e.message); }
 }
 setInterval(flushStats, 60e3).unref();
