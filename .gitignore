@@ -3,3 +3,7 @@ public/
 data/
 data-test/
 .env
+tools/cards3/src/
+tools/cards3/out/
+tools/cards3/proof/
+tools/cards3/__pycache__/
