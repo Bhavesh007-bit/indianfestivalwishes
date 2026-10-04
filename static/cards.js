@@ -55,6 +55,9 @@
     prog: [],
     made: false
   };
+  // A link can name its design by id ("d"), which survives cards being added or hidden later.
+  var urlD = clean(P.get("d"), 60);
+  (function () { var i = DES.map(function (d) { return d.id; }).indexOf(urlD); if (urlD && i >= 0) state.design = i; })();
   FIELD_KEYS.forEach(function (k) { state.f[k] = clean(P.get("f_" + k), FIELD_MAX[k] || 50); });
   if (!mapOk(state.f.map)) state.f.map = "";
   if (K.program) for (var pi = 1; pi <= 6; pi++) {
@@ -575,6 +578,7 @@
     q.set("w", String(state.wish));
     if (state.wish === "c" && state.custom) q.set("c", state.custom);
     q.set("s", String(state.design));
+    if (DES[state.design] && DES[state.design].id) q.set("d", DES[state.design].id);
     if (K.thoughts) q.set("t", String(state.thought));
     if (K.program) state.prog.forEach(function (r, i) { if (r.n || r.w) q.set("p" + (i + 1), [r.n, r.w, r.v].join("~").replace(/~+$/, "")); });
     return location.origin + location.pathname + "?" + q.toString();
@@ -731,14 +735,17 @@
       var hidden = ((c.hidden || {})[key]) || [], extra = ((c.extra || {})[key]) || [];
       if (!hidden.length && !extra.length) return;
       var cur = DES[state.design] && DES[state.design].id;
-      var list = DES.filter(function (d) { return hidden.indexOf(d.id) < 0; });
+      var list = DES.filter(function (d) { return hidden.indexOf(d.id) < 0; }), added = [];
       extra.forEach(function (x) {
         if (!x || typeof x.url !== "string" || !/^(\/uploads\/[\w.-]+|https:\/\/)/.test(x.url)) return;
-        list.push({ id: x.id, url: x.url, tone: x.tone === "dark" ? "dark" : "light", ink: "#7A1238", zone: [180, 1170], w: 820, extra: true });
+        added.push({ id: x.id, url: x.url, tone: x.tone === "dark" ? "dark" : "light", ink: "#7A1238", zone: [180, 1170], w: 820, extra: true });
       });
+      list = added.concat(list); // cards added from the admin panel come first
       if (!list.length) return;
       DES = list;
-      var ni = DES.map(function (d) { return d.id; }).indexOf(cur);
+      var ids = DES.map(function (d) { return d.id; });
+      var ni = urlD && ids.indexOf(urlD) >= 0 ? ids.indexOf(urlD)
+        : (state.picked || P.get("s") !== null) ? ids.indexOf(cur) : 0;
       state.design = ni >= 0 ? ni : 0;
       rebuildPicker();
       redraw();
@@ -762,7 +769,7 @@
   }
 
   function selectDesign(i, scroll) {
-    state.design = i;
+    state.design = i; state.picked = true;
     if (state.bgImg) { state.bgImg = null; if ($("bg-remove")) $("bg-remove").hidden = true; if ($("card-bg")) $("card-bg").value = ""; }
     dzBtns.forEach(function (x, j) { x.setAttribute("aria-pressed", j === i ? "true" : "false"); });
     if (scroll && dzBtns[i]) dzBtns[i].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
