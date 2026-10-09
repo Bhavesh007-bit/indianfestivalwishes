@@ -505,7 +505,7 @@ function buildNavratri(L) {
 function buildNavDay(L, i) {
   const u = UI[L], N = NAV[L], d = N.days[i], n = i + 1, p = `navratri/day-${n}.html`;
   const K = navCard(L, { title: d.devi, topLabel: d.card_top, wishes: MW[L]["navratri-day-" + n].card, fromTpl: d.from, slug: "navratri-2026-day-" + n, theme: d.theme, dayNum: String(n),
-    designs: (TPL["navratri-day-" + n] || []).concat(designList("navratri")) });
+    designs: (TPL["navratri-day-" + n] || []).concat(designList("navratri")), cardKey: "navratri-day-" + n });
   const facts = [[u.date_label, d.date], [u.color_label, d.color], [u.bhog_label, d.bhog]];
   const prevNext = `<nav class="pn" aria-label="${esc(u.nav.navratri)}">${n > 1 ? `<a class="pn-a" href="${url(L, `navratri/day-${n - 1}.html`)}"><span>${esc(u.prev)}</span><b>${esc(N.days[i - 1].devi)}</b></a>` : "<span></span>"}${n < 9 ? `<a class="pn-a next" href="${url(L, `navratri/day-${n + 1}.html`)}"><span>${esc(u.next)}</span><b>${esc(N.days[i + 1].devi)}</b></a>` : `<a class="pn-a next" href="${url(L, "dussehra/")}"><span>${esc(u.next)}</span><b>${esc(u.nav.dussehra)}</b></a>`}</nav>`;
   const light = ["#F7F3EE", "#F5C518"].indexOf(d.theme.primary) >= 0;
@@ -741,11 +741,18 @@ function main() {
     });
     return o;
   };
-  ["navratri", "dussehra", "karva-chauth", "diwali", "birthday", "anniversary", "wedding", "engagement", "good-morning", "shraddhanjali"].concat(INVITES.map((k) => "invite-" + k)).forEach((key) => {
+  const ALL_DAYS = { hi: " (सभी दिन)", gu: " (બધા દિવસ)", en: " (all days)" };
+  const navAll = labelOf("navratri");
+  LANGS.forEach((L) => { navAll[L] += ALL_DAYS[L]; });
+  cat.navratri = { label: navAll, designs: designList("navratri").map((d) => ({ id: d.id, thumb: `/static/cards/thumb/${d.id}.webp?v=${ASSET_V}` })) };
+  for (let n = 1; n <= 9; n++) {
+    const lab = {};
+    LANGS.forEach((L) => { lab[L] = UI[L].nav.navratri + " · " + fmt(UI[L].day_n, { n }) + ": " + NAV[L].days[n - 1].devi; });
+    cat["navratri-day-" + n] = { label: lab, designs: (TPL["navratri-day-" + n] || []).concat(designList("navratri")).map((d) => ({ id: d.id, thumb: `/static/cards/thumb/${d.id}.webp?v=${ASSET_V}` })) };
+  }
+  ["dussehra", "karva-chauth", "diwali", "birthday", "anniversary", "wedding", "engagement", "good-morning", "shraddhanjali"].concat(INVITES.map((k) => "invite-" + k)).forEach((key) => {
     const set = key.startsWith("invite-") ? "inv-" + key.slice(7) : key;
-    // Navratri day pages share the "navratri" settings, so their own designs are listed here too.
-    const own = key === "navratri" ? Object.keys(TPL).filter((k) => /^navratri-day-\d$/.test(k)).sort().reduce((a, k) => a.concat(TPL[k]), []) : [];
-    cat[key] = { label: labelOf(key), designs: own.concat(designList(set)).map((d) => ({ id: d.id, thumb: `/static/cards/thumb/${d.id}.webp?v=${ASSET_V}` })) };
+    cat[key] = { label: labelOf(key), designs: designList(set).map((d) => ({ id: d.id, thumb: `/static/cards/thumb/${d.id}.webp?v=${ASSET_V}` })) };
   });
   write("static/cards/catalog.json", JSON.stringify(cat));
   buildSitemap();

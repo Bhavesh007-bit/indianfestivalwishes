@@ -735,8 +735,10 @@
   }
   if (window.IFW_SETTINGS) {
     window.IFW_SETTINGS.then(function (S) {
-      var c = (S && S.cards) || {}, key = K.occasion;
-      var hidden = ((c.hidden || {})[key]) || [], extra = ((c.extra || {})[key]) || [];
+      // "navratri" settings apply to every Navratri page; a day page also has its own ("navratri-day-N").
+      var c = (S && S.cards) || {}, keys = K.cardKey ? [K.cardKey, K.occasion] : [K.occasion];
+      var hidden = [], extra = [];
+      keys.forEach(function (k) { hidden = hidden.concat(((c.hidden || {})[k]) || []); extra = extra.concat(((c.extra || {})[k]) || []); });
       if (!hidden.length && !extra.length) return;
       var cur = DES[state.design] && DES[state.design].id;
       var list = DES.filter(function (d) { return hidden.indexOf(d.id) < 0; }), added = [];
