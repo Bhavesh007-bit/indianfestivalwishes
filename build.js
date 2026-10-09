@@ -504,7 +504,8 @@ function buildNavratri(L) {
 
 function buildNavDay(L, i) {
   const u = UI[L], N = NAV[L], d = N.days[i], n = i + 1, p = `navratri/day-${n}.html`;
-  const K = navCard(L, { title: d.devi, topLabel: d.card_top, wishes: MW[L]["navratri-day-" + n].card, fromTpl: d.from, slug: "navratri-2026-day-" + n, theme: d.theme, dayNum: String(n) });
+  const K = navCard(L, { title: d.devi, topLabel: d.card_top, wishes: MW[L]["navratri-day-" + n].card, fromTpl: d.from, slug: "navratri-2026-day-" + n, theme: d.theme, dayNum: String(n),
+    designs: (TPL["navratri-day-" + n] || []).concat(designList("navratri")) });
   const facts = [[u.date_label, d.date], [u.color_label, d.color], [u.bhog_label, d.bhog]];
   const prevNext = `<nav class="pn" aria-label="${esc(u.nav.navratri)}">${n > 1 ? `<a class="pn-a" href="${url(L, `navratri/day-${n - 1}.html`)}"><span>${esc(u.prev)}</span><b>${esc(N.days[i - 1].devi)}</b></a>` : "<span></span>"}${n < 9 ? `<a class="pn-a next" href="${url(L, `navratri/day-${n + 1}.html`)}"><span>${esc(u.next)}</span><b>${esc(N.days[i + 1].devi)}</b></a>` : `<a class="pn-a next" href="${url(L, "dussehra/")}"><span>${esc(u.next)}</span><b>${esc(u.nav.dussehra)}</b></a>`}</nav>`;
   const light = ["#F7F3EE", "#F5C518"].indexOf(d.theme.primary) >= 0;

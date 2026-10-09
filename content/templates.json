@@ -3703,5 +3703,115 @@
    "title": "script",
    "align": "center"
   }
+ ],
+ "navratri-day-1": [
+  {
+   "id": "E-navratri-d1-1",
+   "tpl": true,
+   "zone": [
+    69,
+    1027,
+    1010,
+    1280
+   ],
+   "colors": {
+    "title": "#8C1028",
+    "text": "#3A1F2B",
+    "accent": "#85580F"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center"
+  },
+  {
+   "id": "E-navratri-d1-2",
+   "tpl": true,
+   "zone": [
+    58,
+    998,
+    1021,
+    1280
+   ],
+   "colors": {
+    "title": "#8C1028",
+    "text": "#3A1F2B",
+    "accent": "#85580F"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center"
+  },
+  {
+   "id": "E-navratri-d1-3",
+   "tpl": true,
+   "zone": [
+    66,
+    1002,
+    1013,
+    1280
+   ],
+   "colors": {
+    "title": "#8C1028",
+    "text": "#3A1F2B",
+    "accent": "#85580F"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center"
+  },
+  {
+   "id": "E-navratri-d1-4",
+   "tpl": true,
+   "zone": [
+    71,
+    1002,
+    1008,
+    1280
+   ],
+   "colors": {
+    "title": "#8C1028",
+    "text": "#3A1F2B",
+    "accent": "#85580F"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center"
+  },
+  {
+   "id": "E-navratri-d1-5",
+   "tpl": true,
+   "zone": [
+    85,
+    1016,
+    994,
+    1280
+   ],
+   "colors": {
+    "title": "#8C1028",
+    "text": "#3A1F2B",
+    "accent": "#85580F"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center"
+  },
+  {
+   "id": "E-navratri-d1-6",
+   "tpl": true,
+   "zone": [
+    70,
+    990,
+    1009,
+    1280
+   ],
+   "colors": {
+    "title": "#8C1028",
+    "text": "#3A1F2B",
+    "accent": "#85580F"
+   },
+   "tone": "light",
+   "title": "deco",
+   "align": "center"
+  }
  ]
 }

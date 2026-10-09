@@ -17,7 +17,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 BASE = "http://localhost:8765"
 
 PAGES = {
-    "navratri": "navratri/", "dussehra": "dussehra/", "karva-chauth": "karva-chauth/", "diwali": "diwali/",
+    "navratri": "navratri/", "navratri-d1": "navratri/day-1.html", "dussehra": "dussehra/", "karva-chauth": "karva-chauth/", "diwali": "diwali/",
     "birthday": "wishes/birthday.html", "anniversary": "wishes/anniversary.html", "wedding": "wishes/wedding.html",
     "engagement": "wishes/engagement.html", "good-morning": "wishes/good-morning.html",
     "shraddhanjali": "shraddhanjali/",
