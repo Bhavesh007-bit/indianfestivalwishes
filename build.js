@@ -310,7 +310,7 @@ ${footer(L)}
 
 /* ------------------------------------------------------------------ shared blocks */
 const slots = (L, aff) => `<div class="tg-slot"></div>
-<div class="ad-slot" data-slot="top"></div>`;
+<div class="ad-slot" data-slot="top" data-label="${esc(UI[L].ad_label)}"></div>`;
 const affSlot = (L, key) => `<div class="aff-slot" data-aff="${key}" data-title="${esc(UI[L].shop_h)}" data-note="${esc(UI[L].aff_note)}"></div>`;
 
 function pageHead(L, o) {
@@ -474,7 +474,7 @@ function buildHome(L) {
   <section class="sec"><div class="sec-top"><h2 class="sec-h">${esc(u.days_h)}</h2><p class="sec-sub">${esc(u.days_sub)}</p></div><ol class="days-grid">${days}</ol></section>
   ${affSlot(L, "home")}
   <article class="prose reveal">${H.article}</article>
-  <div class="ad-slot" data-slot="middle"></div>
+  <div class="ad-slot" data-slot="middle" data-label="${esc(u.ad_label)}"></div>
 </div>`;
   emit(L, p, page({ L, p, title: H.title, desc: H.desc, active: "home", pageTag: "home", body, og: "home.png", data: { cal: countdownData() },
     ld: [{ "@context": "https://schema.org", "@type": "WebSite", name: "Indian Festival Wishes", url: SITE + "/", inLanguage: L }] }));
@@ -495,7 +495,7 @@ function buildNavratri(L) {
   ${slots(L)}
   <section class="sec"><h2 class="sec-h">${esc(u.wishes_h)}</h2>${wishList(L, MW[L].navratri.list, "w")}</section>
   <article class="prose reveal">${N.article}</article>
-  <div class="ad-slot" data-slot="middle"></div>
+  <div class="ad-slot" data-slot="middle" data-label="${esc(u.ad_label)}"></div>
   ${affSlot(L, "navratri")}
 </div>`;
   emit(L, p, page({ L, p, title: N.title, desc: N.desc, active: "navratri", pageTag: "navratri", body, og: "home.png", cards: true, data: { card: K },
@@ -523,7 +523,7 @@ function buildNavDay(L, i) {
     <aside class="side reveal"><a class="side-card${light ? " is-light" : ""}" href="${url(L, `navratri/vrat-recipes-day-${n}.html`)}" style="--c:${d.theme.primary}"><span class="ico">${I.bowl}</span><span><b>${esc(u.day_recipes)}</b><small>${esc(REC[L].days[i].desc || "")}</small></span>${I.arrow}</a></aside>
   </div>
   <section class="sec"><h2 class="sec-h">${esc(u.wishes_h)}</h2>${wishList(L, d.wishes.concat(MW[L]["navratri-day-" + n].list), "w")}</section>
-  <div class="ad-slot" data-slot="middle"></div>
+  <div class="ad-slot" data-slot="middle" data-label="${esc(u.ad_label)}"></div>
   ${prevNext}
   ${affSlot(L, "navratri-day")}
 </div>`;
@@ -535,7 +535,7 @@ function buildRecipesIndex(L) {
   const u = UI[L], R = REC[L], N = NAV[L], p = "navratri/vrat-recipes.html";
   const list = R.days.map((d, i) => `<li class="reveal" style="--d:${i * 40}ms"><a class="rec-tile${LIGHT_DAY.indexOf(N.days[i].theme.primary) >= 0 ? " is-light" : ""}" href="${url(L, `navratri/vrat-recipes-day-${i + 1}.html`)}" style="--c:${N.days[i].theme.primary}"><span class="day-n">${i + 1}</span><span><b>${esc(fmt(u.day_n, { n: i + 1 }))}: ${esc(N.days[i].devi)}</b><small>${esc(d.recipes.map((r) => r.name).join(", "))}</small></span>${I.arrow}</a></li>`).join("");
   const body = `${pageHead(L, { h1: R.title, sub: R.intro, crumbs: [[u.nav.home, url(L, "")], [u.nav.navratri, url(L, "navratri/")], [u.nav.recipes]] })}
-<div class="wrap"><ol class="rec-list">${list}</ol>${slots(L)}<article class="prose reveal">${R.article}</article><div class="ad-slot" data-slot="middle"></div>${affSlot(L, "recipes")}</div>`;
+<div class="wrap"><ol class="rec-list">${list}</ol>${slots(L)}<article class="prose reveal">${R.article}</article><div class="ad-slot" data-slot="middle" data-label="${esc(u.ad_label)}"></div>${affSlot(L, "recipes")}</div>`;
   emit(L, p, page({ L, p, title: R.doc_title || R.title, desc: R.desc, active: "recipes", pageTag: "recipes", body }));
 }
 
@@ -561,7 +561,7 @@ function buildRecipeDay(L, i) {
   ${recipes}
   ${slots(L)}
   <nav class="pn">${n > 1 ? `<a class="pn-a" href="${url(L, `navratri/vrat-recipes-day-${n - 1}.html`)}"><span>${esc(u.prev)}</span><b>${esc(fmt(u.day_n, { n: n - 1 }))}</b></a>` : `<span></span>`}<a class="pn-a next" href="${url(L, n < 9 ? `navratri/vrat-recipes-day-${n + 1}.html` : "navratri/vrat-recipes.html")}"><span>${esc(u.next)}</span><b>${esc(n < 9 ? fmt(u.day_n, { n: n + 1 }) : u.all_recipes)}</b></a></nav>
-  <div class="ad-slot" data-slot="middle"></div>
+  <div class="ad-slot" data-slot="middle" data-label="${esc(u.ad_label)}"></div>
   ${affSlot(L, "recipes")}
 </div>`;
   const ld = [{ "@context": "https://schema.org", "@type": "ItemList", itemListElement: d.recipes.map((r, j) => ({ "@type": "ListItem", position: j + 1, name: r.name })) }];
@@ -571,7 +571,7 @@ function buildRecipeDay(L, i) {
 function buildInfo(L, key, active, tag) {
   const u = UI[L], P = PAGES[L][key], p = key;
   const crumbs = key.startsWith("navratri/") ? [[u.nav.home, url(L, "")], [u.nav.navratri, url(L, "navratri/")], [P.title]] : [[u.nav.home, url(L, "")], [P.title]];
-  const body = `${pageHead(L, { h1: P.title, crumbs })}<div class="wrap">${tag === "garba" ? slots(L) : ""}<article class="prose reveal">${P.body}</article>${tag === "garba" ? `<div class="ad-slot" data-slot="middle"></div>${affSlot(L, "garba")}` : ""}</div>`;
+  const body = `${pageHead(L, { h1: P.title, crumbs })}<div class="wrap">${tag === "garba" ? slots(L) : ""}<article class="prose reveal">${P.body}</article>${tag === "garba" ? `<div class="ad-slot" data-slot="middle" data-label="${esc(u.ad_label)}"></div>${affSlot(L, "garba")}` : ""}</div>`;
   emit(L, p, page({ L, p, title: P.doc_title || P.title, desc: P.desc, active, pageTag: tag || "info", body }));
 }
 
@@ -586,7 +586,7 @@ function buildOccasion(L, occ) {
   ${slots(L)}
   <section class="sec"><h2 class="sec-h">${esc(u.wishes_h)}</h2>${wishList(L, allW, "w")}</section>
   <article class="prose reveal">${A.article}</article>
-  <div class="ad-slot" data-slot="middle"></div>
+  <div class="ad-slot" data-slot="middle" data-label="${esc(u.ad_label)}"></div>
   ${faqBlock(L, A.faq)}
   ${affSlot(L, occ)}
 </div>`;
@@ -607,7 +607,7 @@ function buildFestival(L, key) {
   ${slots(L)}
   <section class="sec"><h2 class="sec-h">${esc(u.wishes_h)}</h2>${wishList(L, allW, "w")}</section>
   <article class="prose reveal">${F.article}</article>
-  <div class="ad-slot" data-slot="middle"></div>
+  <div class="ad-slot" data-slot="middle" data-label="${esc(u.ad_label)}"></div>
   ${faqBlock(L, F.faq)}
   ${affSlot(L, key)}
 </div>`;
@@ -668,7 +668,7 @@ function buildInvite(L, k) {
   ${slots(L)}
   <section class="sec"><h2 class="sec-h">${esc(u.messages_h)}</h2>${wishList(L, V.list, "w")}</section>
   <article class="prose reveal">${V.article}</article>
-  <div class="ad-slot" data-slot="middle"></div>
+  <div class="ad-slot" data-slot="middle" data-label="${esc(u.ad_label)}"></div>
   ${faqBlock(L, V.faq)}
   <nav class="more-chips" aria-label="${esc(H.nav)}">${others}</nav>
   ${affSlot(L, "invite-" + k)}

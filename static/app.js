@@ -231,7 +231,7 @@
       renderAffiliates(S.affiliate);
       renderTelegram(S.telegram);
     }
-    runAds(S.ads);
+    runAds(S.ads, PAGE !== "shraddhanjali");
   }
 
   function renderAnnouncement(A) {
@@ -343,8 +343,41 @@
     }
   }
 
-  function runAds(Ad) {
+  // Ad code from another network (e.g. Adsterra), saved in the admin panel per position.
+  // It loads in a frame from /ad-frame/<position>; the frame grows to fit the ad.
+  function runOtherAds(Ad) {
+    var code = { top: Ad.adsterraTop, middle: Ad.adsterraMiddle };
+    var adsense = /^ca-pub-\d{10,20}$/.test((Ad.adsenseClient || "").trim());
+    document.querySelectorAll(".ad-slot").forEach(function (box) {
+      var pos = box.getAttribute("data-slot");
+      if (!/<script[\s>]/i.test(code[pos] || "")) return;
+      if (adsense && /^\d{6,20}$/.test(((pos === "top" ? Ad.slotTop : Ad.slotMiddle) || "").trim())) return;
+      var label = el("p", "ad-label", box.getAttribute("data-label") || "");
+      var f = document.createElement("iframe");
+      f.src = "/ad-frame/" + pos;
+      f.title = box.getAttribute("data-label") || "Ad";
+      f.loading = "lazy";
+      f.setAttribute("scrolling", "no");
+      f.setAttribute("sandbox", "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms");
+      f.className = "ad-frame";
+      var n = 0;
+      function fit() {
+        try {
+          var d = f.contentDocument, h = d && d.documentElement ? Math.max(d.documentElement.scrollHeight, d.body ? d.body.scrollHeight : 0) : 0;
+          if (h > 20) f.style.height = Math.min(h, 900) + "px";
+        } catch (e) {}
+        if (++n < 30) setTimeout(fit, 700);
+      }
+      f.addEventListener("load", function () { n = 0; fit(); });
+      box.appendChild(label);
+      box.appendChild(f);
+      box.classList.add("has-ad");
+    });
+  }
+
+  function runAds(Ad, allowOther) {
     Ad = Ad || {};
+    if (allowOther) runOtherAds(Ad);
     var client = (Ad.adsenseClient || "").trim();
     if (/^ca-pub-\d{10,20}$/.test(client)) {
       if (!document.querySelector('script[src*="adsbygoogle.js"]')) {

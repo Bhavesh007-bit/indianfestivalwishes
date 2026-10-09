@@ -710,6 +710,22 @@ api.use((req, res) => res.status(404).json({ error: "Not found" }));
 
 app.use("/api", api);
 
+/* Third-party ad code (e.g. Adsterra) pasted in the admin panel runs in its own frame page,
+   so scripts that use document.write work and cannot reflow or redirect the main page. */
+app.get(/^\/ad-frame\/(top|middle)$/, (req, res) => {
+  let code = "";
+  try {
+    const st = readJson(SETTINGS_FILE);
+    const a = (st && st.ads) || {};
+    code = String((req.params[0] === "top" ? a.adsterraTop : a.adsterraMiddle) || "");
+  } catch (e) { code = ""; }
+  res.set({ "Cache-Control": "no-cache", "X-Robots-Tag": "noindex, nofollow" });
+  if (!/<script[\s>]/i.test(code) || code.length > 8000) return res.status(204).end();
+  res.type("html").send('<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
+    '<meta name="robots" content="noindex"><style>html,body{margin:0;padding:0;background:transparent}body{display:flex;justify-content:center;overflow:hidden}</style>' +
+    "</head><body>" + code + "</body></html>");
+});
+
 /* Share link pages: crawlers (WhatsApp, Facebook…) get the card as preview, people go to the card. */
 const BOT_RE = /facebookexternalhit|facebot|whatsapp|twitterbot|telegrambot|linkedinbot|slackbot|discordbot|pinterest|skypeuripreview|googlebot|bingbot|applebot|embedly|vkshare|redditbot|snapchat|viber|line\//i;
 function escAttr(s) {

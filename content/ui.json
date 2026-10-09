@@ -190,7 +190,8 @@
    "सगाई",
    "चुन्नी चढ़ाई"
   ],
-  "program_title_eng": "सगाई के कार्यक्रम"
+  "program_title_eng": "सगाई के कार्यक्रम",
+  "ad_label": "विज्ञापन"
  },
  "gu": {
   "lang_name": "ગુજરાતી",
@@ -384,7 +385,8 @@
    "સગાઈ",
    "ચાંદલો"
   ],
-  "program_title_eng": "સગાઈના પ્રસંગો"
+  "program_title_eng": "સગાઈના પ્રસંગો",
+  "ad_label": "જાહેરાત"
  },
  "en": {
   "lang_name": "English",
@@ -577,6 +579,7 @@
    "Engagement",
    "Ring Ceremony"
   ],
-  "program_title_eng": "Engagement Functions"
+  "program_title_eng": "Engagement Functions",
+  "ad_label": "Advertisement"
  }
 }

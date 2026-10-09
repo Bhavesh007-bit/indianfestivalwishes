@@ -713,6 +713,7 @@
     e = vAdsense(S.ads.adsenseClient || ""); if (e) return ["ads", e];
     e = vSlot(S.ads.slotTop || "") || vSlot(S.ads.slotMiddle || ""); if (e) return ["ads", e];
     e = vGa(S.ads.gaId || ""); if (e) return ["ads", e];
+    e = vAdCode(S.ads.adsterraTop || "") || vAdCode(S.ads.adsterraMiddle || ""); if (e) return ["ads", e];
     e = vTag(S.affiliate.amazonTag || ""); if (e) return ["products", e];
     for (var i = 0; i < S.affiliate.products.length; i++) {
       var p = S.affiliate.products[i];
@@ -1210,6 +1211,11 @@
 
   /* ---------------------------------------------------------------- ads */
 
+  function vAdCode(v) {
+    if (!v) return "";
+    if (v.length > 8000) return t("ads.other.long");
+    return /<script[\s>]/i.test(v) ? "" : t("ads.other.bad");
+  }
   function renderAds() {
     var v = clear(viewEl("ads"));
     var D = S.ads;
@@ -1221,6 +1227,13 @@
         h("div", { class: "grid-2" },
           textField(t("ads.slotTop"), D, "slotTop", { placeholder: "1234567890", inputmode: "numeric", validate: vSlot }),
           textField(t("ads.slotMid"), D, "slotMiddle", { placeholder: "1234567890", inputmode: "numeric", validate: vSlot })))
+    }));
+    v.appendChild(card({
+      icon: "link", tone: "gold", title: t("ads.other"), desc: t("ads.other.desc"),
+      body: h("div", { class: "stack" },
+        textField(t("ads.otherTop"), D, "adsterraTop", { multiline: true, rows: 5, placeholder: '<script type="text/javascript" src="//...invoke.js"></script>', validate: vAdCode }),
+        textField(t("ads.otherMid"), D, "adsterraMiddle", { multiline: true, rows: 5, placeholder: '<script type="text/javascript" src="//...invoke.js"></script>', validate: vAdCode }),
+        h("div", { class: "note info" }, icon("info"), h("span", { text: t("ads.other.hint") })))
     }));
     v.appendChild(card({
       icon: "globe", tone: "gold", title: t("ads.ga"), desc: t("ads.ga.desc"),

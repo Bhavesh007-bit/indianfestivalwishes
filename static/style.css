@@ -649,3 +649,7 @@ textarea:focus { outline: none; border-color: var(--rani); box-shadow: 0 0 0 4px
 .prog-box #prog-add{margin-top:10px}
 .hint.bad{color:#B3261E;font-weight:600}
 .map-open{margin:0 0 12px;display:inline-flex}
+/* third-party ad frames */
+.ad-slot.has-ad{margin:18px auto;max-width:760px;display:flex;flex-direction:column;align-items:center;gap:4px}
+.ad-label{margin:0;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.ad-frame{display:block;width:100%;height:120px;border:0;background:transparent}
