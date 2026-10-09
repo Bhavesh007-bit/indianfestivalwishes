@@ -743,7 +743,9 @@ function main() {
   };
   ["navratri", "dussehra", "karva-chauth", "diwali", "birthday", "anniversary", "wedding", "engagement", "good-morning", "shraddhanjali"].concat(INVITES.map((k) => "invite-" + k)).forEach((key) => {
     const set = key.startsWith("invite-") ? "inv-" + key.slice(7) : key;
-    cat[key] = { label: labelOf(key), designs: designList(set).map((d) => ({ id: d.id, thumb: `/static/cards/thumb/${d.id}.webp?v=${ASSET_V}` })) };
+    // Navratri day pages share the "navratri" settings, so their own designs are listed here too.
+    const own = key === "navratri" ? Object.keys(TPL).filter((k) => /^navratri-day-\d$/.test(k)).sort().reduce((a, k) => a.concat(TPL[k]), []) : [];
+    cat[key] = { label: labelOf(key), designs: own.concat(designList(set)).map((d) => ({ id: d.id, thumb: `/static/cards/thumb/${d.id}.webp?v=${ASSET_V}` })) };
   });
   write("static/cards/catalog.json", JSON.stringify(cat));
   buildSitemap();

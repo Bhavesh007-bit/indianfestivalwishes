@@ -545,7 +545,11 @@
     ]).catch(function () {});
   }
   var token = 0;
+  // Only designs that have room for a photo show the "add photo" option.
+  function photoOk(d) { return !!state.bgImg || (!!d && (!d.tpl || !!d.photo)); }
+  function syncPhotoBox() { if (photoFs) photoFs.hidden = !photoOk(DES[state.design]); }
   function redraw() {
+    syncPhotoBox();
     var my = ++token, id = DES[state.design].id;
     frame.classList.add("loading");
     Promise.all([loadImg(id), fontsReady()]).then(function (r) {
